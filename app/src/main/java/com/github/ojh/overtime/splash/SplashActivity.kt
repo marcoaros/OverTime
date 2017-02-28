@@ -7,7 +7,8 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.main.MainActivity
 
-class SplashActivity : BaseActivity<SplashContract.View, SplashPresenter, SplashComponent>(), SplashContract.View {
+class SplashActivity : BaseActivity<SplashContract.View, SplashPresenter, SplashComponent>(),
+        SplashContract.View {
 
     override fun createComponent(): SplashComponent = DaggerSplashComponent.builder()
                     .appComponent(OverTimeApplication.appComponent)

@@ -5,10 +5,11 @@ import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.di.AppModule
 import com.github.ojh.overtime.di.DaggerAppComponent
 
+
 /**
  * Created by ohjaehwan on 2017. 2. 27..
  */
-class OverTimeApplication : Application()  {
+class OverTimeApplication : Application() {
 
     companion object {
         @JvmStatic

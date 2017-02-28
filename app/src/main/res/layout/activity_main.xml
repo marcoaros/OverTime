@@ -10,4 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.github.ojh.overtime.main.MainActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@android:drawable/ic_input_add" />
+
 </RelativeLayout>
