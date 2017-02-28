@@ -1,8 +1,11 @@
 package com.github.ojh.overtime.di
 
 import android.app.Application
+import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.LocalDataSource
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
 /**
@@ -13,4 +16,11 @@ class AppModule(val application: Application) {
     @Singleton
     @Provides
     fun providesApplication(): Application = application
+
+    @Provides
+    fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+
+    @Singleton
+    @Provides
+    fun provideDataSource(): DataSource = LocalDataSource()
 }

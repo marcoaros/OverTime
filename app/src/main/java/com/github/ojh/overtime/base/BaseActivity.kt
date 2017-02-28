@@ -13,7 +13,6 @@ abstract class BaseActivity<V : BaseContract.View,
 
     protected val presenter: P by lazy { component.presenter() }
     protected val component: C by lazy { createComponent() }
-
     protected abstract fun createComponent(): C
 
     @Suppress("UNCHECKED_CAST")
@@ -23,7 +22,7 @@ abstract class BaseActivity<V : BaseContract.View,
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.detachView()
+        super.onDestroy()
     }
 }

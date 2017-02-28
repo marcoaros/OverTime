@@ -1,5 +1,7 @@
 package com.github.ojh.overtime.base
 
+import io.reactivex.disposables.CompositeDisposable
+
 /**
  * Created by ohjaehwan on 2017. 2. 28..
  */
