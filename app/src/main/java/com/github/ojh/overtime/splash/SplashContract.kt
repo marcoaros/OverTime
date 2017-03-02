@@ -12,5 +12,4 @@ interface SplashContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun init()
     }
-    interface Component<V : View, out P : Presenter<V>> : BaseContract.Component<V, P>
 }

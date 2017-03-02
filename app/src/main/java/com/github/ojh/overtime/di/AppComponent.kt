@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
-    fun aplication(): Application
+    fun application(): Application
     fun dataSource(): DataSource
     fun compositeDisables(): CompositeDisposable
 }

@@ -8,9 +8,9 @@ import javax.inject.Inject
 /**
  * Created by OhJaeHwan on 2017-02-28.
  */
-class MainPresenter @Inject constructor(
+class MainPresenter<V : MainContract.View> @Inject constructor(
         dataSource: DataSource, compositeDisposable: CompositeDisposable
-) : BasePresenter<MainContract.View>(dataSource, compositeDisposable), MainContract.Presenter<MainContract.View> {
+) : BasePresenter<V>(dataSource, compositeDisposable), MainContract.Presenter<V> {
 
     override fun clickFabWrite() {
         getView().showToast("토스트 먹고싶다.")

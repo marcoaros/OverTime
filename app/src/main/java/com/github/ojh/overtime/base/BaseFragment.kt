@@ -1,31 +1,22 @@
 package com.github.ojh.overtime.base
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import com.github.ojh.overtime.OverTimeApplication
+import com.github.ojh.overtime.di.AppComponent
 
 /**
  * Created by ohjaehwan on 2017. 2. 28..
  */
-abstract class BaseFragment<V : BaseContract.View,
-        out P : BaseContract.Presenter<V>,
-        out C : BaseContract.Component<V, P>>
-    : AppCompatActivity(), BaseContract.View {
+abstract class BaseFragment :Fragment(), BaseContract.View {
 
-    protected val presenter: P by lazy { component.presenter() }
-    protected val component: C by lazy { createComponent() }
-
-    protected abstract fun createComponent(): C
-
-    @Suppress("UNCHECKED_CAST")
-    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View {
-        presenter.attachView(this as V)
-        return super.onCreateView(name, context, attrs)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setComponent(OverTimeApplication.appComponent)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onDestroy() {
-        presenter.detachView()
-        super.onDestroy()
-    }
+    abstract fun setComponent(appComponent: AppComponent)
 }

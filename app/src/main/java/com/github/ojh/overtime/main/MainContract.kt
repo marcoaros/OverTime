@@ -12,5 +12,4 @@ interface MainContract {
     interface Presenter<V : View>: BaseContract.Presenter<V> {
         fun clickFabWrite()
     }
-    interface Component<V: View, out P: Presenter<V>>: BaseContract.Component<V, P>
 }

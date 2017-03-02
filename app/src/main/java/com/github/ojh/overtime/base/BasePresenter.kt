@@ -13,15 +13,17 @@ open class BasePresenter<V : BaseContract.View> @Inject constructor(
         protected val compositeDisposable: CompositeDisposable
 
 ): BaseContract.Presenter<V> {
+
     private var viewRef: WeakReference<V>? = null
 
-    override fun getView(): V = viewRef?.get() as V
+    override fun getView(): V = viewRef?.get()!!
 
     override fun attachView(view: V) {
         viewRef = WeakReference(view)
     }
 
     override fun detachView() {
+        compositeDisposable.dispose()
         viewRef?.clear()
         viewRef = null
     }

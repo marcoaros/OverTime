@@ -8,7 +8,10 @@ import dagger.Component
  * Created by OhJaeHwan on 2017-02-28.
  */
 @PerActivity
-@Component(dependencies = arrayOf(AppComponent::class))
-interface MainComponent : MainContract.Component<MainContract.View, MainPresenter> {
-//    override fun presenter(): MainPresenter
+@Component(
+        dependencies = arrayOf(AppComponent::class),
+        modules = arrayOf(MainModule::class)
+)
+interface MainComponent  {
+    fun inject(mainActivity: MainActivity)
 }

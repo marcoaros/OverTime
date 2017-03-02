@@ -10,10 +10,10 @@ import javax.inject.Inject
 /**
  * Created by ohjaehwan on 2017. 2. 27..
  */
-class SplashPresenter @Inject constructor(
+class SplashPresenter<V : SplashContract.View> @Inject constructor(
         dataSource: DataSource, compositeDisposable: CompositeDisposable
-) : BasePresenter<SplashContract.View>(dataSource, compositeDisposable),
-        SplashContract.Presenter<SplashContract.View> {
+) : BasePresenter<V>(dataSource, compositeDisposable),
+        SplashContract.Presenter<V> {
 
     override fun init() {
         compositeDisposable.add(
