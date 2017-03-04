@@ -1,7 +1,7 @@
 package com.github.ojh.overtime.di
 
 import android.app.Application
-import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.DataManager
 import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
@@ -13,6 +13,6 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
     fun application(): Application
-    fun dataSource(): DataSource
+    fun dataManager(): DataManager
     fun compositeDisables(): CompositeDisposable
 }

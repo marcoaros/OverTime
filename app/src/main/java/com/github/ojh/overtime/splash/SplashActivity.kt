@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.main.MainActivity
+import com.github.ojh.overtime.timeline.TimeLineActivity
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity(), SplashContract.View {
@@ -28,7 +28,7 @@ class SplashActivity : BaseActivity(), SplashContract.View {
     }
 
     override fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, TimeLineActivity::class.java))
         finish()
     }
 

@@ -1,21 +1,26 @@
-package com.github.ojh.overtime.main
+package com.github.ojh.overtime.timeline
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
+import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.View {
+class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
     @Inject
-    lateinit var presenter: MainPresenter<MainContract.View>
+    lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
+
+    private val timeLineAdapter by lazy { TimeLineAdapter() }
 
     override fun setComponent(appComponent: AppComponent) {
-        DaggerMainComponent.builder()
+        DaggerTimeLineComponent.builder()
                 .appComponent(appComponent)
+                .timeLineModule(TimeLineModule(timeLineAdapter))
                 .build().inject(this)
     }
 
@@ -27,6 +32,11 @@ class MainActivity : BaseActivity(), MainContract.View {
         fb_write.setOnClickListener {
             presenter.clickFabWrite()
         }
+
+        rv_main.layoutManager = LinearLayoutManager(this)
+        rv_main.adapter = timeLineAdapter
+
+        presenter.getData()
     }
 
     override fun showToast(message: String) {
