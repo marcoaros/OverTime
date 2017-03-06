@@ -26,7 +26,7 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     override fun getItemCount(): Int = timeLines.size
 
 
-    override fun setTimlines(timeLines: List<TimeLine>) {
+    override fun setTimeLines(timeLines: List<TimeLine>) {
         this.timeLines.addAll(timeLines)
     }
 

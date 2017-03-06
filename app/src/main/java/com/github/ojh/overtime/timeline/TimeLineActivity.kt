@@ -6,7 +6,7 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
-import com.github.ojh.overtime.toast
+import com.github.ojh.overtime.write.WriteDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -21,7 +21,8 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         DaggerTimeLineComponent.builder()
                 .appComponent(appComponent)
                 .timeLineModule(TimeLineModule(timeLineAdapter))
-                .build().inject(this)
+                .build()
+                .inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +40,9 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         presenter.getData()
     }
 
-    override fun showToast(message: String) {
-        toast(message)
+    override fun showWriteDialog() {
+        val writeDialog = WriteDialog()
+        writeDialog.show(supportFragmentManager, WriteDialog::class.java.simpleName)
     }
 
     override fun onDestroy() {

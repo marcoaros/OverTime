@@ -7,7 +7,7 @@ import com.github.ojh.overtime.data.model.TimeLine
  */
 interface TimeLineAdapterContract {
     interface Model {
-        fun setTimlines(timeLines: List<TimeLine>)
+        fun setTimeLines(timeLines: List<TimeLine>)
     }
     interface View {
         fun refresh()

@@ -19,7 +19,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
     override fun clickFabWrite() {
-        getView().showToast("토스트 먹고싶다.")
+        getView().showWriteDialog()
     }
 
     override fun getData() {
@@ -29,7 +29,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete { timeLineAdapterView.refresh() }
                         .subscribe { timeLines ->
-                            timeLineAdapterModel.setTimlines(timeLines)
+                            timeLineAdapterModel.setTimeLines(timeLines)
                         }
         )
     }

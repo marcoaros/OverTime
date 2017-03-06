@@ -7,7 +7,7 @@ buildscript {
         firebaseVersion = '10.0.1'
         retrofitVersion = '2.1.0'
         okhttpVersion = '3.5.0'
-        daggerVersion = '2.7'
+        daggerVersion = '2.10-rc2'
 
         junitVersion = '4.12'
         mockitoVersion = '1.10.19'
@@ -24,7 +24,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "io.realm:realm-gradle-plugin:2.2.0"
+        classpath "io.realm:realm-gradle-plugin:3.0.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
