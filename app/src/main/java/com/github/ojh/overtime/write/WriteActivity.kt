@@ -1,11 +1,8 @@
 package com.github.ojh.overtime.write
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseDialogFragment
+import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.toast
 import javax.inject.Inject
@@ -13,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by ohjaehwan on 2017. 3. 6..
  */
-class WriteDialog : BaseDialogFragment(), WriteContract.View {
+class WriteActivity : BaseActivity(), WriteContract.View {
 
     @Inject
     lateinit var writePresenter: WritePresenter<WriteContract.View>
@@ -21,29 +18,23 @@ class WriteDialog : BaseDialogFragment(), WriteContract.View {
     override fun setComponent(appComponent: AppComponent) {
         DaggerWriteComponent.builder()
                 .appComponent(appComponent)
-                .writeModule(WriteModule())
                 .build()
                 .inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.CustomDialog)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_write, container, false)
+        setContentView(R.layout.activity_write)
         writePresenter.attachView(this)
         writePresenter.init()
-        return view
     }
 
-    override fun onDestroyView() {
+    override fun onDestroy() {
         writePresenter.detachView()
-        super.onDestroyView()
+        super.onDestroy()
     }
 
     override fun initView() {
-        toast("다이얼로그!")
+        toast("글쓰기!")
     }
 }

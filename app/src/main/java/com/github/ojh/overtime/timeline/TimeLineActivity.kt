@@ -1,12 +1,13 @@
 package com.github.ojh.overtime.timeline
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
-import com.github.ojh.overtime.write.WriteDialog
+import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -41,8 +42,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     }
 
     override fun showWriteDialog() {
-        val writeDialog = WriteDialog()
-        writeDialog.show(supportFragmentManager, WriteDialog::class.java.simpleName)
+        startActivity(Intent(this, WriteActivity::class.java))
     }
 
     override fun onDestroy() {
