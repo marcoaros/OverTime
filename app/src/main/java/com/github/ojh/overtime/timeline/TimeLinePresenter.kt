@@ -1,5 +1,6 @@
 package com.github.ojh.overtime.timeline
 
+import android.os.Handler
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
@@ -23,14 +24,16 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     }
 
     override fun getData() {
-        compositeDisposable.add(
-                dataManager.getTimeLineData()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { timeLineAdapterView.refresh() }
-                        .subscribe { timeLines ->
-                            timeLineAdapterModel.setTimeLines(timeLines)
-                        }
-        )
+        Handler().post {
+            compositeDisposable.add(
+                    dataManager.getTimeLineData()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete { timeLineAdapterView.refresh() }
+                            .subscribe { timeLines ->
+                                timeLineAdapterModel.setTimeLines(timeLines)
+                            }
+            )
+        }
     }
 }

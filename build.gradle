@@ -8,6 +8,7 @@ buildscript {
         retrofitVersion = '2.1.0'
         okhttpVersion = '3.5.0'
         daggerVersion = '2.10-rc2'
+        stethoVersion = '1.4.2'
 
         junitVersion = '4.12'
         mockitoVersion = '1.10.19'

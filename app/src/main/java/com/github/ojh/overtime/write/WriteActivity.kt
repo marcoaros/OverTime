@@ -75,6 +75,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
     override fun navigateToMain() {
         toast("END")
+        finish()
     }
 
     override fun onDestroy() {

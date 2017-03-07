@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.data
 
 import com.github.ojh.overtime.data.model.TimeLine
+import io.reactivex.Flowable
 import io.reactivex.Observable
 
 /**
@@ -9,7 +10,7 @@ import io.reactivex.Observable
 class DataManager {
     private val dataSource = LocalDataSource()
 
-    fun getTimeLineData(): Observable<List<TimeLine>> {
-        return dataSource.getTimeLineData()
+    fun getTimeLineData(): Flowable<List<TimeLine>> {
+        return dataSource.getTimeLines()
     }
 }

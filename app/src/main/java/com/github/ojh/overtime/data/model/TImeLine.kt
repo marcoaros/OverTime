@@ -21,7 +21,7 @@ open class TimeLine : RealmObject() {
 
     fun getNextId(): Int {
         val realm = Realm.getDefaultInstance()
-        val nextId = realm.where(TimeLine::class.java).max("id").toInt()
+        val nextId = (realm.where(TimeLine::class.java).max("id")?.toInt() ?: 0) + 1
         realm.close()
         return nextId
     }

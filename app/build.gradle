@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -13,13 +14,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
-            enabled true
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -76,6 +70,17 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:2.0.1"
     compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
 
+
+    //Stetho
+    compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+    compile 'com.uphyca:stetho_realm:2.0.0'
+
+//    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
+
 }
 
-apply plugin: 'realm-android'
+repositories {
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
+}
