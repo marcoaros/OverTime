@@ -6,7 +6,7 @@ import io.reactivex.Observable
 /**
  * Created by ohjaehwan on 2017. 3. 2..
  */
-open class DataManager {
+class DataManager {
     private val dataSource = LocalDataSource()
 
     fun getTimeLineData(): Observable<List<TimeLine>> {

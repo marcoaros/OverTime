@@ -2,6 +2,8 @@ package com.github.ojh.overtime.write
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -17,7 +19,21 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         getView().initView()
     }
 
-    override fun clickSave() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun clickSave(timeLine: TimeLine) {
+        if (timeLine.isValidAll()) {
+            RealmUtil.execute {
+                timeLine.apply {
+                    id = timeLine.getNextId()
+                }
+            }
+            getView().navigateToMain()
+        } else {
+            getView().setErrorContent(true)
+        }
+    }
+
+    override fun validateContent(content: String?) {
+        val isError = content == null || content.isEmpty()
+        getView().setErrorContent(isError)
     }
 }

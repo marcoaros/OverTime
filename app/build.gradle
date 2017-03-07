@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -78,3 +77,5 @@ dependencies {
     compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
 
 }
+
+apply plugin: 'realm-android'

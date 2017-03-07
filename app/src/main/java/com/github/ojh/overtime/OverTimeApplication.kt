@@ -4,6 +4,7 @@ import android.app.Application
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.di.AppModule
 import com.github.ojh.overtime.di.DaggerAppComponent
+import io.realm.Realm
 
 
 /**
@@ -22,5 +23,12 @@ class OverTimeApplication : Application() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+
+        initRealmConfiguration()
+
+    }
+
+    private fun initRealmConfiguration() {
+        Realm.init(this)
     }
 }
