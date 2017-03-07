@@ -1,4 +1,4 @@
-package com.github.ojh.overtime
+package com.github.ojh.overtime.util
 
 import android.app.Activity
 import android.support.v4.app.Fragment

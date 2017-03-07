@@ -7,7 +7,7 @@ import com.github.ojh.overtime.base.BaseContract
  */
 interface TimeLineContract {
     interface View: BaseContract.View {
-        fun showToast(message: String)
+        fun showWriteDialog()
     }
     interface Presenter<V : View>: BaseContract.Presenter<V> {
         fun clickFabWrite()
