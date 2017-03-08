@@ -24,16 +24,14 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     }
 
     override fun getData() {
-        Handler().post {
-            compositeDisposable.add(
-                    dataManager.getTimeLineData()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete { timeLineAdapterView.refresh() }
-                            .subscribe { timeLines ->
-                                timeLineAdapterModel.setTimeLines(timeLines)
-                            }
-            )
-        }
+        compositeDisposable.add(
+                dataManager.getTimeLineData()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { timeLineAdapterView.refresh() }
+                        .subscribe { timeLines ->
+                            timeLineAdapterModel.setTimeLines(timeLines)
+                        }
+        )
     }
 }

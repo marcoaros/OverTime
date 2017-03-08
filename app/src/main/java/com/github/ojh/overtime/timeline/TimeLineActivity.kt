@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
+import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
+import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -39,6 +41,14 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         rv_main.adapter = timeLineAdapter
 
         presenter.getData()
+
+        EventBus.bus.subscribe { event ->
+            when(event) {
+                is Events.WriteEvent -> {
+                    presenter.getData()
+                }
+            }
+        }
     }
 
     override fun showWriteDialog() {

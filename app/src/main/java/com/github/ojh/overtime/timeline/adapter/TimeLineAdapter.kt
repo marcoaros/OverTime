@@ -27,6 +27,7 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
 
     override fun setTimeLines(timeLines: List<TimeLine>) {
+        this.timeLines.clear()
         this.timeLines.addAll(timeLines)
     }
 
