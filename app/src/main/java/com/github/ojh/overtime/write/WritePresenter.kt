@@ -2,7 +2,9 @@ package com.github.ojh.overtime.write
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -27,6 +29,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
                 }
             }
             getView().navigateToMain()
+            EventBus.post(Events.WriteEvent())
         } else {
             getView().setErrorContent(true)
         }
