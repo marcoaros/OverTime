@@ -27,8 +27,9 @@ class SplashActivity : BaseActivity(), SplashContract.View {
         presenter.init()
     }
 
-    override fun navigateToMain() {
-        startActivity(Intent(this, TimeLineActivity::class.java))
+    override fun navigateToTimeLine() {
+        val timeLineIntent = Intent(this, TimeLineActivity::class.java)
+        startActivity(timeLineIntent)
         finish()
     }
 

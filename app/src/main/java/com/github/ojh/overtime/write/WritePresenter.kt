@@ -18,25 +18,21 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
 ) : BasePresenter<V>(dataManager, compositeDisposable), WriteContract.Presenter<V> {
 
     override fun init() {
-        getView().initView()
+        getView()?.initView()
     }
 
     override fun clickSave(timeLine: TimeLine) {
         if (timeLine.isValidAll()) {
-            RealmUtil.execute {
-                timeLine.apply {
-                    id = timeLine.getNextId()
-                }
-            }
-            getView().navigateToMain()
+            dataManager.saveTimeLine(timeLine)
+            getView()?.navigateToMain()
             EventBus.post(Events.WriteEvent())
         } else {
-            getView().setErrorContent(true)
+            getView()?.setErrorContent(true)
         }
     }
 
     override fun validateContent(content: String?) {
         val isError = content == null || content.isEmpty()
-        getView().setErrorContent(isError)
+        getView()?.setErrorContent(isError)
     }
 }

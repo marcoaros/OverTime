@@ -2,6 +2,8 @@ package com.github.ojh.overtime.di
 
 import android.app.Application
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.LocalDataSource
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -21,5 +23,10 @@ class AppModule(val application: Application) {
 
     @Singleton
     @Provides
-    fun provideDataManager(): DataManager = DataManager()
+    fun provideLocalDataSource(): DataSource = LocalDataSource()
+
+    @Singleton
+    @Provides
+    fun provideDataManager(dataSource: DataSource): DataManager = DataManager(dataSource)
+
 }

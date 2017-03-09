@@ -16,7 +16,7 @@ open class BasePresenter<V : BaseContract.View> @Inject constructor(
 
     private var viewRef: WeakReference<V>? = null
 
-    override fun getView(): V = viewRef?.get()!!
+    override fun getView(): V? = viewRef?.get()
 
     override fun attachView(view: V) {
         viewRef = WeakReference(view)

@@ -6,10 +6,8 @@ import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.di.AppModule
 import com.github.ojh.overtime.di.DaggerAppComponent
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
-import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmMigration
 
 
 /**
@@ -49,6 +47,6 @@ class OverTimeApplication : Application() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
 
-        Realm.setDefaultConfiguration(config)
+//        Realm.setDefaultConfiguration(config)
     }
 }

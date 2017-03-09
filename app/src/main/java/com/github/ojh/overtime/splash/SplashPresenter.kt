@@ -18,7 +18,7 @@ class SplashPresenter<V : SplashContract.View> @Inject constructor(
     override fun init() {
         compositeDisposable.add(
                 Observable.timer(2, TimeUnit.SECONDS).subscribe {
-                    getView().navigateToMain()
+                    getView()?.navigateToTimeLine()
                 }
         )
     }

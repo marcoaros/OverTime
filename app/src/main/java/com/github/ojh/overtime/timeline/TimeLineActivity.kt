@@ -8,6 +8,7 @@ import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
+import com.github.ojh.overtime.timeline.adapter.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,10 +38,11 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
             presenter.clickFabWrite()
         }
 
-        rv_main.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        rv_main.layoutManager = layoutManager
+        val itemDecoration =  VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.item_vertical_space))
+        rv_main.addItemDecoration(itemDecoration)
         rv_main.adapter = timeLineAdapter
-
-        presenter.getData()
 
         EventBus.bus.subscribe { event ->
             when(event) {
@@ -49,6 +51,8 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
                 }
             }
         }
+
+        presenter.getData()
     }
 
     override fun showWriteDialog() {

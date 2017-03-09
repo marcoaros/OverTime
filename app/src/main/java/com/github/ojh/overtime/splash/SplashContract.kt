@@ -7,7 +7,7 @@ import com.github.ojh.overtime.base.BaseContract
  */
 interface SplashContract {
     interface View : BaseContract.View {
-        fun navigateToMain()
+        fun navigateToTimeLine()
     }
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun init()
