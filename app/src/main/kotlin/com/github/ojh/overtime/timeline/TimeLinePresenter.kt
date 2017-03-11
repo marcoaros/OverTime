@@ -10,10 +10,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable,
-        val timeLineAdapterModel: TimeLineAdapterContract.Model,
-        val timeLineAdapterView: TimeLineAdapterContract.View
+        private val timeLineAdapterModel: TimeLineAdapterContract.Model,
+        private val timeLineAdapterView: TimeLineAdapterContract.View,
+            dataManager: DataManager,
+            compositeDisposable: CompositeDisposable
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
     override fun clickFabWrite() {

@@ -12,12 +12,11 @@ class LocalDataSource : DataSource {
         val results = realm.where(TimeLine::class.java).findAll()
         val list: List<TimeLine> = results.toList()
         return Flowable.just(list)
-
 //        return RealmUtil.getRealm().map { it.where(TimeLine::class.java).findAll() }
     }
 
     override fun saveTimeLine(timeLine: TimeLine) {
-        RealmUtil.execute {
+        RealmUtil.save {
             timeLine.apply {
                 id = timeLine.getNextId()
             }
