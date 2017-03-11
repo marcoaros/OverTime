@@ -11,7 +11,7 @@ import io.realm.RealmObject
 
 object RealmUtil {
 
-    fun execute(action: () -> RealmObject) {
+    fun save(action: () -> RealmObject) {
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
         val realmData = action.invoke()
