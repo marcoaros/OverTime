@@ -6,9 +6,6 @@ import android.view.ViewGroup
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.data.model.TimeLine
 
-/**
- * Created by ohjaehwan on 2017. 3. 2..
- */
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         TimeLineAdapterContract.Model, TimeLineAdapterContract.View {
 
@@ -31,7 +28,12 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         this.timeLines.addAll(timeLines)
     }
 
-    override fun refresh() {
+    override fun addTimeLine(timeLine: TimeLine, position: Int) {
+        timeLines.add(position, timeLine)
+        notifyItemInserted(position)
+    }
+
+    override fun refreshAll() {
         notifyDataSetChanged()
     }
 }

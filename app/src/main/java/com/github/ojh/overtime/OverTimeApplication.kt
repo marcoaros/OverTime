@@ -10,9 +10,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 
-/**
- * Created by ohjaehwan on 2017. 2. 27..
- */
 class OverTimeApplication : Application() {
 
     companion object {
@@ -47,6 +44,6 @@ class OverTimeApplication : Application() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
 
-//        Realm.setDefaultConfiguration(config)
+        Realm.setDefaultConfiguration(config)
     }
 }

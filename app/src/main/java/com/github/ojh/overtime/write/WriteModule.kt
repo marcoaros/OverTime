@@ -4,9 +4,6 @@ import com.github.ojh.overtime.di.PerActivity
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by ohjaehwan on 2017. 3. 6..
- */
 @Module
 class WriteModule {
 

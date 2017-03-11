@@ -5,9 +5,6 @@ import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.Flowable
 import io.realm.Realm
 
-/**
- * Created by OhJaeHwan on 2017-02-28.
- */
 class LocalDataSource : DataSource {
 
     override fun getTimeLines(): Flowable<List<TimeLine>> {

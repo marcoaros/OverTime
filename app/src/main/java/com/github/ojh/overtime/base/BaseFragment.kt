@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import com.github.ojh.overtime.OverTimeApplication
 import com.github.ojh.overtime.di.AppComponent
 
-/**
- * Created by ohjaehwan on 2017. 2. 28..
- */
 abstract class BaseFragment :Fragment(), BaseContract.View {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

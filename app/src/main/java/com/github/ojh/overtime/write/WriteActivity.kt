@@ -14,9 +14,6 @@ import kotlinx.android.synthetic.main.activity_write.*
 import java.util.*
 import javax.inject.Inject
 
-/**
- * Created by ohjaehwan on 2017. 3. 6..
- */
 class WriteActivity : BaseActivity(), WriteContract.View {
 
     @Inject

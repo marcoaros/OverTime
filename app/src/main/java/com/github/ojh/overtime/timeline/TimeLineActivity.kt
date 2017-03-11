@@ -34,25 +34,23 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         setContentView(R.layout.activity_main)
         presenter.attachView(this)
 
-        fb_write.setOnClickListener {
-            presenter.clickFabWrite()
-        }
-
         val layoutManager = LinearLayoutManager(this)
         rv_main.layoutManager = layoutManager
-        val itemDecoration =  VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.item_vertical_space))
+        val itemDecoration = VerticalSpaceItemDecoration(
+                resources.getDimensionPixelSize(R.dimen.item_vertical_space)
+        )
         rv_main.addItemDecoration(itemDecoration)
         rv_main.adapter = timeLineAdapter
 
-        EventBus.bus.subscribe { event ->
-            when(event) {
-                is Events.WriteEvent -> {
-                    presenter.getData()
-                }
+        EventBus.bus.subscribe {
+            when (it) {
+                is Events.WriteEvent -> presenter.addTimeLine(it.timeLine, 0)
             }
         }
 
-        presenter.getData()
+        presenter.getTimeLines()
+
+        fb_write.setOnClickListener { presenter.clickFabWrite() }
     }
 
     override fun showWriteDialog() {

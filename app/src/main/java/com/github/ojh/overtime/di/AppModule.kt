@@ -9,9 +9,6 @@ import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
-/**
- * Created by ohjaehwan on 2017. 2. 27..
- */
 @Module
 class AppModule(val application: Application) {
     @Singleton

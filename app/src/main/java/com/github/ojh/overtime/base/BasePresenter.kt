@@ -5,9 +5,6 @@ import io.reactivex.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-/**
- * Created by ohjaehwan on 2017. 2. 28..
- */
 open class BasePresenter<V : BaseContract.View> @Inject constructor(
         protected val dataManager: DataManager,
         protected val compositeDisposable: CompositeDisposable

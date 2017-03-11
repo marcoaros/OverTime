@@ -7,9 +7,6 @@ import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-/**
- * Created by ohjaehwan on 2017. 2. 27..
- */
 class SplashPresenter<V : SplashContract.View> @Inject constructor(
         dataManager: DataManager, compositeDisposable: CompositeDisposable
 ) : BasePresenter<V>(dataManager, compositeDisposable),

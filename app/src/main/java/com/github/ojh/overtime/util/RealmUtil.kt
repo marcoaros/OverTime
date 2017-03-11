@@ -1,7 +1,5 @@
 package com.github.ojh.overtime.util
 
-import android.os.Handler
-import android.os.Looper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -11,9 +9,6 @@ import io.realm.Realm
 import io.realm.RealmChangeListener
 import io.realm.RealmObject
 
-/**
- * Created by ohjaehwan on 2017. 3. 7..
- */
 object RealmUtil {
 
     fun execute(action: () -> RealmObject) {
@@ -23,6 +18,13 @@ object RealmUtil {
         realm.copyToRealmOrUpdate(realmData)
         realm.commitTransaction()
         realm.close()
+    }
+
+    inline fun <reified T : RealmObject> getNextId(): Int {
+        val realm = Realm.getDefaultInstance()
+        val nextId = (realm.where(T::class.java).max("id")?.toInt() ?: 0) + 1
+        realm.close()
+        return nextId
     }
 
     fun getRealm(): Flowable<Realm> {
@@ -43,7 +45,6 @@ object RealmUtil {
         }, BackpressureStrategy.LATEST)
 
     }
-
 
     fun getObservableRealm(): Observable<Realm> {
         return Observable.create {

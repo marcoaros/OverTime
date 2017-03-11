@@ -2,15 +2,13 @@ package com.github.ojh.overtime.timeline
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.model.TimeLine
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-/**
- * Created by OhJaeHwan on 2017-02-28.
- */
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         dataManager: DataManager,
         compositeDisposable: CompositeDisposable,
@@ -22,15 +20,19 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         getView()?.showWriteDialog()
     }
 
-    override fun getData() {
+    override fun getTimeLines() {
         compositeDisposable.add(
                 dataManager.getTimeLineData()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { timeLineAdapterView.refresh() }
+                        .doOnComplete { timeLineAdapterView.refreshAll() }
                         .subscribe { timeLines ->
                             timeLineAdapterModel.setTimeLines(timeLines)
                         }
         )
+    }
+
+    override fun addTimeLine(timeLine: TimeLine, position: Int) {
+        timeLineAdapterModel.addTimeLine(timeLine, position)
     }
 }
