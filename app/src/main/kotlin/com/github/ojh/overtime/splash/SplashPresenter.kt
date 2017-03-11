@@ -8,9 +8,10 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SplashPresenter<V : SplashContract.View> @Inject constructor(
-        dataManager: DataManager, compositeDisposable: CompositeDisposable
-) : BasePresenter<V>(dataManager, compositeDisposable),
-        SplashContract.Presenter<V> {
+        dataManager: DataManager,
+        compositeDisposable: CompositeDisposable
+
+) : BasePresenter<V>(dataManager, compositeDisposable), SplashContract.Presenter<V> {
 
     override fun init() {
         compositeDisposable.add(

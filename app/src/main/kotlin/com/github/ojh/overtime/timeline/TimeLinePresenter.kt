@@ -12,8 +12,9 @@ import javax.inject.Inject
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         private val timeLineAdapterModel: TimeLineAdapterContract.Model,
         private val timeLineAdapterView: TimeLineAdapterContract.View,
-            dataManager: DataManager,
-            compositeDisposable: CompositeDisposable
+        dataManager: DataManager,
+        compositeDisposable: CompositeDisposable
+
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
     override fun clickFabWrite() {

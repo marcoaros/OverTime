@@ -17,9 +17,7 @@ class LocalDataSource : DataSource {
 
     override fun saveTimeLine(timeLine: TimeLine) {
         RealmUtil.save {
-            timeLine.apply {
-                id = timeLine.getNextId()
-            }
+            timeLine.apply { id = timeLine.getNextId() }
         }
     }
 }

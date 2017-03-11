@@ -9,5 +9,6 @@ class WriteModule {
 
     @PerActivity
     @Provides
-    fun provideWritePresenter(writePresenter: WritePresenter<WriteContract.View>): WriteContract.Presenter<WriteContract.View> = writePresenter
+    fun provideWritePresenter(writePresenter: WritePresenter<WriteContract.View>)
+            : WriteContract.Presenter<WriteContract.View> = writePresenter
 }
