@@ -15,6 +15,7 @@ open class TimeLine : RealmObject() {
     open var date: Date? = null
     open var content: String? = null
     open var pay: Int = 0
+    open var imgUri: String? = null
 
     fun getNextId(): Int {
         return RealmUtil.getNextId<TimeLine>()

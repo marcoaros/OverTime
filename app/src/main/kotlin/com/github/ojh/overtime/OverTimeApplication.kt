@@ -41,6 +41,14 @@ class OverTimeApplication : Application() {
         val config = RealmConfiguration.Builder()
                 .name("overtime")
                 .schemaVersion(0)
+                .migration { mi, oldVersion, newVersion ->
+                    var targetVersion = oldVersion
+
+                    if (targetVersion == 0L) {
+                        mi.schema.get("TimeLine")
+                                .addField("imgUrl", String::class.java)
+                    }
+                }
                 .deleteRealmIfMigrationNeeded()
                 .build()
 

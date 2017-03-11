@@ -35,6 +35,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         val timeLine = TimeLine().apply {
             content = mContent
             date = Date()
+            imgUri = Uri.fromFile(mSavedFile).toString()
         }
         if (timeLine.isValidAll()) {
             dataManager.saveTimeLine(timeLine)
@@ -60,6 +61,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mSavedFile = File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
                 getView()?.navigateToGallery(Uri.fromFile(mSavedFile))
+
             } else {
                 getView()?.showRationalDialog()
             }
@@ -68,6 +70,11 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
+            mSavedFile?.let {
+                if(it.exists()) {
+                    it.delete()
+                }
+            }
             getView()?.loadCroppedImage(Uri.fromFile(mSavedFile))
         }
     }
