@@ -4,13 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import com.github.ojh.overtime.base.BaseContract
+import com.github.ojh.overtime.data.model.TimeLine
 
 interface WriteContract {
     companion object {
         const val REQUEST_GALLERY = 200
     }
     interface View : BaseContract.View {
-        fun initView()
+        fun initView(timeLine: TimeLine)
         fun setErrorContent(isError: Boolean)
         fun navigateToMain()
         fun navigateToGallery(uri: Uri)

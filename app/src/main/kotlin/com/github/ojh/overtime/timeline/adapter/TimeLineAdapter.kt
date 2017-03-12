@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.timeline.viewholder.TimeLineViewHolder
 
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         TimeLineAdapterContract.Model, TimeLineAdapterContract.View {
@@ -31,6 +32,11 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     override fun addTimeLine(timeLine: TimeLine, position: Int) {
         timeLines.add(position, timeLine)
         notifyItemInserted(position)
+    }
+
+    override fun updateTimeLine(timeLine: TimeLine) {
+        val updatedPosition = timeLines.map { it.id }.indexOf(timeLine.id)
+        notifyItemChanged(updatedPosition)
     }
 
     override fun refreshAll() {

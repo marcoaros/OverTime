@@ -40,7 +40,7 @@ class OverTimeApplication : Application() {
 
         val config = RealmConfiguration.Builder()
                 .name("overtime")
-                .schemaVersion(0)
+                .schemaVersion(1)
                 .migration { mi, oldVersion, newVersion ->
                     var targetVersion = oldVersion
 

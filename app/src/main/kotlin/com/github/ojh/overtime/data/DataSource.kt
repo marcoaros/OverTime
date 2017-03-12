@@ -6,4 +6,5 @@ import io.reactivex.Flowable
 interface DataSource {
     fun getTimeLines(): Flowable<List<TimeLine>>
     fun saveTimeLine(timeLine: TimeLine)
+    fun updateTimeLine(timeLine: TimeLine)
 }

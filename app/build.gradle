@@ -74,8 +74,12 @@ dependencies {
     //Stetho
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
     compile 'com.uphyca:stetho_realm:2.0.0'
-
 //    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
+
+
+    //Parcel
+    compile 'org.parceler:parceler-api:1.1.6'
+    kapt 'org.parceler:parceler:1.1.6'
 
 }
 

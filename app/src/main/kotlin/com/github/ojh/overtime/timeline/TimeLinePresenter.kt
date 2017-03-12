@@ -36,4 +36,8 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     override fun addTimeLine(timeLine: TimeLine, position: Int) {
         timeLineAdapterModel.addTimeLine(timeLine, position)
     }
+
+    override fun updateTimeLine(timeLine: TimeLine) {
+        timeLineAdapterModel.updateTimeLine(timeLine)
+    }
 }
