@@ -34,6 +34,12 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         setContentView(R.layout.activity_main)
         presenter.attachView(this)
 
+        initRecyclerView()
+        initEventBus()
+        initTimeLines()
+        initEventListener()
+    }
+    private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         rv_main.layoutManager = layoutManager
         val itemDecoration = VerticalSpaceItemDecoration(
@@ -41,15 +47,25 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         )
         rv_main.addItemDecoration(itemDecoration)
         rv_main.adapter = timeLineAdapter
+    }
 
+    private fun initEventBus() {
         EventBus.bus.subscribe {
             when (it) {
-                is Events.WriteEvent -> presenter.addTimeLine(it.timeLine, 0)
+                is Events.WriteEvent -> {
+                    presenter.addTimeLine(it.timeLine, 0)
+                    rv_main.scrollToPosition(0)
+                }
+                is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
             }
         }
+    }
 
+    private fun initTimeLines() {
         presenter.getTimeLines()
+    }
 
+    private fun initEventListener() {
         fb_write.setOnClickListener { presenter.clickFabWrite() }
     }
 

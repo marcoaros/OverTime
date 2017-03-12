@@ -4,17 +4,25 @@ import com.github.ojh.overtime.util.RealmUtil
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
+import org.parceler.Parcel
 import java.util.*
 
+@Parcel(value = Parcel.Serialization.BEAN, analyze = arrayOf(TimeLine::class))
 @RealmClass
 open class TimeLine : RealmObject() {
 
+
+    companion object {
+//        @Ignore
+        const val KEY_TIMELINE = "key_timeline"
+    }
+
     @PrimaryKey
-    open var id: Int = 0
+    open var id: Int? = null
 
     open var date: Date? = null
     open var content: String? = null
-    open var pay: Int = 0
+    open var pay: Int? = null
     open var imgUri: String? = null
 
     fun getNextId(): Int {

@@ -15,4 +15,8 @@ class DataManager @Inject constructor(
     fun saveTimeLine(timeLine: TimeLine) {
         dataSource.saveTimeLine(timeLine)
     }
+
+    fun updateTimeLine(timeLine: TimeLine) {
+        dataSource.updateTimeLine(timeLine)
+    }
 }
