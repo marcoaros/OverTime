@@ -15,6 +15,7 @@ open class TimeLine : RealmObject() {
     companion object {
 //        @Ignore
         const val KEY_TIMELINE = "key_timeline"
+        const val KEY_TIMELINE_ID = "key_timeline_id"
     }
 
     @PrimaryKey

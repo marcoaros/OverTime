@@ -1,11 +1,11 @@
 package com.github.ojh.overtime.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v4.app.DialogFragment
 import com.github.ojh.overtime.OverTimeApplication
 import com.github.ojh.overtime.di.AppComponent
 
-abstract class BaseFragment :Fragment(), BaseContract.View {
+abstract class BaseDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

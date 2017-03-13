@@ -1,35 +1,35 @@
 package com.github.ojh.overtime.timeline.viewholder
 
-import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.github.ojh.overtime.R
 import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.TimeLine.Companion.KEY_TIMELINE
+import com.github.ojh.overtime.timeline.TimeLineActivity
+import com.github.ojh.overtime.timeline.dialog.TimeLineSettingDialog
 import com.github.ojh.overtime.util.load
-import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.view_timeline.view.*
-import org.parceler.Parcels
 
 class TimeLineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var timeLine: TimeLine? = null
+    private var timeLine: TimeLine? = null
 
     init {
         val context = itemView.context
 
         itemView.setOnLongClickListener {
-            AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.timeline_modify_dialog_title))
-                    .setMessage(context.getString(R.string.timeline_modify_dialog_message))
-                    .setNegativeButton(context.getString(R.string.common_no), null)
-                    .setPositiveButton(context.getString(R.string.common_yes), { _, _ ->
-                        val intent = Intent(context, WriteActivity::class.java)
-                        intent.putExtra(KEY_TIMELINE, Parcels.wrap(TimeLine::class.java, timeLine))
-                        context.startActivity(intent)
-                    }).show()
+
+            val dialog = TimeLineSettingDialog.newInstance(timeLine?.id!!)
+            dialog.show((context as TimeLineActivity).supportFragmentManager, "option")
+
+//            AlertDialog.Builder(context)
+//                    .setTitle(context.getString(R.string.timeline_modify_dialog_title))
+//                    .setMessage(context.getString(R.string.timeline_modify_dialog_message))
+//                    .setNegativeButton(context.getString(R.string.common_no), null)
+//                    .setPositiveButton(context.getString(R.string.common_yes), { _, _ ->
+//                        val intent = Intent(context, WriteActivity::class.java)
+//                        intent.putExtra(KEY_TIMELINE, Parcels.wrap(TimeLine::class.java, timeLine))
+//                        context.startActivity(intent)
+//                    }).show()
             false
         }
     }
