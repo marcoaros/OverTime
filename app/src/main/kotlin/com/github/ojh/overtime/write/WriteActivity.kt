@@ -45,11 +45,11 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     }
 
     override fun initView(timeLine: TimeLine) {
-        timeLine.content?.let {
+        timeLine.mContent?.let {
             edit_content.setText(it)
         }
 
-        timeLine.imgUri?.let {
+        timeLine.mImgUri?.let {
             iv_gallery.load(Uri.parse(it))
         }
     }

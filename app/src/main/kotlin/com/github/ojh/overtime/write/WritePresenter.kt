@@ -35,7 +35,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
                 (getView() as Activity).intent?.getParcelableExtra<Parcelable> (KEY_TIMELINE)
         ) ?: TimeLine()
 
-        if(timeLine.id != null) {
+        if(timeLine.mId != null) {
             isUpdate = true
         }
 
@@ -60,7 +60,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     override fun onContentTextChanged(changedContent: String) {
         val isError = changedContent.isEmpty()
         getView()?.setErrorContent(isError)
-        timeLine.content = changedContent
+        timeLine.mContent = changedContent
     }
 
     override fun checkStoragePermission(activity: Activity) {
@@ -82,7 +82,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
             val uri = Uri.fromFile(imgFile)
-            timeLine.imgUri = uri.toString()
+            timeLine.mImgUri = uri.toString()
             getView()?.loadCroppedImage(uri)
         }
     }

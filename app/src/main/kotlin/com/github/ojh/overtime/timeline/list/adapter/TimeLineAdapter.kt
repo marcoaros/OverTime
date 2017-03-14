@@ -41,18 +41,15 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     }
 
     override fun updateTimeLine(timeLine: TimeLine) {
-        val updatedPosition = timeLines.map { it.id }.indexOf(timeLine.id)
+        val updatedPosition = timeLines.map { it.mId }.indexOf(timeLine.mId)
+        timeLines[updatedPosition] = timeLine
         notifyItemChanged(updatedPosition)
     }
 
     override fun deleteTimeLine(timeLineId: Int) {
-        val id = timeLines.map { it.id }.indexOf(timeLineId)
-        Log.d("timelineadapter id = ", ""+id)
-//        timeLines.removeIf { it.id == timeLineId }
-//        notifyDataSetChanged()
-//        val deletePosition = timeLines.map { it.id }.indexOf(timeLineId)
-//        timeLines.removeAt(deletePosition)
-//        notifyItemRemoved(deletePosition)
+        val deletedPosition = timeLines.map { it.mId }.indexOf(timeLineId)
+        timeLines.removeAt(deletedPosition)
+        notifyItemRemoved(deletedPosition)
 
     }
 
@@ -68,8 +65,8 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             val context = itemView.context
 
             itemView.setOnLongClickListener {
-                timeLines[adapterPosition].id?.let {
-                    Log.d("dialog id : ", "" + it)
+                timeLines[adapterPosition].mId?.let {
+                    Log.d("dialog mId : ", "" + it)
                     val dialog = TimeLineSettingDialog.newInstance(it)
                     dialog.show((context as TimeLineActivity).supportFragmentManager, "option")
                 }
@@ -80,19 +77,19 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         fun bind(item: TimeLine) {
             this.timeLine = item
             with(item) {
-                id?.let {
+                mId?.let {
                     itemView.tv_timeline_id.text = it.toString()
                 }
 
-                content?.let {
+                mContent?.let {
                     itemView.tv_timeline_content.text = it
                 }
 
-                date?.let {
+                mDate?.let {
                     itemView.tv_timeline_date.text = it.toString()
                 }
 
-                imgUri?.let {
+                mImgUri?.let {
                     itemView.iv_timeline_image.load(Uri.parse(it))
                 }
             }

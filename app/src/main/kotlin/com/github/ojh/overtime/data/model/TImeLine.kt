@@ -8,26 +8,32 @@ import org.parceler.Parcel
 import java.util.*
 
 @Parcel(value = Parcel.Serialization.BEAN, analyze = arrayOf(TimeLine::class))
-@RealmClass
-open class TimeLine : RealmObject() {
-
+data class TimeLine (
+        var mId: Int? = null,
+        var mDate: Date? = null,
+        var mContent: String? = null,
+        var mPay: Int? = null,
+        var mImgUri: String? = null
+) {
 
     companion object {
         const val KEY_TIMELINE = "key_timeline"
         const val KEY_TIMELINE_ID = "key_timeline_id"
     }
 
-    @PrimaryKey
-    open var id: Int? = null
-
-    open var date: Date? = null
-    open var content: String? = null
-    open var pay: Int? = null
-    open var imgUri: String? = null
-
     fun getNextId(): Int {
-        return RealmUtil.getNextId<TimeLine>()
+        return RealmUtil.getNextId<TimeLineRealm>()
     }
 
-    fun isValidAll(): Boolean = !content.isNullOrEmpty()
+    fun isValidAll(): Boolean = !mContent.isNullOrEmpty()
+
+    fun toRealm(): TimeLineRealm {
+        return TimeLineRealm().apply {
+            id = mId
+            date = mDate
+            content = mContent
+            pay = mPay
+            imgUri = mImgUri
+        }
+    }
 }
