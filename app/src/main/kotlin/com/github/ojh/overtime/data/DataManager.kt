@@ -8,7 +8,11 @@ class DataManager @Inject constructor(
         private val dataSource: DataSource
 ) {
 
-    fun getTimeLineData(): Flowable<List<TimeLine>> {
+    fun getTimeLine(timeLineId: Int): Flowable<TimeLine> {
+        return dataSource.getTimeLine(timeLineId)
+    }
+
+    fun getTimeLines(): Flowable<List<TimeLine>> {
         return dataSource.getTimeLines()
     }
 
@@ -18,5 +22,9 @@ class DataManager @Inject constructor(
 
     fun updateTimeLine(timeLine: TimeLine) {
         dataSource.updateTimeLine(timeLine)
+    }
+
+    fun deleteTimeLine(timeLineId: Int) {
+        dataSource.deleteTimeLine(timeLineId)
     }
 }

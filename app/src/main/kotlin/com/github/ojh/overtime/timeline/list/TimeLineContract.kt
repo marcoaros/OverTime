@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.timeline.list
 
 import com.github.ojh.overtime.base.BaseContract
 import com.github.ojh.overtime.data.model.TimeLine
@@ -12,5 +12,6 @@ interface TimeLineContract {
         fun getTimeLines()
         fun addTimeLine(timeLine: TimeLine, position: Int)
         fun updateTimeLine(timeLine: TimeLine)
+        fun deleteTimeLine(timeLineId: Int)
     }
 }

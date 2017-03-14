@@ -1,9 +1,9 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.timeline.list
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
+import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapterContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -23,7 +23,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
     override fun getTimeLines() {
         compositeDisposable.add(
-                dataManager.getTimeLineData()
+                dataManager.getTimeLines()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete { timeLineAdapterView.refreshAll() }
@@ -39,5 +39,9 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
     override fun updateTimeLine(timeLine: TimeLine) {
         timeLineAdapterModel.updateTimeLine(timeLine)
+    }
+
+    override fun deleteTimeLine(timeLineId: Int) {
+        timeLineAdapterModel.deleteTimeLine(timeLineId)
     }
 }

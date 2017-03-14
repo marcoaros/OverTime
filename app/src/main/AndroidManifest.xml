@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".timeline.TimeLineActivity"
+            android:name=".timeline.list.TimeLineActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".write.WriteActivity"

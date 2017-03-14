@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.timeline.list
 
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.di.PerActivity

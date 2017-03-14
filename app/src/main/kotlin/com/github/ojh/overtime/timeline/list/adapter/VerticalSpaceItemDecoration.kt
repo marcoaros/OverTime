@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.adapter
+package com.github.ojh.overtime.timeline.list.adapter
 
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView

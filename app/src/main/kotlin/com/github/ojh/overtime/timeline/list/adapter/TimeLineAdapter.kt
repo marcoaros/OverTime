@@ -1,11 +1,11 @@
-package com.github.ojh.overtime.timeline.adapter
+package com.github.ojh.overtime.timeline.list.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.timeline.viewholder.TimeLineViewHolder
+import com.github.ojh.overtime.timeline.list.TimeLineViewHolder
 
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         TimeLineAdapterContract.Model, TimeLineAdapterContract.View {
@@ -37,6 +37,16 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     override fun updateTimeLine(timeLine: TimeLine) {
         val updatedPosition = timeLines.map { it.id }.indexOf(timeLine.id)
         notifyItemChanged(updatedPosition)
+    }
+
+    override fun deleteTimeLine(timeLineId: Int) {
+        val deletePosition = timeLines.map { it.id }.indexOf(timeLineId)
+        try {
+            timeLines.removeAt(deletePosition)
+            notifyItemRemoved(deletePosition)
+        } catch (e: ArrayIndexOutOfBoundsException) {
+
+        }
     }
 
     override fun refreshAll() {

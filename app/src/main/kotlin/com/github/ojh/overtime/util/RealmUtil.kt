@@ -11,11 +11,18 @@ import io.realm.RealmObject
 
 object RealmUtil {
 
-    fun save(action: () -> RealmObject) {
+    fun save(realmObject: RealmObject) {
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
-        val realmData = action.invoke()
-        realm.copyToRealmOrUpdate(realmData)
+        realm.copyToRealmOrUpdate(realmObject)
+        realm.commitTransaction()
+        realm.close()
+    }
+
+    fun delete(realmObject: RealmObject) {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        realmObject.deleteFromRealm()
         realm.commitTransaction()
         realm.close()
     }

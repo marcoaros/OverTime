@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.timeline.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
-import com.github.ojh.overtime.timeline.adapter.VerticalSpaceItemDecoration
+import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapter
+import com.github.ojh.overtime.timeline.list.adapter.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -57,6 +57,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
                     rv_main.scrollToPosition(0)
                 }
                 is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
+                is Events.DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
             }
         }
     }

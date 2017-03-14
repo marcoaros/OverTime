@@ -1,5 +1,6 @@
 package com.github.ojh.overtime.timeline.dialog
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
@@ -8,9 +9,12 @@ import android.view.ViewGroup
 import com.github.ojh.overtime.OverTimeApplication
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseDialogFragment
+import com.github.ojh.overtime.data.model.TimeLine
 import com.github.ojh.overtime.data.model.TimeLine.Companion.KEY_TIMELINE_ID
 import com.github.ojh.overtime.di.AppComponent
+import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.fragment_dialog_timeline.*
+import org.parceler.Parcels
 import javax.inject.Inject
 
 class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLineSettingDialogContract.View {
@@ -53,7 +57,13 @@ class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLi
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initArguments()
         initEventListener()
+    }
+
+    private fun initArguments() {
+        val timeLineId = arguments.getInt(KEY_TIMELINE_ID)
+        timeLineSettingDialogPresenter.init(timeLineId)
     }
 
     private fun initEventListener() {
@@ -72,5 +82,11 @@ class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLi
 
     override fun dismissDialog() {
         dismiss()
+    }
+
+    override fun navigateToWrite(timeLine: TimeLine) {
+        val intent = Intent(context, WriteActivity::class.java)
+        intent.putExtra(TimeLine.KEY_TIMELINE, Parcels.wrap(TimeLine::class.java, timeLine))
+        context.startActivity(intent)
     }
 }
