@@ -37,8 +37,8 @@ class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @In
 
     override fun clickDelete() {
         dataManager.deleteTimeLine(timeLineId)
-        getView()?.dismissDialog()
         EventBus.post(Events.DeleteEvent(timeLineId))
+        getView()?.dismissDialog()
     }
 
     override fun clickCancel() {

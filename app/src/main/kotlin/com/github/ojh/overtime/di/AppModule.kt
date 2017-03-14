@@ -15,7 +15,6 @@ class AppModule(val application: Application) {
     @Provides
     fun providesApplication(): Application = application
 
-    @Singleton
     @Provides
     fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 
