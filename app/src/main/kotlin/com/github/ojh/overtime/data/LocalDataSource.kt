@@ -21,7 +21,6 @@ class LocalDataSource : DataSource {
         val results = realm.where(TimeLineRealm::class.java).findAllSorted("date", Sort.DESCENDING)
         val list: List<TimeLine> = results.toList().map { it.toDto() }
         return Flowable.just(list)
-//        return RealmUtil.getRealm().map { it.where(TimeLine::class.java).findAllSorted("date", Sort.DESCENDING) }
     }
 
     override fun saveTimeLine(timeLine: TimeLine) {

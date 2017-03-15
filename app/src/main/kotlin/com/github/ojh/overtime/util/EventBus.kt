@@ -1,12 +1,12 @@
 package com.github.ojh.overtime.util
 
+import com.github.ojh.overtime.data.model.Events
 import io.reactivex.subjects.PublishSubject
-import java.util.*
 
 object EventBus {
-    val bus: PublishSubject<Any> = PublishSubject.create()
+    val bus: PublishSubject<Events> = PublishSubject.create()
 
-    fun post(event: Any) {
+    fun post(event: Events) {
         bus.onNext(event)
     }
 }

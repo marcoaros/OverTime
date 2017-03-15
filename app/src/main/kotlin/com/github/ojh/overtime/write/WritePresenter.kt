@@ -26,25 +26,23 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
 
 ) : BasePresenter<V>(dataManager, compositeDisposable), WriteContract.Presenter<V> {
 
+    private lateinit var timeLine: TimeLine
+
     private var imgFile: File? = null
-    lateinit var timeLine: TimeLine
-    var isUpdate = false
+    private var isUpdate: Boolean = false
+        get() = timeLine.mId != null
 
     override fun init() {
-        timeLine = Parcels.unwrap <TimeLine> (
-                (getView() as Activity).intent?.getParcelableExtra<Parcelable> (KEY_TIMELINE)
+        timeLine = Parcels.unwrap <TimeLine>(
+                (getView() as Activity).intent?.getParcelableExtra<Parcelable>(KEY_TIMELINE)
         ) ?: TimeLine()
-
-        if(timeLine.mId != null) {
-            isUpdate = true
-        }
 
         getView()?.initView(timeLine)
     }
 
     override fun clickSave() {
         if (timeLine.isValidAll()) {
-            if(isUpdate) {
+            if (isUpdate) {
                 dataManager.updateTimeLine(timeLine)
                 EventBus.post(Events.UpdateEvent(timeLine))
             } else {
