@@ -66,7 +66,10 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             itemView.setOnLongClickListener {
                 timeLines[adapterPosition].mId?.let {
                     val dialog = TimeLineSettingDialog.newInstance(it)
-                    dialog.show((context as TimeLineActivity).supportFragmentManager, TimeLineSettingDialog::class.java.simpleName)
+                    dialog.show(
+                            (context as TimeLineActivity).supportFragmentManager,
+                            TimeLineSettingDialog::class.java.simpleName
+                    )
                 }
                 false
             }
@@ -87,8 +90,11 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                     itemView.tv_timeline_date.text = it.toString()
                 }
 
-                mImgUri?.let {
-                    itemView.iv_timeline_image.load(Uri.parse(it))
+                if(mImgUri != null) {
+                    itemView.iv_timeline_image.load(Uri.parse(mImgUri))
+                    itemView.iv_timeline_image.visibility = View.VISIBLE
+                } else {
+                    itemView.iv_timeline_image.visibility = View.GONE
                 }
             }
         }
