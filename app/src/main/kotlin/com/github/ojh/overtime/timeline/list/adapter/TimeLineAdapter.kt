@@ -2,7 +2,6 @@ package com.github.ojh.overtime.timeline.list.adapter
 
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,9 +65,8 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
             itemView.setOnLongClickListener {
                 timeLines[adapterPosition].mId?.let {
-                    Log.d("dialog mId : ", "" + it)
                     val dialog = TimeLineSettingDialog.newInstance(it)
-                    dialog.show((context as TimeLineActivity).supportFragmentManager, "option")
+                    dialog.show((context as TimeLineActivity).supportFragmentManager, TimeLineSettingDialog::class.java.simpleName)
                 }
                 false
             }
