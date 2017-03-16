@@ -20,7 +20,7 @@ interface WriteContract {
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun init()
+        fun init(timeLine: TimeLine)
         fun clickSave()
         fun onContentTextChanged(changedContent: String)
         fun checkStoragePermission(activity: Activity)
