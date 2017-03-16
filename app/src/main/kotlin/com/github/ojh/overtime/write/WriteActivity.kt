@@ -3,6 +3,7 @@ package com.github.ojh.overtime.write
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.view.View
 import android.view.WindowManager
@@ -16,6 +17,7 @@ import com.github.ojh.overtime.util.cropIntent
 import com.github.ojh.overtime.util.load
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import kotlinx.android.synthetic.main.activity_write.*
+import org.parceler.Parcels
 import javax.inject.Inject
 
 
@@ -41,7 +43,10 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     }
 
     private fun initTimeLine() {
-        writePresenter.init()
+        val timeLine = Parcels.unwrap <TimeLine>(
+                intent?.getParcelableExtra<Parcelable>(TimeLine.KEY_TIMELINE)
+        ) ?: TimeLine()
+        writePresenter.init(timeLine)
     }
 
     override fun initView(timeLine: TimeLine) {

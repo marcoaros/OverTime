@@ -6,17 +6,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
-import android.os.Parcelable
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.TimeLine.Companion.KEY_TIMELINE
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import io.reactivex.disposables.CompositeDisposable
-import org.parceler.Parcels
 import java.io.File
 import javax.inject.Inject
 
@@ -28,20 +25,21 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
 
     private lateinit var timeLine: TimeLine
 
-    private var imgFile: File? = null
-    private var isUpdate: Boolean = false
+    private val isValidTimeLine
+        get() = timeLine.isValidAll()
+
+    private val isUpdate
         get() = timeLine.mId != null
 
-    override fun init() {
-        timeLine = Parcels.unwrap <TimeLine>(
-                (getView() as Activity).intent?.getParcelableExtra<Parcelable>(KEY_TIMELINE)
-        ) ?: TimeLine()
+    private var imgFile: File? = null
 
+    override fun init(timeLine: TimeLine) {
+        this.timeLine = timeLine
         getView()?.initView(timeLine)
     }
 
     override fun clickSave() {
-        if (timeLine.isValidAll()) {
+        if (isValidTimeLine) {
             if (isUpdate) {
                 dataManager.updateTimeLine(timeLine)
                 EventBus.post(Events.UpdateEvent(timeLine))

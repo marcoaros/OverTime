@@ -30,11 +30,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    //Test
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "junit:junit:$rootProject.junitVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
@@ -46,41 +47,25 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
 
-    //HTTP
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
-    compile "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttpVersion"
-
     //Image Processing
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
     //DI
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
-//    //Rx
-//    compile 'io.reactivex:rxandroid:1.2.1'
-//    compile 'io.reactivex:rxjava:1.1.6'
-//    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
-
     //Rx2
-    compile "io.reactivex.rxjava2:rxjava:2.0.4"
-    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
-    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
-
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
     //Stetho
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
-    compile 'com.uphyca:stetho_realm:2.0.0'
-//    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
-
+    compile "com.uphyca:stetho_realm:$rootProject.stethoRealmVersion"
 
     //Parcel
-    compile 'org.parceler:parceler-api:1.1.6'
-    kapt 'org.parceler:parceler:1.1.6'
-
+    compile "org.parceler:parceler-api:$rootProject.parcelerVersion"
+    kapt "org.parceler:parceler:$rootProject.parcelerVersion"
 }
 
 repositories {
