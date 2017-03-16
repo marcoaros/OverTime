@@ -8,8 +8,9 @@ import android.net.Uri
 import android.os.Environment
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
-import com.github.ojh.overtime.data.model.Events
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.model.UpdateEvent
+import com.github.ojh.overtime.data.model.WriteEvent
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
@@ -42,10 +43,10 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         if (isValidTimeLine) {
             if (isUpdate) {
                 dataManager.updateTimeLine(timeLine)
-                EventBus.post(Events.UpdateEvent(timeLine))
+                EventBus.post(UpdateEvent(timeLine))
             } else {
                 dataManager.saveTimeLine(timeLine)
-                EventBus.post(Events.WriteEvent(timeLine))
+                EventBus.post(WriteEvent(timeLine))
             }
             getView()?.navigateToMain()
         } else {
