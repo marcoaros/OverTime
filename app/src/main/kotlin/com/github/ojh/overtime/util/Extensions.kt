@@ -6,6 +6,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -22,6 +25,16 @@ fun ImageView.load(uri: Uri) {
     Glide.with(context)
             .load(uri)
             .into(this)
+}
+
+fun EditText.setOnSimpleTextWather(listener: (text: String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            listener.invoke(s.toString())
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    })
 }
 
 fun Intent.cropIntent(uri: Uri, aspectX: Int, aspectY: Int): Intent = this.apply {

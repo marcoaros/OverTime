@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.timeline.list.TimeLineActivity
+import com.github.ojh.overtime.timeline.TimeLineActivity
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity(), SplashContract.View {

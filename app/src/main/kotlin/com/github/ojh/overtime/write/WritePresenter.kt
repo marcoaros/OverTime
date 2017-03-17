@@ -39,7 +39,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         getView()?.initView(timeLine)
     }
 
-    override fun clickSave() {
+    override fun saveTimeLine() {
         if (isValidTimeLine) {
             if (isUpdate) {
                 dataManager.updateTimeLine(timeLine)

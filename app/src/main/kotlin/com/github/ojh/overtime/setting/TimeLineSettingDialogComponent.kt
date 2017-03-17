@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.dialog
+package com.github.ojh.overtime.setting
 
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.di.PerFragment

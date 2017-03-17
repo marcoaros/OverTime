@@ -1,9 +1,9 @@
-package com.github.ojh.overtime.timeline.list
+package com.github.ojh.overtime.timeline
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapterContract
+import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -17,8 +17,21 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
-    override fun clickFabWrite() {
-        getView()?.showWriteDialog()
+    override fun initEventListener() {
+        timeLineAdapterView.setOnClickViewHolder {
+            val timeLineId = timeLineAdapterModel.findTimeLineId(it)
+            timeLineId?.let {
+                getView()?.navigateToDetail(timeLineId)
+            }
+        }
+
+        timeLineAdapterView.setOnLongClickViewHolder {
+            val timeLineId = timeLineAdapterModel.findTimeLineId(it)
+            timeLineId?.let {
+                getView()?.navigateToSetting(it)
+            }
+
+        }
     }
 
     override fun getTimeLines() {
@@ -37,6 +50,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
     override fun addTimeLine(timeLine: TimeLine, position: Int) {
         timeLineAdapterModel.addTimeLine(timeLine, position)
+        getView()?.scrollToPosition(position)
     }
 
     override fun updateTimeLine(timeLine: TimeLine) {

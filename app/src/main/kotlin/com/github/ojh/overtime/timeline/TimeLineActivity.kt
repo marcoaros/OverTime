@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.list
+package com.github.ojh.overtime.timeline
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,11 @@ import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.DeleteEvent
 import com.github.ojh.overtime.data.model.UpdateEvent
 import com.github.ojh.overtime.data.model.WriteEvent
+import com.github.ojh.overtime.detail.DetailActivity
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapter
-import com.github.ojh.overtime.timeline.list.adapter.VerticalSpaceItemDecoration
+import com.github.ojh.overtime.setting.TimeLineSettingDialog
+import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
+import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,8 +23,9 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     @Inject
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
 
-
-    private val timeLineAdapter by lazy { TimeLineAdapter() }
+    private val timeLineAdapter by lazy {
+        TimeLineAdapter()
+    }
 
     override fun setComponent(appComponent: AppComponent) {
         DaggerTimeLineComponent.builder()
@@ -56,10 +59,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     private fun initEventBus() {
         EventBus.bus.subscribe {
             when (it) {
-                is WriteEvent -> {
-                    presenter.addTimeLine(it.timeLine, 0)
-                    rv_timeline.scrollToPosition(0)
-                }
+                is WriteEvent -> presenter.addTimeLine(it.timeLine, 0)
                 is UpdateEvent -> presenter.updateTimeLine(it.timeLine)
                 is DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
             }
@@ -71,11 +71,27 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     }
 
     private fun initEventListener() {
-        fb_write.setOnClickListener { presenter.clickFabWrite() }
+        presenter.initEventListener()
+        fb_write.setOnClickListener { navigateToWrite() }
     }
 
-    override fun showWriteDialog() {
-        startActivity(Intent(this, WriteActivity::class.java))
+    override fun navigateToWrite() {
+        val intent = Intent(this, WriteActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun navigateToSetting(timeLineId: Int) {
+        val dialog = TimeLineSettingDialog.newInstance(timeLineId)
+        dialog.show(supportFragmentManager, TimeLineSettingDialog::class.java.simpleName)
+    }
+
+    override fun navigateToDetail(timeLineId: Int) {
+        val intent = Intent(this, DetailActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun scrollToPosition(position: Int) {
+        rv_timeline.scrollToPosition(position)
     }
 
     override fun onDestroy() {

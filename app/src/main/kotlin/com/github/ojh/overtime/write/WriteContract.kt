@@ -21,11 +21,10 @@ interface WriteContract {
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun init(timeLine: TimeLine)
-        fun clickSave()
+        fun saveTimeLine()
         fun onContentTextChanged(changedContent: String)
         fun checkStoragePermission(activity: Activity)
         fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-
     }
 }

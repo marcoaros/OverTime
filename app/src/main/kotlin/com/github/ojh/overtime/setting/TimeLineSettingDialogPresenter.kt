@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.dialog
+package com.github.ojh.overtime.setting
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
@@ -21,7 +21,7 @@ class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @In
         this.timeLineId = timeLineId
     }
 
-    override fun clickUpdate() {
+    override fun updateTiemLine() {
         compositeDisposable.add(
                 dataManager.getTimeLine(timeLineId)
                         .subscribeOn(Schedulers.io())
@@ -35,13 +35,13 @@ class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @In
         )
     }
 
-    override fun clickDelete() {
+    override fun deleteTimeLine() {
         dataManager.deleteTimeLine(timeLineId)
         EventBus.post(DeleteEvent(timeLineId))
         getView()?.dismissDialog()
     }
 
-    override fun clickCancel() {
+    override fun dismiss() {
         getView()?.dismissDialog()
     }
 }

@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.dialog
+package com.github.ojh.overtime.setting
 
 import android.content.Intent
 import android.os.Bundle
@@ -68,15 +68,15 @@ class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLi
 
     private fun initEventListener() {
         btn_update.setOnClickListener {
-            timeLineSettingDialogPresenter.clickUpdate()
+            timeLineSettingDialogPresenter.updateTiemLine()
         }
 
         btn_delete.setOnClickListener {
-            timeLineSettingDialogPresenter.clickDelete()
+            timeLineSettingDialogPresenter.deleteTimeLine()
         }
 
         btn_cancel.setOnClickListener {
-            timeLineSettingDialogPresenter.clickCancel()
+            timeLineSettingDialogPresenter.dismiss()
         }
     }
 
