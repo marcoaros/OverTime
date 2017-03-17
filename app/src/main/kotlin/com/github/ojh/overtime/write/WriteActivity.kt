@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.Editable
 import android.view.View
 import android.view.WindowManager
 import com.github.ojh.overtime.R
@@ -12,9 +11,9 @@ import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.TimeLine
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.util.PermissionUtil
-import com.github.ojh.overtime.util.SimpleTextWatcher
 import com.github.ojh.overtime.util.cropIntent
 import com.github.ojh.overtime.util.load
+import com.github.ojh.overtime.util.setOnSimpleTextWather
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import kotlinx.android.synthetic.main.activity_write.*
 import org.parceler.Parcels
@@ -65,14 +64,12 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         }
 
         btn_write.setOnClickListener {
-            writePresenter.clickSave()
+            writePresenter.saveTimeLine()
         }
 
-        edit_content.addTextChangedListener(object : SimpleTextWatcher() {
-            override fun afterTextChanged(s: Editable?) {
-                writePresenter.onContentTextChanged(s.toString())
-            }
-        })
+        edit_content.setOnSimpleTextWather {
+            writePresenter.onContentTextChanged(it)
+        }
     }
 
     override fun onDestroy() {

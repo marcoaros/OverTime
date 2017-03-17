@@ -23,10 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".timeline.list.TimeLineActivity"
+            android:name=".timeline.TimeLineActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".write.WriteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".detail.DetailActivity"
             android:screenOrientation="portrait" />
     </application>
 

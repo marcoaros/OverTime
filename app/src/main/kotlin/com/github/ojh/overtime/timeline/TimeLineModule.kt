@@ -1,8 +1,8 @@
-package com.github.ojh.overtime.timeline.list
+package com.github.ojh.overtime.timeline
 
 import com.github.ojh.overtime.di.PerActivity
-import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapter
-import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapterContract
+import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
+import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
 import dagger.Module
 import dagger.Provides
 
