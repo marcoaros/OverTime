@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
-import com.github.ojh.overtime.data.model.Events
+import com.github.ojh.overtime.data.model.DeleteEvent
+import com.github.ojh.overtime.data.model.UpdateEvent
+import com.github.ojh.overtime.data.model.WriteEvent
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.timeline.list.adapter.TimeLineAdapter
 import com.github.ojh.overtime.timeline.list.adapter.VerticalSpaceItemDecoration
@@ -18,6 +20,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
     @Inject
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
+
 
     private val timeLineAdapter by lazy { TimeLineAdapter() }
 
@@ -39,25 +42,26 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         initTimeLines()
         initEventListener()
     }
+
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
-        rv_main.layoutManager = layoutManager
+        rv_timeline.layoutManager = layoutManager
         val itemDecoration = VerticalSpaceItemDecoration(
                 resources.getDimensionPixelSize(R.dimen.item_vertical_space)
         )
-        rv_main.addItemDecoration(itemDecoration)
-        rv_main.adapter = timeLineAdapter
+        rv_timeline.addItemDecoration(itemDecoration)
+        rv_timeline.adapter = timeLineAdapter
     }
 
     private fun initEventBus() {
         EventBus.bus.subscribe {
             when (it) {
-                is Events.WriteEvent -> {
+                is WriteEvent -> {
                     presenter.addTimeLine(it.timeLine, 0)
-                    rv_main.scrollToPosition(0)
+                    rv_timeline.scrollToPosition(0)
                 }
-                is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
-                is Events.DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
+                is UpdateEvent -> presenter.updateTimeLine(it.timeLine)
+                is DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
             }
         }
     }

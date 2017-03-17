@@ -26,9 +26,11 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
                 dataManager.getTimeLines()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { timeLineAdapterView.refreshAll() }
-                        .subscribe { timeLines ->
-                            timeLineAdapterModel.setTimeLines(timeLines)
+                        .doOnComplete {
+                            timeLineAdapterView.refreshAll()
+                        }
+                        .subscribe {
+                            timeLineAdapterModel.setTimeLines(it)
                         }
         )
     }
