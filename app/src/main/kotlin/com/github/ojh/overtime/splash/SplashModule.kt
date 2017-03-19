@@ -9,7 +9,8 @@ class SplashModule {
 
     @PerActivity
     @Provides
-    fun provideSplashPresenter(splashPresenter: SplashPresenter<SplashContract.View>): SplashContract.Presenter<SplashContract.View> {
-        return splashPresenter
-    }
+    fun provideSplashPresenter(
+            splashPresenter: SplashPresenter<SplashContract.View>
+
+    ): SplashContract.Presenter<SplashContract.View> = splashPresenter
 }

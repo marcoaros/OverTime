@@ -13,6 +13,7 @@ class TimeLineModule(val timeLineAdapter: TimeLineAdapter) {
     @Provides
     fun provideMainPresenter(
             timeLinePresenter: TimeLinePresenter<TimeLineContract.View>
+
     ): TimeLineContract.Presenter<TimeLineContract.View> = timeLinePresenter
 
     @PerActivity
