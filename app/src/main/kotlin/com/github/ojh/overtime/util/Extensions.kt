@@ -1,13 +1,16 @@
 package com.github.ojh.overtime.util
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.Transition
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -46,4 +49,18 @@ fun Intent.cropIntent(uri: Uri, aspectX: Int, aspectY: Int): Intent = this.apply
     putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
     putExtra("aspectX", aspectX)
     putExtra("aspectY", aspectY)
+}
+
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+fun Transition.addSimpleEndTransitionListener(action: ()-> Unit) {
+    this.addListener(object : Transition.TransitionListener {
+        override fun onTransitionEnd(transition: Transition) {
+            removeListener(this)
+            action.invoke()
+        }
+        override fun onTransitionStart(transition: Transition) {}
+        override fun onTransitionCancel(transition: Transition) {}
+        override fun onTransitionPause(transition: Transition) {}
+        override fun onTransitionResume(transition: Transition) {}
+    })
 }

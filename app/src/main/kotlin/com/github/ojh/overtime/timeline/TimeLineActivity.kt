@@ -1,6 +1,8 @@
 package com.github.ojh.overtime.timeline
 
+import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.github.ojh.overtime.R
@@ -73,12 +75,16 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
     private fun initEventListener() {
         presenter.initEventListener()
-        fb_write.setOnClickListener { navigateToWrite() }
+        fab_write.setOnClickListener { navigateToWrite() }
     }
 
     override fun navigateToWrite() {
-        val intent = Intent(this, WriteActivity::class.java)
-        startActivity(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val options = ActivityOptions.makeSceneTransitionAnimation(this, fab_write, fab_write.transitionName)
+            startActivity(Intent(this, WriteActivity::class.java), options.toBundle())
+        } else {
+            startActivity(Intent(this, WriteActivity::class.java))
+        }
     }
 
     override fun navigateToSetting(timeLineId: Int) {
