@@ -18,15 +18,15 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
     override fun initEventListener() {
-        timeLineAdapterView.setOnClickViewHolder {
-            val timeLineId = timeLineAdapterModel.findTimeLineId(it)
+        timeLineAdapterView.setOnClickViewHolder { view, position ->
+            val timeLineId = timeLineAdapterModel.findTimeLineId(position)
             timeLineId?.let {
-                getView()?.navigateToDetail(timeLineId)
+                getView()?.navigateToDetail(view, timeLineId)
             }
         }
 
-        timeLineAdapterView.setOnLongClickViewHolder {
-            val timeLineId = timeLineAdapterModel.findTimeLineId(it)
+        timeLineAdapterView.setOnLongClickViewHolder { view, position ->
+            val timeLineId = timeLineAdapterModel.findTimeLineId(position)
             timeLineId?.let {
                 getView()?.navigateToSetting(it)
             }

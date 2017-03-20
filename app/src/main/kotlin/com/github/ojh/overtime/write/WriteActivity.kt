@@ -2,18 +2,19 @@ package com.github.ojh.overtime.write
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.transition.Fade
+import android.transition.TransitionInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.TimeLine
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.util.PermissionUtil
-import com.github.ojh.overtime.util.cropIntent
-import com.github.ojh.overtime.util.load
-import com.github.ojh.overtime.util.setOnSimpleTextWather
+import com.github.ojh.overtime.util.*
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import kotlinx.android.synthetic.main.activity_write.*
 import org.parceler.Parcels
@@ -21,6 +22,8 @@ import javax.inject.Inject
 
 
 class WriteActivity : BaseActivity(), WriteContract.View {
+
+    private var isShowingAnimation = true
 
     @Inject
     lateinit var writePresenter: WritePresenter<WriteContract.View>
@@ -39,6 +42,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
         initTimeLine()
         initEventListener()
+        initAnimation()
     }
 
     private fun initTimeLine() {
@@ -69,6 +73,67 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
         edit_content.setOnSimpleTextWather {
             writePresenter.onContentTextChanged(it)
+        }
+    }
+
+    private fun initAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val transition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.changebounds_with_arcmotion)
+
+            window.sharedElementEnterTransition = transition
+
+            transition.addSimpleEndTransitionListener {
+                animateRevealShow(rl_write_reveal_hide)
+            }
+
+            val fade = Fade().apply {
+                duration = resources.getInteger(R.integer.animation_duration).toLong()
+            }
+
+            window.returnTransition = fade
+        }
+    }
+
+    private fun animateRevealShow(viewRoot: View) {
+        val cx = (viewRoot.left + viewRoot.right) / 2
+        val cy = (viewRoot.top + viewRoot.bottom) / 2
+        GUIUtils.animateRevealShow(
+                this,
+                viewRoot,
+                fab_write.width / 2,
+                R.color.colorPrimary,
+                cx,
+                cy,
+                {
+                    val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+                    animation.duration = 300
+                    ll_write_reveal_show.startAnimation(animation)
+                    ll_write_reveal_show.visibility = View.VISIBLE
+                    isShowingAnimation = false
+                }
+        )
+    }
+
+    override fun onBackPressed() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (isShowingAnimation) {
+                return
+            }
+
+            isShowingAnimation = true
+            GUIUtils.animateRevealHide(
+                    this,
+                    rl_write_reveal_hide,
+                    R.color.colorPrimary,
+                    fab_write.width / 2,
+                    {
+                        super.onBackPressed()
+                    }
+            )
+        } else {
+            super.onBackPressed()
         }
     }
 

@@ -6,7 +6,7 @@ import com.github.ojh.overtime.data.model.TimeLine
 interface TimeLineContract {
     interface View: BaseContract.View {
         fun navigateToWrite()
-        fun navigateToDetail(timeLineId: Int)
+        fun navigateToDetail(view: android.view.View, timeLineId: Int)
         fun navigateToSetting(timeLineId: Int)
         fun scrollToPosition(position: Int)
     }
