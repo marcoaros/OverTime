@@ -1,5 +1,6 @@
-package com.github.ojh.overtime.data.model
+package com.github.ojh.overtime.data
 
+import com.github.ojh.overtime.data.local.TimeLineRealm
 import com.github.ojh.overtime.util.RealmUtil
 import org.parceler.Parcel
 import java.util.*

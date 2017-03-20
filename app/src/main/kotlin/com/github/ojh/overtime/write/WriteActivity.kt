@@ -12,7 +12,7 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.util.*
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY

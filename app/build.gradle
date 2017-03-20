@@ -21,6 +21,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        local {
+            dimension "dataSource"
+            buildConfigField 'boolean', 'IS_LOCAL', 'true'
+        }
+        remote {
+            dimension "dataSource"
+            buildConfigField 'boolean', 'IS_LOCAL', 'false'
+        }
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
@@ -66,6 +76,11 @@ dependencies {
     //Parcel
     compile "org.parceler:parceler-api:$rootProject.parcelerVersion"
     kapt "org.parceler:parceler:$rootProject.parcelerVersion"
+
+    //Retrofit
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
 }
 
 repositories {
