@@ -1,8 +1,11 @@
 package com.github.ojh.overtime.di
 
 import android.app.Application
+import com.github.ojh.overtime.BuildConfig
 import com.github.ojh.overtime.api.FirebaseAPI
-import com.github.ojh.overtime.data.*
+import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.local.LocalDataSource
 import com.github.ojh.overtime.data.remote.RemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -23,7 +26,12 @@ class AppModule(val application: Application) {
 
     @Singleton
     @Provides
-    fun provideLocalDataSource(firebaseApi: FirebaseAPI): DataSource = RemoteDataSource(firebaseApi)
+    fun provideDataSource(firebaseApi: FirebaseAPI): DataSource =
+            if (BuildConfig.IS_LOCAL) {
+                LocalDataSource()
+            } else {
+                RemoteDataSource(firebaseApi)
+            }
 
     @Singleton
     @Provides
