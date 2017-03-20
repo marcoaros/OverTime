@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Pair
 import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
@@ -101,11 +102,13 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && view.iv_timeline_image.visibility == View.VISIBLE) {
 
-            val options = ActivityOptions.makeSceneTransitionAnimation(
-                    this, view.iv_timeline_image, view.iv_timeline_image.transitionName
-            )
+            val p1 = with(view.iv_timeline_image) {
+                Pair.create<View, String>(this, this.transitionName)
+            }
 
+            val options = ActivityOptions.makeSceneTransitionAnimation(this, p1)
             startActivity(intent, options.toBundle())
+
         } else {
             startActivity(intent)
         }

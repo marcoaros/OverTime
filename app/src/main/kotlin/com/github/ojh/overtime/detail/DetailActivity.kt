@@ -50,13 +50,11 @@ class DetailActivity : BaseActivity(), DetailContract.View {
 
             window.sharedElementEnterTransition = transition
 
-            window.enterTransition = Explode()
-                    .apply {
+            window.enterTransition = Explode().apply {
                 duration = resources.getInteger(R.integer.animation_duration).toLong()
             }
 
-            window.returnTransition = Explode()
-                    .apply {
+            window.returnTransition = Explode().apply {
                 duration = resources.getInteger(R.integer.animation_duration).toLong()
             }
         }
