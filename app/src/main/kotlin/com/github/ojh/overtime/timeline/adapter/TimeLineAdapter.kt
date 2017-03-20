@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.util.ViewClickHandler
 
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         TimeLineAdapterContract.Model, TimeLineAdapterContract.View {
 
     private val timeLines = mutableListOf<TimeLine>()
 
-    var clickListener: ((timeLineId: Int) -> Unit)? = null
-    var longClickListener: ((timeLineId: Int) -> Unit)? = null
+    private var clickListener: ViewClickHandler? = null
+    private var longClickListener: ViewClickHandler? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.view_timeline, parent, false)
@@ -52,11 +53,11 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun findTimeLineId(position: Int): Int? = timeLines[position].mId
 
-    override fun setOnClickViewHolder(listener: (timeLineId: Int) -> Unit) {
+    override fun setOnClickViewHolder(listener: ViewClickHandler) {
         clickListener = listener
     }
 
-    override fun setOnLongClickViewHolder(listener: (timeLineId: Int) -> Unit) {
+    override fun setOnLongClickViewHolder(listener: ViewClickHandler) {
         longClickListener = listener
     }
 

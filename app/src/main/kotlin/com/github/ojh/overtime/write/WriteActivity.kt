@@ -1,6 +1,5 @@
 package com.github.ojh.overtime.write
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -79,29 +78,21 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
     private fun initAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setupEnterAnimation()
-            setupExitAnimation()
+            val transition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.changebounds_with_arcmotion)
+
+            window.sharedElementEnterTransition = transition
+
+            transition.addSimpleEndTransitionListener {
+                animateRevealShow(rl_write_reveal_hide)
+            }
+
+            val fade = Fade().apply {
+                duration = resources.getInteger(R.integer.animation_duration).toLong()
+            }
+
+            window.returnTransition = fade
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setupEnterAnimation() {
-        val transition = TransitionInflater.from(this)
-                .inflateTransition(R.transition.changebounds_with_arcmotion)
-
-        window.sharedElementEnterTransition = transition
-
-        transition.addSimpleEndTransitionListener {
-            animateRevealShow(rl_write_reveal_hide)
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setupExitAnimation() {
-        val fade = Fade().apply {
-            duration = resources.getInteger(R.integer.animation_duration).toLong()
-        }
-        window.returnTransition = fade
     }
 
     private fun animateRevealShow(viewRoot: View) {

@@ -19,4 +19,5 @@
 
 
     <string name="transition_reveal_write">transition_reveal_write</string>
+    <string name="transition_image_detail">transition_reveal_write</string>
 </resources>

@@ -1,7 +1,11 @@
 package com.github.ojh.overtime.detail
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.TransitionInflater
+import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.TimeLine
@@ -34,6 +38,28 @@ class DetailActivity : BaseActivity(), DetailContract.View {
         }
 
         presenter.init(timeLineId)
+        initAnimation()
+    }
+
+
+    private fun initAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            val transition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.change_images_transform)
+
+            window.sharedElementEnterTransition = transition
+
+            window.enterTransition = Explode()
+                    .apply {
+                duration = resources.getInteger(R.integer.animation_duration).toLong()
+            }
+
+            window.returnTransition = Explode()
+                    .apply {
+                duration = resources.getInteger(R.integer.animation_duration).toLong()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -43,7 +69,12 @@ class DetailActivity : BaseActivity(), DetailContract.View {
 
     override fun initView(timeLine: TimeLine) {
         with(timeLine) {
-            mImgUri?.let { iv_img.load(Uri.parse(it)) }
+            if (mImgUri != null) {
+                iv_img.load(Uri.parse(mImgUri))
+            } else {
+                iv_img.visibility = View.GONE
+            }
+
             mContent?.let { tv_content.text = it }
             mDate?.let { tv_date.text = it.toString() }
         }

@@ -4,13 +4,14 @@ import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.util.ViewClickHandler
 import com.github.ojh.overtime.util.load
 import kotlinx.android.synthetic.main.view_timeline.view.*
 
 class TimeLineViewHolder(
         itemView: View,
-        clickListener: ((position: Int) -> Unit)?,
-        longClickListener: ((position: Int) -> Unit)?
+        clickListener: ViewClickHandler?,
+        longClickListener: ViewClickHandler?
 
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -18,11 +19,11 @@ class TimeLineViewHolder(
 
     init {
         itemView.setOnClickListener {
-            clickListener?.invoke(adapterPosition)
+            clickListener?.invoke(it, adapterPosition)
         }
 
         itemView.setOnLongClickListener {
-            longClickListener?.invoke(adapterPosition)
+            longClickListener?.invoke(it, adapterPosition)
             false
         }
     }

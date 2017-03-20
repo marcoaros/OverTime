@@ -27,6 +27,7 @@ fun Fragment.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 fun ImageView.load(uri: Uri) {
     Glide.with(context)
             .load(uri)
+            .centerCrop()
             .into(this)
 }
 

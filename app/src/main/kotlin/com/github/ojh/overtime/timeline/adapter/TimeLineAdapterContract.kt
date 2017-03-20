@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.timeline.adapter
 
 import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.util.ViewClickHandler
 
 interface TimeLineAdapterContract {
     interface Model {
@@ -12,8 +13,8 @@ interface TimeLineAdapterContract {
     }
 
     interface View {
-        fun setOnClickViewHolder(listener: (position: Int)->Unit)
-        fun setOnLongClickViewHolder(listener: (position: Int)->Unit)
+        fun setOnClickViewHolder(listener: ViewClickHandler)
+        fun setOnLongClickViewHolder(listener: ViewClickHandler)
         fun refreshAll()
         fun refreshItemChanged(position: Int)
         fun refreshItemInserted(position: Int)

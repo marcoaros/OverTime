@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.model.DeleteEvent
@@ -19,6 +20,7 @@ import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
 
 class TimeLineActivity : BaseActivity(), TimeLineContract.View {
@@ -92,10 +94,21 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         dialog.show(supportFragmentManager, TimeLineSettingDialog::class.java.simpleName)
     }
 
-    override fun navigateToDetail(timeLineId: Int) {
+    override fun navigateToDetail(view: View, timeLineId: Int) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(KEY_TIMELINE_ID, timeLineId)
-        startActivity(intent)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && view.iv_timeline_image.visibility == View.VISIBLE) {
+
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                    this, view.iv_timeline_image, view.iv_timeline_image.transitionName
+            )
+
+            startActivity(intent, options.toBundle())
+        } else {
+            startActivity(intent)
+        }
     }
 
     override fun scrollToPosition(position: Int) {
