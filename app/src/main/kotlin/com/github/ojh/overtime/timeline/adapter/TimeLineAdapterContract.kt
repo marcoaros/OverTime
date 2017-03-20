@@ -1,6 +1,6 @@
 package com.github.ojh.overtime.timeline.adapter
 
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
 
 interface TimeLineAdapterContract {

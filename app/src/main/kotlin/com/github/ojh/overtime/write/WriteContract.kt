@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import com.github.ojh.overtime.base.BaseContract
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 
 interface WriteContract {
     companion object {

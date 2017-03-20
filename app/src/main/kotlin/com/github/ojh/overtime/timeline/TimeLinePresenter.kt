@@ -2,7 +2,7 @@ package com.github.ojh.overtime.timeline
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.timeline.adapter.TimeLineAdapterContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

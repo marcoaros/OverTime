@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
 
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),

@@ -1,6 +1,6 @@
 package com.github.ojh.overtime.data
 
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import io.reactivex.Flowable
 
 interface DataSource {

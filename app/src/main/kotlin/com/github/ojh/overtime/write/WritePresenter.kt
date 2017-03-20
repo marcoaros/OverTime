@@ -8,9 +8,9 @@ import android.net.Uri
 import android.os.Environment
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
-import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.UpdateEvent
-import com.github.ojh.overtime.data.model.WriteEvent
+import com.github.ojh.overtime.data.TimeLine
+import com.github.ojh.overtime.data.UpdateEvent
+import com.github.ojh.overtime.data.WriteEvent
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY

@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.data.model
+package com.github.ojh.overtime.data
 
 sealed class Events
 

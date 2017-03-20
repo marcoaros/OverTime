@@ -1,6 +1,6 @@
 package com.github.ojh.overtime.util
 
-import com.github.ojh.overtime.data.model.Events
+import com.github.ojh.overtime.data.Events
 import io.reactivex.subjects.PublishSubject
 
 object EventBus {

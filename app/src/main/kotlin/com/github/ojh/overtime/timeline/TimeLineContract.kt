@@ -1,7 +1,7 @@
 package com.github.ojh.overtime.timeline
 
 import com.github.ojh.overtime.base.BaseContract
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 
 interface TimeLineContract {
     interface View: BaseContract.View {

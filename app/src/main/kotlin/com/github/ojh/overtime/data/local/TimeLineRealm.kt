@@ -1,5 +1,6 @@
-package com.github.ojh.overtime.data.model
+package com.github.ojh.overtime.data.local
 
+import com.github.ojh.overtime.data.TimeLine
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass

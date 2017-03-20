@@ -1,7 +1,8 @@
-package com.github.ojh.overtime.data
+package com.github.ojh.overtime.data.local
 
-import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.TimeLineRealm
+import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.TimeLine
+import com.github.ojh.overtime.data.local.TimeLineRealm
 import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.Flowable
 import io.realm.Realm
