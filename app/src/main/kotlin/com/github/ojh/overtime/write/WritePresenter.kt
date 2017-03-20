@@ -34,7 +34,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
 
     private var imgFile: File? = null
 
-    override fun init(timeLine: TimeLine) {
+    override fun initTimeLine(timeLine: TimeLine) {
         this.timeLine = timeLine
         getView()?.initView(timeLine)
     }

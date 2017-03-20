@@ -87,6 +87,6 @@ class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLi
     override fun navigateToWrite(timeLine: TimeLine) {
         val intent = Intent(context, WriteActivity::class.java)
         intent.putExtra(TimeLine.KEY_TIMELINE, Parcels.wrap(TimeLine::class.java, timeLine))
-        context.startActivity(intent)
+        startActivity(intent)
     }
 }

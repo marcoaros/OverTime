@@ -23,7 +23,8 @@ import javax.inject.Inject
 
 class WriteActivity : BaseActivity(), WriteContract.View {
 
-    private var isShowingAnimation = true
+    private var isShowingAnimation = false
+    private var isUpdate = false
 
     @Inject
     lateinit var writePresenter: WritePresenter<WriteContract.View>
@@ -49,7 +50,12 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         val timeLine = Parcels.unwrap <TimeLine>(
                 intent?.getParcelableExtra<Parcelable>(TimeLine.KEY_TIMELINE)
         ) ?: TimeLine()
-        writePresenter.init(timeLine)
+
+        if(timeLine.mId != null) {
+            isUpdate = true
+        }
+
+        writePresenter.initTimeLine(timeLine)
     }
 
     override fun initView(timeLine: TimeLine) {
@@ -77,11 +83,13 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     }
 
     private fun initAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUpdate) {
             val transition = TransitionInflater.from(this)
                     .inflateTransition(R.transition.changebounds_with_arcmotion)
 
             window.sharedElementEnterTransition = transition
+
+            isShowingAnimation = true
 
             transition.addSimpleEndTransitionListener {
                 animateRevealShow(rl_write_reveal_hide)
@@ -92,6 +100,9 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             window.returnTransition = fade
+        } else {
+            fab_write.visibility = View.INVISIBLE
+            ll_write_reveal_show.visibility = View.VISIBLE
         }
     }
 
@@ -116,7 +127,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     }
 
     override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUpdate) {
 
             if (isShowingAnimation) {
                 return
