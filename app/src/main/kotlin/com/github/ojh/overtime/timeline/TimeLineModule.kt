@@ -30,7 +30,7 @@ class TimeLineModule(val timeLineAdapter: TimeLineAdapter) {
     @PerActivity
     @Provides
     fun provideFilterArrayAdapter(application: Application): ArrayAdapter<CharSequence> {
-        val adapter = ArrayAdapter.createFromResource(application, R.array.filter_array, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(application, R.array.filter_array, R.layout.spiiner_item)
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         return adapter
     }

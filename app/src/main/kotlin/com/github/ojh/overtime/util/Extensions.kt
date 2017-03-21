@@ -66,9 +66,15 @@ fun Transition.addSimpleEndTransitionListener(action: ()-> Unit) {
             removeListener(this)
             action.invoke()
         }
-        override fun onTransitionStart(transition: Transition) {}
-        override fun onTransitionCancel(transition: Transition) {}
-        override fun onTransitionPause(transition: Transition) {}
+        override fun onTransitionCancel(transition: Transition) {
+            removeListener(this)
+            action.invoke()
+        }
+        override fun onTransitionPause(transition: Transition) {
+            removeListener(this)
+            action.invoke()
+        }
         override fun onTransitionResume(transition: Transition) {}
+        override fun onTransitionStart(transition: Transition) {}
     })
 }

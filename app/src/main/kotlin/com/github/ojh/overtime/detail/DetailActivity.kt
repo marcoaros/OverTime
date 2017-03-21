@@ -4,6 +4,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.transition.Explode
+import android.transition.Fade
+import android.transition.Slide
 import android.transition.TransitionInflater
 import android.view.View
 import com.github.ojh.overtime.R
@@ -51,11 +53,11 @@ class DetailActivity : BaseActivity(), DetailContract.View {
 
             window.sharedElementEnterTransition = transition
 
-            window.enterTransition = Explode().apply {
+            window.enterTransition = Fade().apply {
                 duration = resources.getInteger(R.integer.animation_duration).toLong()
             }
 
-            window.returnTransition = Explode().apply {
+            window.returnTransition = Fade().apply {
                 duration = resources.getInteger(R.integer.animation_duration).toLong()
             }
         }

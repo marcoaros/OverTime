@@ -4,11 +4,15 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Pair
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.data.Events
@@ -49,10 +53,29 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         setContentView(R.layout.activity_timeline)
         presenter.attachView(this)
 
+        initToolbar()
         initRecyclerView()
-        initFilterSpinner()
         initEventBus()
         initEventListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_timeline, menu)
+        val item = menu?.findItem(R.id.menu_filter)
+
+        val spinnerFilter = MenuItemCompat.getActionView(item) as Spinner
+        spinnerFilter.adapter = filterAdapter
+        spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                presenter.getTimeLines(position)
+            }
+        }
+
+        return true
     }
 
     private fun initRecyclerView() {
@@ -65,8 +88,8 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         rv_timeline.adapter = timeLineAdapter
     }
 
-    private fun initFilterSpinner() {
-        sp_filter.adapter = filterAdapter
+    private fun initToolbar() {
+        setSupportActionBar(toolbar)
     }
 
     private fun initEventBus() {
@@ -84,16 +107,6 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
         fab_write.setOnClickListener {
             presenter.clickWrite()
-        }
-
-        sp_filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                presenter.getTimeLines(position)
-            }
         }
     }
 
