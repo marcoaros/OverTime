@@ -13,7 +13,7 @@ class RemoteDataSource @Inject constructor(
         return Flowable.just(null)
     }
 
-    override fun getTimeLines(): Flowable<List<TimeLine>> {
+    override fun getTimeLines(filter: Int): Flowable<List<TimeLine>> {
         return firebaseAPI.getTimeLines()
     }
 

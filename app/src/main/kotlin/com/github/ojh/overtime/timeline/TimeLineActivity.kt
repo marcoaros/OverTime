@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Pair
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
-import com.github.ojh.overtime.data.DeleteEvent
+import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
-import com.github.ojh.overtime.data.UpdateEvent
-import com.github.ojh.overtime.data.WriteEvent
 import com.github.ojh.overtime.detail.DetailActivity
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.setting.TimeLineSettingDialog
@@ -28,6 +28,9 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
     @Inject
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
+
+    @Inject
+    lateinit var filterAdapter: ArrayAdapter<CharSequence>
 
     private val timeLineAdapter by lazy {
         TimeLineAdapter()
@@ -47,8 +50,8 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         presenter.attachView(this)
 
         initRecyclerView()
+        initFilterSpinner()
         initEventBus()
-        initTimeLines()
         initEventListener()
     }
 
@@ -62,23 +65,36 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
         rv_timeline.adapter = timeLineAdapter
     }
 
+    private fun initFilterSpinner() {
+        sp_filter.adapter = filterAdapter
+    }
+
     private fun initEventBus() {
         EventBus.bus.subscribe {
             when (it) {
-                is WriteEvent -> presenter.addTimeLine(it.timeLine, 0)
-                is UpdateEvent -> presenter.updateTimeLine(it.timeLine)
-                is DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
+                is Events.WriteEvent -> presenter.addTimeLine(it.timeLine)
+                is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
+                is Events.DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
             }
         }
     }
 
-    private fun initTimeLines() {
-        presenter.getTimeLines()
-    }
-
     private fun initEventListener() {
         presenter.initEventListener()
-        fab_write.setOnClickListener { navigateToWrite() }
+
+        fab_write.setOnClickListener {
+            presenter.clickWrite()
+        }
+
+        sp_filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                presenter.getTimeLines(position)
+            }
+        }
     }
 
     override fun navigateToWrite() {
@@ -115,7 +131,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     }
 
     override fun scrollToPosition(position: Int) {
-        rv_timeline.scrollToPosition(position)
+        rv_timeline.smoothScrollToPosition(position)
     }
 
     override fun onDestroy() {

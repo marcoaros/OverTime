@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         private val timeLineAdapterModel: TimeLineAdapterContract.Model,
@@ -16,6 +17,8 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         compositeDisposable: CompositeDisposable
 
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
+
+    private var filter by Delegates.notNull<Int>()
 
     override fun initEventListener() {
         timeLineAdapterView.setOnClickViewHolder { view, position ->
@@ -34,9 +37,15 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         }
     }
 
-    override fun getTimeLines() {
+    override fun clickWrite() {
+        getView()?.navigateToWrite()
+    }
+
+    override fun getTimeLines(filter: Int) {
+        this.filter = filter
+
         compositeDisposable.add(
-                dataManager.getTimeLines()
+                dataManager.getTimeLines(filter)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete {
@@ -48,9 +57,15 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         )
     }
 
-    override fun addTimeLine(timeLine: TimeLine, position: Int) {
-        timeLineAdapterModel.addTimeLine(timeLine, position)
-        getView()?.scrollToPosition(position)
+    override fun addTimeLine(timeLine: TimeLine) {
+        val insertedPosition = if(filter == 1) {
+            timeLineAdapterModel.getSize()
+        } else {
+            0
+        }
+
+        timeLineAdapterModel.addTimeLine(timeLine, insertedPosition)
+        getView()?.scrollToPosition(insertedPosition)
     }
 
     override fun updateTimeLine(timeLine: TimeLine) {

@@ -10,6 +10,7 @@ interface TimeLineAdapterContract {
         fun updateTimeLine(timeLine: TimeLine)
         fun deleteTimeLine(timeLineId: Int)
         fun findTimeLineId(position: Int): Int?
+        fun getSize(): Int
     }
 
     interface View {

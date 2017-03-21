@@ -1,6 +1,5 @@
 package com.github.ojh.overtime.data
 
-import com.github.ojh.overtime.data.TimeLine
 import io.reactivex.Flowable
 import javax.inject.Inject
 
@@ -12,8 +11,8 @@ class DataManager @Inject constructor(
         return dataSource.getTimeLine(timeLineId)
     }
 
-    fun getTimeLines(): Flowable<List<TimeLine>> {
-        return dataSource.getTimeLines()
+    fun getTimeLines(filter: Int = 0): Flowable<List<TimeLine>> {
+        return dataSource.getTimeLines(filter)
     }
 
     fun saveTimeLine(timeLine: TimeLine) {

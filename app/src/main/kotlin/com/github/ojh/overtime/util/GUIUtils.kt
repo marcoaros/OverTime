@@ -29,7 +29,12 @@ object GUIUtils {
                     object : AnimatorListenerAdapter() {
                         override fun onAnimationStart(animation: Animator) {
                             super.onAnimationStart(animation)
-                            view.setBackgroundColor(ctx.resources.getColor(color))
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                view.setBackgroundColor(ctx.resources.getColor(color, ctx.theme))
+                            } else {
+                                @Suppress("DEPRECATION")
+                                view.setBackgroundColor(ctx.resources.getColor(color))
+                            }
                         }
 
                         override fun onAnimationEnd(animation: Animator) {
@@ -54,7 +59,12 @@ object GUIUtils {
         anim.interpolator = AccelerateDecelerateInterpolator()
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator) {
-                view.setBackgroundColor(ctx.resources.getColor(color))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setBackgroundColor(ctx.resources.getColor(color, ctx.theme))
+                } else {
+                    @Suppress("DEPRECATION")
+                    view.setBackgroundColor(ctx.resources.getColor(color))
+                }
             }
 
             override fun onAnimationEnd(animation: Animator) {

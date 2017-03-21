@@ -28,6 +28,7 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun getItemCount(): Int = timeLines.size
 
+    override fun getSize() = itemCount
 
     override fun setTimeLines(timeLines: List<TimeLine>) {
         this.timeLines.clear()
@@ -41,14 +42,18 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun updateTimeLine(timeLine: TimeLine) {
         val updatedPosition = timeLines.map { it.mId }.indexOf(timeLine.mId)
-        timeLines[updatedPosition] = timeLine
-        notifyItemChanged(updatedPosition)
+        if (updatedPosition != -1) {
+            timeLines[updatedPosition] = timeLine
+            notifyItemChanged(updatedPosition)
+        }
     }
 
     override fun deleteTimeLine(timeLineId: Int) {
         val deletedPosition = timeLines.map { it.mId }.indexOf(timeLineId)
-        timeLines.removeAt(deletedPosition)
-        notifyItemRemoved(deletedPosition)
+        if(deletedPosition != -1) {
+            timeLines.removeAt(deletedPosition)
+            notifyItemRemoved(deletedPosition)
+        }
     }
 
     override fun findTimeLineId(position: Int): Int? = timeLines[position].mId

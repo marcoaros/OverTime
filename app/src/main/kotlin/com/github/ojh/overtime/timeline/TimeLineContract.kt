@@ -12,8 +12,9 @@ interface TimeLineContract {
     }
     interface Presenter<V : View>: BaseContract.Presenter<V> {
         fun initEventListener()
-        fun getTimeLines()
-        fun addTimeLine(timeLine: TimeLine, position: Int)
+        fun clickWrite()
+        fun getTimeLines(filter: Int = 0)
+        fun addTimeLine(timeLine: TimeLine)
         fun updateTimeLine(timeLine: TimeLine)
         fun deleteTimeLine(timeLineId: Int)
     }
