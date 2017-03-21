@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.transition.Fade
 import android.transition.TransitionInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
@@ -41,9 +43,37 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         setContentView(R.layout.activity_write)
         writePresenter.attachView(this)
 
+        initToolbar()
         initTimeLine()
         initEventListener()
         initAnimation()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_write, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+
+            R.id.menu_write -> {
+                writePresenter.saveTimeLine()
+                true
+            }
+
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(toolbar_write)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initTimeLine() {
@@ -51,7 +81,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
                 intent?.getParcelableExtra<Parcelable>(TimeLine.KEY_TIMELINE)
         ) ?: TimeLine()
 
-        if(timeLine.mId != null) {
+        if (timeLine.mId != null) {
             isUpdate = true
         }
 
@@ -71,10 +101,6 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     private fun initEventListener() {
         iv_gallery.setOnClickListener {
             writePresenter.checkStoragePermission(this)
-        }
-
-        btn_write.setOnClickListener {
-            writePresenter.saveTimeLine()
         }
 
         edit_content.setOnSimpleTextWather {
@@ -113,7 +139,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
                 this,
                 viewRoot,
                 fab_write.width / 2,
-                R.color.colorPrimary,
+                R.color.colorAccent,
                 cx,
                 cy,
                 {
@@ -137,7 +163,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             GUIUtils.animateRevealHide(
                     this,
                     rl_write_reveal_hide,
-                    R.color.colorPrimary,
+                    R.color.colorAccent,
                     fab_write.width / 2,
                     {
                         super.onBackPressed()

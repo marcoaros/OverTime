@@ -20,7 +20,7 @@ import com.github.ojh.overtime.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.write.WriteActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
 
@@ -46,7 +46,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_timeline)
         presenter.attachView(this)
 
         initRecyclerView()

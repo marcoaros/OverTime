@@ -28,6 +28,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".write.WriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".detail.DetailActivity"

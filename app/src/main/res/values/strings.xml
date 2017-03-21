@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">OverTime</string>
-    <string name="write_content_hint">내용</string>
-    <string name="write_content_error">1글자 이상 입력하세요.</string>
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>
     <string name="common_yes">예</string>
     <string name="common_no">아니오</string>
     <string name="common_update">수정</string>
     <string name="common_delete">삭제</string>
+
+    <string name="write_button_ok_text">글 작성하기</string>
+    <string name="write_content_hint">내용을 입력해주세요.</string>
+    <string name="write_content_error">1글자 이상 입력하세요.</string>
 
     <string name="timeline_modify_dialog_title">타임라인 수정하기</string>
     <string name="timeline_modify_dialog_message">타임라인을 수정하시겠습니까?</string>
