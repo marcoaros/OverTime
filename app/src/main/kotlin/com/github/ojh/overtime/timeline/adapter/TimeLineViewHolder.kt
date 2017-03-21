@@ -6,12 +6,13 @@ import android.view.View
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
 import com.github.ojh.overtime.util.load
+import com.github.ojh.overtime.util.toFormatString
 import kotlinx.android.synthetic.main.view_timeline.view.*
 
 class TimeLineViewHolder(
         itemView: View,
-        clickListener: ViewClickHandler?,
-        longClickListener: ViewClickHandler?
+        itemClickListener: ViewClickHandler?,
+        settingClickListener: ViewClickHandler?
 
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -19,28 +20,23 @@ class TimeLineViewHolder(
 
     init {
         itemView.setOnClickListener {
-            clickListener?.invoke(it, adapterPosition)
+            itemClickListener?.invoke(it, adapterPosition)
         }
 
-        itemView.setOnLongClickListener {
-            longClickListener?.invoke(it, adapterPosition)
-            false
+        itemView.iv_setting.setOnClickListener {
+            settingClickListener?.invoke(it, adapterPosition)
         }
     }
 
     fun bind(item: TimeLine) {
         this.timeLine = item
         with(item) {
-            mId?.let {
-                itemView.tv_timeline_id.text = it.toString()
-            }
-
             mContent?.let {
                 itemView.tv_timeline_content.text = it
             }
 
             mDate?.let {
-                itemView.tv_timeline_date.text = it.toString()
+                itemView.tv_timeline_date.text = it.toFormatString()
             }
 
             if (mImgUri != null) {

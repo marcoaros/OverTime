@@ -12,6 +12,7 @@ import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.util.load
+import com.github.ojh.overtime.util.toFormatString
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
@@ -74,7 +75,7 @@ class DetailActivity : BaseActivity(), DetailContract.View {
             }
 
             mContent?.let { tv_content.text = it }
-            mDate?.let { tv_date.text = it.toString() }
+            mDate?.let { tv_date.text = it.toFormatString() }
         }
     }
 }

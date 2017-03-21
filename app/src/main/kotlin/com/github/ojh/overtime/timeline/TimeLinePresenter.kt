@@ -25,7 +25,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
             }
         }
 
-        timeLineAdapterView.setOnLongClickViewHolder { view, position ->
+        timeLineAdapterView.setOnClickSetting { _, position ->
             val timeLineId = timeLineAdapterModel.findTimeLineId(position)
             timeLineId?.let {
                 getView()?.navigateToSetting(it)

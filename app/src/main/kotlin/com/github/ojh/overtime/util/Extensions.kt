@@ -15,6 +15,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
@@ -29,6 +31,11 @@ fun ImageView.load(uri: Uri) {
             .load(uri)
             .centerCrop()
             .into(this)
+}
+
+fun Date.toFormatString(format: String = "yyyy-MM-dd"): String {
+    val formatter = SimpleDateFormat(format, Locale.KOREA)
+    return formatter.format(this)
 }
 
 fun EditText.setOnSimpleTextWather(listener: (text: String) -> Unit) {

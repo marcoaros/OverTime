@@ -12,12 +12,12 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     private val timeLines = mutableListOf<TimeLine>()
 
-    private var clickListener: ViewClickHandler? = null
-    private var longClickListener: ViewClickHandler? = null
+    private var itemClickListener: ViewClickHandler? = null
+    private var settingClickListener: ViewClickHandler? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.view_timeline, parent, false)
-        val viewHolder = TimeLineViewHolder(view, clickListener, longClickListener)
+        val viewHolder = TimeLineViewHolder(view, itemClickListener, settingClickListener)
 
         return viewHolder
     }
@@ -54,26 +54,14 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     override fun findTimeLineId(position: Int): Int? = timeLines[position].mId
 
     override fun setOnClickViewHolder(listener: ViewClickHandler) {
-        clickListener = listener
+        itemClickListener = listener
     }
 
-    override fun setOnLongClickViewHolder(listener: ViewClickHandler) {
-        longClickListener = listener
+    override fun setOnClickSetting(listener: ViewClickHandler) {
+        settingClickListener = listener
     }
 
     override fun refreshAll() {
         notifyDataSetChanged()
-    }
-
-    override fun refreshItemChanged(position: Int) {
-        notifyItemChanged(position)
-    }
-
-    override fun refreshItemInserted(position: Int) {
-        notifyItemInserted(position)
-    }
-
-    override fun refreshItemRemoved(position: Int) {
-        notifyItemRemoved(position)
     }
 }

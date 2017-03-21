@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -19,29 +19,36 @@
             android:transitionName="@string/transition_image_detail" />
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/iv_timeline_image"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tv_timeline_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="id" />
+            android:padding="@dimen/padding_short">
 
             <TextView
                 android:id="@+id/tv_timeline_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="content" />
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tv_timeline_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="date" />
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/padding_short"
+            android:src="@android:drawable/ic_menu_edit" />
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
