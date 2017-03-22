@@ -13,6 +13,7 @@ buildscript {
         rxJavaVersion = '2.0.4'
         rxAndroidVersion = '2.0.1'
         retrofitVersion = '2.2.0'
+        lottieVersion = '2.0.0-beta2'
 
         junitVersion = '4.12'
         mockitoVersion = '2.7.17'
