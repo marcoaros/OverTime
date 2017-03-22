@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.write
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.github.ojh.overtime.base.BaseContract
@@ -25,6 +26,6 @@ interface WriteContract {
         fun onContentTextChanged(changedContent: String)
         fun checkStoragePermission(activity: Activity)
         fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun onActivityResult(context: Context, requestCode: Int, resultCode: Int, data: Intent?)
     }
 }

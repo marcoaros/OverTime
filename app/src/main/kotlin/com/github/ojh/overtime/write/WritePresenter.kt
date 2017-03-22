@@ -2,6 +2,7 @@ package com.github.ojh.overtime.write
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -17,6 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import javax.inject.Inject
 
+
 class WritePresenter<V : WriteContract.View> @Inject constructor(
         dataManager: DataManager,
         compositeDisposable: CompositeDisposable
@@ -31,7 +33,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     private val isUpdate
         get() = timeLine.mId != null
 
-    private var imgFile: File? = null
+    private var tempImgFile: File? = null
 
     override fun initTimeLine(timeLine: TimeLine) {
         this.timeLine = timeLine
@@ -66,8 +68,8 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_GALLERY) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                imgFile = File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
-                getView()?.navigateToGallery(Uri.fromFile(imgFile))
+                tempImgFile = File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
+                getView()?.navigateToGallery(Uri.fromFile(tempImgFile))
 
             } else {
                 getView()?.showRationalDialog()
@@ -75,9 +77,19 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(context: Context, requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
-            val uri = Uri.fromFile(imgFile)
+
+            val internalFile = File("${context.filesDir}/images", "img_" + System.currentTimeMillis() / 1000 + ".jpg")
+            tempImgFile?.copyTo(internalFile)
+
+            tempImgFile?.let {
+                if (it.exists()) {
+                    it.delete()
+                }
+            }
+
+            val uri = Uri.fromFile(internalFile)
             timeLine.mImgUri = uri.toString()
             getView()?.loadCroppedImage(uri)
         }

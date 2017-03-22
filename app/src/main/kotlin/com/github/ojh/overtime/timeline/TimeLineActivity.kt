@@ -8,7 +8,6 @@ import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Pair
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -36,7 +35,7 @@ class TimeLineActivity : BaseActivity(), TimeLineContract.View {
     @Inject
     lateinit var filterAdapter: ArrayAdapter<CharSequence>
 
-    private val timeLineAdapter by lazy {
+    private val timeLineAdapter by lazy(LazyThreadSafetyMode.NONE) {
         TimeLineAdapter()
     }
 

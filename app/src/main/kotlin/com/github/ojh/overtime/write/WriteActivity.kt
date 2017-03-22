@@ -217,7 +217,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        writePresenter.onActivityResult(requestCode, resultCode, data)
+        writePresenter.onActivityResult(this, requestCode, resultCode, data)
     }
 
     override fun loadCroppedImage(uri: Uri) {
