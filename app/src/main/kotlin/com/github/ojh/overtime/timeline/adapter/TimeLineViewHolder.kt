@@ -7,6 +7,7 @@ import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
 import com.github.ojh.overtime.util.load
 import com.github.ojh.overtime.util.toFormatString
+import com.github.ojh.overtime.util.toWeekString
 import kotlinx.android.synthetic.main.view_timeline.view.*
 
 class TimeLineViewHolder(
@@ -37,6 +38,7 @@ class TimeLineViewHolder(
 
             mDate?.let {
                 itemView.tv_timeline_date.text = it.toFormatString()
+                itemView.tv_timeline_day.text = it.toWeekString()
             }
 
             if (mImgUri != null) {

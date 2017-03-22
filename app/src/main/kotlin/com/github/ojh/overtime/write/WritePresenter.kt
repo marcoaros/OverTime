@@ -98,8 +98,6 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
                 Uri.fromFile(internalImgFile)
             }
 
-            timeLine.apply {  }
-
             tempImgFile?.let {
                 if (it.exists()) {
                     it.delete()

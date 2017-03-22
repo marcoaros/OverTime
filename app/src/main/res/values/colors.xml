@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#795548</color>
     <color name="colorPrimaryDark">#5D4037</color>
+    <color name="colorPrimaryDemiLight">#86665A</color>
     <color name="colorPrimaryLight">#D7CCC8</color>
     <color name="colorAccent">#795548</color>
     <color name="colorPrimaryText">#212121</color>
@@ -10,4 +11,6 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="red">#FF5252</color>
+    <color name="backgroundGray">#E6E6E6</color>
 </resources>
