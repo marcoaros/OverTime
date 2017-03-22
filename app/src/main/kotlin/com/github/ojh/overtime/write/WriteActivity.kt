@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.transition.Fade
 import android.transition.TransitionInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.util.*
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
@@ -23,7 +25,8 @@ import javax.inject.Inject
 
 class WriteActivity : BaseActivity(), WriteContract.View {
 
-    private var isShowingAnimation = true
+    private var isShowingAnimation = false
+    private var isUpdate = false
 
     @Inject
     lateinit var writePresenter: WritePresenter<WriteContract.View>
@@ -40,16 +43,49 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         setContentView(R.layout.activity_write)
         writePresenter.attachView(this)
 
+        initToolbar()
         initTimeLine()
         initEventListener()
         initAnimation()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_write, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+
+            R.id.menu_write -> {
+                writePresenter.saveTimeLine()
+                true
+            }
+
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(toolbar_write)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initTimeLine() {
         val timeLine = Parcels.unwrap <TimeLine>(
                 intent?.getParcelableExtra<Parcelable>(TimeLine.KEY_TIMELINE)
         ) ?: TimeLine()
-        writePresenter.init(timeLine)
+
+        if (timeLine.mId != null) {
+            isUpdate = true
+        }
+
+        writePresenter.initTimeLine(timeLine)
     }
 
     override fun initView(timeLine: TimeLine) {
@@ -67,21 +103,19 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             writePresenter.checkStoragePermission(this)
         }
 
-        btn_write.setOnClickListener {
-            writePresenter.saveTimeLine()
-        }
-
         edit_content.setOnSimpleTextWather {
             writePresenter.onContentTextChanged(it)
         }
     }
 
     private fun initAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUpdate) {
             val transition = TransitionInflater.from(this)
                     .inflateTransition(R.transition.changebounds_with_arcmotion)
 
             window.sharedElementEnterTransition = transition
+
+            isShowingAnimation = true
 
             transition.addSimpleEndTransitionListener {
                 animateRevealShow(rl_write_reveal_hide)
@@ -92,6 +126,9 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             window.returnTransition = fade
+        } else {
+            fab_write.visibility = View.INVISIBLE
+            ll_write_reveal_show.visibility = View.VISIBLE
         }
     }
 
@@ -102,7 +139,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
                 this,
                 viewRoot,
                 fab_write.width / 2,
-                R.color.colorPrimary,
+                R.color.colorAccent,
                 cx,
                 cy,
                 {
@@ -116,7 +153,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     }
 
     override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUpdate) {
 
             if (isShowingAnimation) {
                 return
@@ -126,7 +163,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             GUIUtils.animateRevealHide(
                     this,
                     rl_write_reveal_hide,
-                    R.color.colorPrimary,
+                    R.color.colorAccent,
                     fab_write.width / 2,
                     {
                         super.onBackPressed()
@@ -165,7 +202,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
                                             grantResults: IntArray) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        writePresenter.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        writePresenter.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 
     override fun showRationalDialog() {
@@ -180,7 +217,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        writePresenter.onActivityResult(requestCode, resultCode, data)
+        writePresenter.onActivityResult(this, requestCode, resultCode, data)
     }
 
     override fun loadCroppedImage(uri: Uri) {

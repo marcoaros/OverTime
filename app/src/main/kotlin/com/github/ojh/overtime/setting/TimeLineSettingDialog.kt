@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.github.ojh.overtime.OverTimeApplication
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseDialogFragment
-import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.TimeLine.Companion.KEY_TIMELINE_ID
+import com.github.ojh.overtime.data.TimeLine
+import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.fragment_dialog_timeline.*
@@ -87,6 +87,6 @@ class TimeLineSettingDialog private constructor() : BaseDialogFragment(), TimeLi
     override fun navigateToWrite(timeLine: TimeLine) {
         val intent = Intent(context, WriteActivity::class.java)
         intent.putExtra(TimeLine.KEY_TIMELINE, Parcels.wrap(TimeLine::class.java, timeLine))
-        context.startActivity(intent)
+        startActivity(intent)
     }
 }

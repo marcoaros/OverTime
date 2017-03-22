@@ -1,7 +1,7 @@
-package com.github.ojh.overtime.data
+package com.github.ojh.overtime.data.local
 
-import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.TimeLineRealm
+import com.github.ojh.overtime.data.DataSource
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -16,11 +16,18 @@ class LocalDataSource : DataSource {
         return Flowable.just(timeLine.toDto())
     }
 
-    override fun getTimeLines(): Flowable<List<TimeLine>> {
+    override fun getTimeLines(filter: Int): Flowable<List<TimeLine>> {
         val realm = Realm.getDefaultInstance()
-        val results = realm.where(TimeLineRealm::class.java).findAllSorted("date", Sort.DESCENDING)
-        val list: List<TimeLine> = results.toList().map { it.toDto() }
-        return Flowable.just(list)
+        val results = realm.where(TimeLineRealm::class.java).findAll()
+
+        when (filter) {
+            1 -> {
+                return Flowable.just(results.sort("date", Sort.ASCENDING).toList().map { it.toDto() })
+            }
+            else -> {
+                return Flowable.just(results.sort("date", Sort.DESCENDING).toList().map { it.toDto() })
+            }
+        }
     }
 
     override fun saveTimeLine(timeLine: TimeLine) {

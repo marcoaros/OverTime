@@ -2,21 +2,22 @@ package com.github.ojh.overtime.write
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
-import com.github.ojh.overtime.data.model.TimeLine
-import com.github.ojh.overtime.data.model.UpdateEvent
-import com.github.ojh.overtime.data.model.WriteEvent
+import com.github.ojh.overtime.data.Events
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import javax.inject.Inject
+
 
 class WritePresenter<V : WriteContract.View> @Inject constructor(
         dataManager: DataManager,
@@ -32,9 +33,10 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     private val isUpdate
         get() = timeLine.mId != null
 
-    private var imgFile: File? = null
+    private var tempImgFile: File? = null
+    private var internalImgFile: File? = null
 
-    override fun init(timeLine: TimeLine) {
+    override fun initTimeLine(timeLine: TimeLine) {
         this.timeLine = timeLine
         getView()?.initView(timeLine)
     }
@@ -43,10 +45,10 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         if (isValidTimeLine) {
             if (isUpdate) {
                 dataManager.updateTimeLine(timeLine)
-                EventBus.post(UpdateEvent(timeLine))
+                EventBus.post(Events.UpdateEvent(timeLine))
             } else {
                 dataManager.saveTimeLine(timeLine)
-                EventBus.post(WriteEvent(timeLine))
+                EventBus.post(Events.WriteEvent(timeLine))
             }
             getView()?.navigateToMain()
         } else {
@@ -64,11 +66,14 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         PermissionUtil.checkPermissionFromActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_GALLERY)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_GALLERY) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                imgFile = File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
-                getView()?.navigateToGallery(Uri.fromFile(imgFile))
+
+                tempImgFile = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                        "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
+
+                getView()?.navigateToGallery(Uri.fromFile(tempImgFile))
 
             } else {
                 getView()?.showRationalDialog()
@@ -76,11 +81,36 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(context: Context, requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
-            val uri = Uri.fromFile(imgFile)
+
+            internalImgFile?.let {
+                if (it.exists()) {
+                    it.delete()
+                }
+            }
+
+            internalImgFile = File(context.filesDir.path + Environment.DIRECTORY_PICTURES,
+                    "img_" + System.currentTimeMillis() / 1000 + ".jpg")
+
+            val uri = internalImgFile?.let {
+                tempImgFile?.copyTo(it)
+                Uri.fromFile(internalImgFile)
+            }
+
+            timeLine.apply {  }
+
+            tempImgFile?.let {
+                if (it.exists()) {
+                    it.delete()
+                }
+            }
+
             timeLine.mImgUri = uri.toString()
-            getView()?.loadCroppedImage(uri)
+
+            uri?.let {
+                getView()?.loadCroppedImage(it)
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.data.model.TimeLine
+import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
 
 class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
@@ -12,12 +12,12 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     private val timeLines = mutableListOf<TimeLine>()
 
-    private var clickListener: ViewClickHandler? = null
-    private var longClickListener: ViewClickHandler? = null
+    private var itemClickListener: ViewClickHandler? = null
+    private var settingClickListener: ViewClickHandler? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.view_timeline, parent, false)
-        val viewHolder = TimeLineViewHolder(view, clickListener, longClickListener)
+        val viewHolder = TimeLineViewHolder(view, itemClickListener, settingClickListener)
 
         return viewHolder
     }
@@ -28,6 +28,7 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun getItemCount(): Int = timeLines.size
 
+    override fun getSize() = itemCount
 
     override fun setTimeLines(timeLines: List<TimeLine>) {
         this.timeLines.clear()
@@ -41,39 +42,31 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun updateTimeLine(timeLine: TimeLine) {
         val updatedPosition = timeLines.map { it.mId }.indexOf(timeLine.mId)
-        timeLines[updatedPosition] = timeLine
-        notifyItemChanged(updatedPosition)
+        if (updatedPosition != -1) {
+            timeLines[updatedPosition] = timeLine
+            notifyItemChanged(updatedPosition)
+        }
     }
 
     override fun deleteTimeLine(timeLineId: Int) {
         val deletedPosition = timeLines.map { it.mId }.indexOf(timeLineId)
-        timeLines.removeAt(deletedPosition)
-        notifyItemRemoved(deletedPosition)
+        if(deletedPosition != -1) {
+            timeLines.removeAt(deletedPosition)
+            notifyItemRemoved(deletedPosition)
+        }
     }
 
     override fun findTimeLineId(position: Int): Int? = timeLines[position].mId
 
     override fun setOnClickViewHolder(listener: ViewClickHandler) {
-        clickListener = listener
+        itemClickListener = listener
     }
 
-    override fun setOnLongClickViewHolder(listener: ViewClickHandler) {
-        longClickListener = listener
+    override fun setOnClickSetting(listener: ViewClickHandler) {
+        settingClickListener = listener
     }
 
     override fun refreshAll() {
-        notifyDataSetChanged()
-    }
-
-    override fun refreshItemChanged(position: Int) {
-        notifyItemChanged(position)
-    }
-
-    override fun refreshItemInserted(position: Int) {
-        notifyItemInserted(position)
-    }
-
-    override fun refreshItemRemoved(position: Int) {
-        notifyItemRemoved(position)
+        notifyItemRangeChanged(0, itemCount)
     }
 }

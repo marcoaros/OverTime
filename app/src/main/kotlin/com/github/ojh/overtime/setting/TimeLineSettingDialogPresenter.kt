@@ -2,7 +2,7 @@ package com.github.ojh.overtime.setting
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
-import com.github.ojh.overtime.data.model.DeleteEvent
+import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.util.EventBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -37,7 +37,7 @@ class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @In
 
     override fun deleteTimeLine() {
         dataManager.deleteTimeLine(timeLineId)
-        EventBus.post(DeleteEvent(timeLineId))
+        EventBus.post(Events.DeleteEvent(timeLineId))
         getView()?.dismissDialog()
     }
 

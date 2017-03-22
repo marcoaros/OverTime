@@ -3,7 +3,7 @@
 buildscript {
     ext {
         kotlinVersion = '1.1.1'
-        supportLibraryVersion = '25.2.0'
+        supportLibraryVersion = '25.3.0'
         glideVersion = '3.7.0'
         daggerVersion = '2.10-rc2'
         parcelerVersion = '1.1.6'
@@ -12,6 +12,7 @@ buildscript {
         stethoRealmVersion = '2.0.0'
         rxJavaVersion = '2.0.4'
         rxAndroidVersion = '2.0.1'
+        retrofitVersion = '2.2.0'
 
         junitVersion = '4.12'
         mockitoVersion = '2.7.17'
