@@ -25,7 +25,7 @@ interface WriteContract {
         fun saveTimeLine()
         fun onContentTextChanged(changedContent: String)
         fun checkStoragePermission(activity: Activity)
-        fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+        fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
         fun onActivityResult(context: Context, requestCode: Int, resultCode: Int, data: Intent?)
     }
 }

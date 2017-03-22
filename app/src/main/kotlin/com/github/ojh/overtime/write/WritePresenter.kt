@@ -34,6 +34,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         get() = timeLine.mId != null
 
     private var tempImgFile: File? = null
+    private var internalImgFile: File? = null
 
     override fun initTimeLine(timeLine: TimeLine) {
         this.timeLine = timeLine
@@ -65,10 +66,13 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
         PermissionUtil.checkPermissionFromActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_GALLERY)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_GALLERY) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                tempImgFile = File(Environment.getExternalStorageDirectory(), "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
+
+                tempImgFile = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                        "temp_" + System.currentTimeMillis() / 1000 + ".jpg")
+
                 getView()?.navigateToGallery(Uri.fromFile(tempImgFile))
 
             } else {
@@ -80,8 +84,21 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     override fun onActivityResult(context: Context, requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
 
-            val internalFile = File("${context.filesDir}/images", "img_" + System.currentTimeMillis() / 1000 + ".jpg")
-            tempImgFile?.copyTo(internalFile)
+            internalImgFile?.let {
+                if (it.exists()) {
+                    it.delete()
+                }
+            }
+
+            internalImgFile = File(context.filesDir.path + Environment.DIRECTORY_PICTURES,
+                    "img_" + System.currentTimeMillis() / 1000 + ".jpg")
+
+            val uri = internalImgFile?.let {
+                tempImgFile?.copyTo(it)
+                Uri.fromFile(internalImgFile)
+            }
+
+            timeLine.apply {  }
 
             tempImgFile?.let {
                 if (it.exists()) {
@@ -89,9 +106,11 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
                 }
             }
 
-            val uri = Uri.fromFile(internalFile)
             timeLine.mImgUri = uri.toString()
-            getView()?.loadCroppedImage(uri)
+
+            uri?.let {
+                getView()?.loadCroppedImage(it)
+            }
         }
     }
 }

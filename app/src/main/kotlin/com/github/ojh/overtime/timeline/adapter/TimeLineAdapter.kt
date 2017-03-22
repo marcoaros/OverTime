@@ -33,7 +33,6 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     override fun setTimeLines(timeLines: List<TimeLine>) {
         this.timeLines.clear()
         this.timeLines.addAll(timeLines)
-        notifyItemRangeChanged(0, itemCount)
     }
 
     override fun addTimeLine(timeLine: TimeLine, position: Int) {
@@ -68,6 +67,6 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     }
 
     override fun refreshAll() {
-//        notifyDataSetChanged()
+        notifyItemRangeChanged(0, itemCount)
     }
 }

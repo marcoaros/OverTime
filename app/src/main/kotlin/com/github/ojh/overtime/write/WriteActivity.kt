@@ -202,7 +202,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
                                             grantResults: IntArray) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        writePresenter.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        writePresenter.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 
     override fun showRationalDialog() {
