@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".timeline.TimeLineActivity">
+    tools:context=".main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -39,28 +39,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_timeline"
+        <FrameLayout
+            android:id="@+id/fragment_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/navigation"
-            android:clipToPadding="false"
-            android:paddingBottom="86dp"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin" />
+            android:layout_above="@+id/navigation" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/navigation"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_create_white_24dp"
-            android:transitionName="@string/transition_reveal_write"
-            app:fabSize="normal" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
@@ -69,8 +53,8 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
-            app:itemTextColor="@drawable/selector_navigation"
             app:itemIconTint="@drawable/selector_navigation"
+            app:itemTextColor="@drawable/selector_navigation"
             app:menu="@menu/navigation" />
 
     </RelativeLayout>

@@ -1,13 +1,14 @@
 package com.github.ojh.overtime.util
 
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.Transition
@@ -18,8 +19,22 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+fun AppCompatActivity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
+}
+
+fun AppCompatActivity.replaceFrament(@IdRes containerViewId: Int, fragment: Fragment, hasBackStack: Boolean = false) {
+    if(hasBackStack) {
+        supportFragmentManager.beginTransaction()
+                .replace(containerViewId, fragment)
+                .addToBackStack(null)
+                .commit()
+    } else {
+        supportFragmentManager.beginTransaction()
+                .replace(containerViewId, fragment)
+                .commit()
+    }
+
 }
 
 fun Fragment.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {

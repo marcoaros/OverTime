@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.github.ojh.overtime.main.setting.SettingFragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="lottie/gears.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
+
+</FrameLayout>

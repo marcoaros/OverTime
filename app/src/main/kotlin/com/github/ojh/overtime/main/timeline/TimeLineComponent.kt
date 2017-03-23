@@ -1,14 +1,15 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.main.timeline
 
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.di.PerActivity
+import com.github.ojh.overtime.di.PerFragment
+import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import dagger.Component
 
-@PerActivity
+@PerFragment
 @Component(
         dependencies = arrayOf(AppComponent::class),
         modules = arrayOf(TimeLineModule::class)
 )
 interface TimeLineComponent {
-    fun inject(timeLineActivity: TimeLineActivity)
+    fun inject(timeLineFragment: TimeLineFragment)
 }

@@ -6,7 +6,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
 import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.timeline.TimeLineActivity
+import com.github.ojh.overtime.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ class SplashActivity : BaseActivity(), SplashContract.View {
     }
 
     override fun navigateToTimeLine() {
-        val timeLineIntent = Intent(this, TimeLineActivity::class.java)
+        val timeLineIntent = Intent(this, MainActivity::class.java)
         startActivity(timeLineIntent)
         finish()
     }

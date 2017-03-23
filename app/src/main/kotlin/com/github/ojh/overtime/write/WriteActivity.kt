@@ -126,6 +126,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             window.returnTransition = fade
+
         } else {
             fab_write.visibility = View.INVISIBLE
             ll_write_reveal_show.visibility = View.VISIBLE

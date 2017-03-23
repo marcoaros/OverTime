@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline
+package com.github.ojh.overtime.main.timeline
 
 import com.github.ojh.overtime.base.BaseContract
 import com.github.ojh.overtime.data.TimeLine

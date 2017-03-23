@@ -49,7 +49,7 @@ class OverTimeApplication : Application() {
 //                                .addField("imgUrl", String::class.java)
 //                    }
 //                }
-                .deleteRealmIfMigrationNeeded()
+//                .deleteRealmIfMigrationNeeded()
                 .build()
 
         Realm.setDefaultConfiguration(config)

@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".timeline.TimeLineActivity"
+            android:name=".main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

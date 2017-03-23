@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.timeline.adapter
+package com.github.ojh.overtime.main.timeline.adapter
 
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
