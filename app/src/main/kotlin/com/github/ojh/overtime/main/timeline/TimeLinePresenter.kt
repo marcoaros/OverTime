@@ -39,10 +39,6 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         }
     }
 
-    override fun clickWrite() {
-        getView()?.navigateToWrite()
-    }
-
     override fun getTimeLines(filter: FilterType) {
         this.filter = filter
 

@@ -19,25 +19,19 @@ import com.github.ojh.overtime.detail.DetailActivity
 import com.github.ojh.overtime.di.AppComponent
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.setting.TimeLineSettingDialog
-import com.github.ojh.overtime.util.EventBus
-import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
-import com.github.ojh.overtime.util.toFilterType
-import com.github.ojh.overtime.write.WriteActivity
+import com.github.ojh.overtime.util.*
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
+import kotlin.LazyThreadSafetyMode.NONE
 
 class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.View {
 
-
     companion object {
-        private val fragment by lazy { TimeLineFragment() }
+        private val fragment by lazy(NONE) { TimeLineFragment() }
 
-        fun getInstance(): TimeLineFragment {
-            return fragment
-        }
+        fun getInstance() = fragment
     }
-
 
     @Inject
     lateinit var filterAdapter: ArrayAdapter<CharSequence>
@@ -45,7 +39,7 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
     @Inject
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
 
-    private val timeLineAdapter by lazy(LazyThreadSafetyMode.NONE) {
+    private val timeLineAdapter by lazy(NONE) {
         TimeLineAdapter()
     }
 
@@ -116,24 +110,6 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
 
     private fun initEventListener() {
         presenter.initEventListener()
-
-        fab_write.setOnClickListener {
-            presenter.clickWrite()
-        }
-    }
-
-    override fun navigateToWrite() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            val p1 = with(fab_write) {
-                Pair.create<View, String>(this, this.transitionName)
-            }
-
-            val options = ActivityOptions.makeSceneTransitionAnimation(activity, p1)
-            startActivity(Intent(context, WriteActivity::class.java), options.toBundle())
-        } else {
-            startActivity(Intent(context, WriteActivity::class.java))
-        }
     }
 
     override fun navigateToSetting(timeLineId: Int) {

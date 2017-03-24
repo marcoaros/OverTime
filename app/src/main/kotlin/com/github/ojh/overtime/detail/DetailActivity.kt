@@ -3,10 +3,9 @@ package com.github.ojh.overtime.detail
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.transition.Explode
 import android.transition.Fade
-import android.transition.Slide
 import android.transition.TransitionInflater
+import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseActivity
@@ -41,7 +40,18 @@ class DetailActivity : BaseActivity(), DetailContract.View {
         }
 
         presenter.init(timeLineId)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initAnimation()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
