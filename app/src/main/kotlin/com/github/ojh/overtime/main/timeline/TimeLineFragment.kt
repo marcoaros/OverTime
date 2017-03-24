@@ -4,11 +4,13 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Pair
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.BaseFragment
 import com.github.ojh.overtime.data.Events
@@ -19,6 +21,7 @@ import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.setting.TimeLineSettingDialog
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
+import com.github.ojh.overtime.util.toFilterType
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
@@ -26,12 +29,18 @@ import javax.inject.Inject
 
 class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.View {
 
+
     companion object {
         private val fragment by lazy { TimeLineFragment() }
+
         fun getInstance(): TimeLineFragment {
             return fragment
         }
     }
+
+
+    @Inject
+    lateinit var filterAdapter: ArrayAdapter<CharSequence>
 
     @Inject
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
@@ -54,9 +63,27 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
         return view
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_timeline, menu)
+        val item = menu?.findItem(R.id.menu_filter)
+
+        val spinnerFilter = MenuItemCompat.getActionView(item) as Spinner
+        spinnerFilter.adapter = filterAdapter
+        spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                TimeLineFragment.getInstance().presenter.getTimeLines(position.toFilterType())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
         initRecyclerView()
         initEventBus()
         initEventListener()
@@ -75,8 +102,6 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
         )
         rv_timeline.addItemDecoration(itemDecoration)
         rv_timeline.adapter = timeLineAdapter
-
-//        presenter.getTimeLines()
     }
 
     private fun initEventBus() {

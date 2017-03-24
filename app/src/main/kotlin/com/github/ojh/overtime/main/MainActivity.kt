@@ -2,32 +2,19 @@ package com.github.ojh.overtime.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.replaceFrament
-import com.github.ojh.overtime.util.toFilterType
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.LazyThreadSafetyMode.NONE
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private val filterAdapter: ArrayAdapter<CharSequence> by lazy(NONE) {
-        ArrayAdapter.createFromResource(application, R.array.filter_array, R.layout.spiiner_item)
-                .apply {
-                    setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                }
-    }
 
     private val backPressHandler by lazy(NONE) {
         BackPressCloseHandler(this)
@@ -71,24 +58,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             else -> false
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_timeline, menu)
-        val item = menu?.findItem(R.id.menu_filter)
-
-        val spinnerFilter = MenuItemCompat.getActionView(item) as Spinner
-        spinnerFilter.adapter = filterAdapter
-        spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                TimeLineFragment.getInstance().presenter.getTimeLines(position.toFilterType())
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-
-        return true
     }
 
     override fun onBackPressed() {
