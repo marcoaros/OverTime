@@ -3,6 +3,7 @@ package com.github.ojh.overtime.data.remote
 import com.github.ojh.overtime.api.FirebaseAPI
 import com.github.ojh.overtime.data.DataSource
 import com.github.ojh.overtime.data.TimeLine
+import com.github.ojh.overtime.util.FilterType
 import io.reactivex.Flowable
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class RemoteDataSource @Inject constructor(
         return Flowable.just(null)
     }
 
-    override fun getTimeLines(filter: Int): Flowable<List<TimeLine>> {
+    override fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
         return firebaseAPI.getTimeLines()
     }
 

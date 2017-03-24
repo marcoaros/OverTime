@@ -4,11 +4,13 @@ import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapterContract
+import com.github.ojh.overtime.util.FilterDateAscending
+import com.github.ojh.overtime.util.FilterDateDescending
+import com.github.ojh.overtime.util.FilterType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         private val timeLineAdapterModel: TimeLineAdapterContract.Model,
@@ -18,7 +20,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
-    private var filter by Delegates.notNull<Int>()
+    private lateinit var filter: FilterType
 
     override fun initEventListener() {
         timeLineAdapterView.setOnClickViewHolder { view, position ->
@@ -41,7 +43,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         getView()?.navigateToWrite()
     }
 
-    override fun getTimeLines(filter: Int) {
+    override fun getTimeLines(filter: FilterType) {
         this.filter = filter
 
         compositeDisposable.add(
@@ -58,10 +60,9 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     }
 
     override fun addTimeLine(timeLine: TimeLine) {
-        val insertedPosition = if(filter == 1) {
-            timeLineAdapterModel.getSize()
-        } else {
-            0
+        val insertedPosition = when(filter) {
+            is FilterDateDescending -> 0
+            is FilterDateAscending -> timeLineAdapterModel.getSize()
         }
 
         timeLineAdapterModel.addTimeLine(timeLine, insertedPosition)

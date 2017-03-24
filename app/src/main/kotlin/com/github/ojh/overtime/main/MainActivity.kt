@@ -16,6 +16,7 @@ import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.replaceFrament
+import com.github.ojh.overtime.util.toFilterType
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                TimeLineFragment.getInstance().presenter.getTimeLines(position)
+                TimeLineFragment.getInstance().presenter.getTimeLines(position.toFilterType())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

@@ -53,25 +53,26 @@ object GUIUtils {
                           @ColorRes color: Int, x: Int, y: Int, animEndListener: () -> Unit) {
         val finalRadius = Math.hypot(view.width.toDouble(), view.height.toDouble()).toFloat()
 
-        val anim = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius.toFloat(), finalRadius)
-        anim.duration = ctx.resources.getInteger(R.integer.animation_duration).toLong()
-        anim.startDelay = 100
-        anim.interpolator = AccelerateDecelerateInterpolator()
-        anim.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    view.setBackgroundColor(ctx.resources.getColor(color, ctx.theme))
-                } else {
-                    @Suppress("DEPRECATION")
-                    view.setBackgroundColor(ctx.resources.getColor(color))
+        val anim = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius.toFloat(), finalRadius).apply {
+            duration = ctx.resources.getInteger(R.integer.animation_duration).toLong()
+            startDelay = 100
+            interpolator = AccelerateDecelerateInterpolator()
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        view.setBackgroundColor(ctx.resources.getColor(color, ctx.theme))
+                    } else {
+                        @Suppress("DEPRECATION")
+                        view.setBackgroundColor(ctx.resources.getColor(color))
+                    }
                 }
-            }
 
-            override fun onAnimationEnd(animation: Animator) {
-                view.visibility = View.VISIBLE
-                animEndListener.invoke()
-            }
-        })
+                override fun onAnimationEnd(animation: Animator) {
+                    view.visibility = View.VISIBLE
+                    animEndListener.invoke()
+                }
+            })
+        }
         anim.start()
     }
 }
