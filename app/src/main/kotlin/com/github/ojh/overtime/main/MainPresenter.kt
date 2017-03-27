@@ -10,8 +10,8 @@ class MainPresenter<V: MainContract.View> @Inject constructor(
         compositeDisposable: CompositeDisposable
 ) : BasePresenter<V>(dataManager, compositeDisposable), MainContract.Presenter<V> {
 
-    override fun click() {
-        getView()?.click()
+    override fun clickWriteButton() {
+        getView()?.navigateToWrite()
     }
 
 }

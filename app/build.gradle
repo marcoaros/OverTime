@@ -84,6 +84,9 @@ dependencies {
 
     //Lottie
     compile "com.airbnb.android:lottie:$rootProject.lottieVersion"
+
+    //RecyclerView Animators
+    compile "jp.wasabeef:recyclerview-animators:$rootProject.recyclerViewAnimatorsVersion"
 }
 
 repositories {

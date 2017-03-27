@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.util
 
 import android.annotation.TargetApi
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.Transition
+import android.util.Pair
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -34,7 +37,36 @@ fun AppCompatActivity.replaceFrament(@IdRes containerViewId: Int, fragment: Frag
                 .replace(containerViewId, fragment)
                 .commit()
     }
+}
 
+fun AppCompatActivity.startActivityWithTransition(intent: Intent, vararg views: View) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        val pairs = views.map {
+            Pair.create(it, it.transitionName)
+        }.toTypedArray()
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(this, *pairs)
+        startActivity(intent, options.toBundle())
+
+    } else {
+        startActivity(intent)
+    }
+}
+
+fun Fragment.startActivityWithTransition(intent: Intent, vararg views: View) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        val pairs = views.map {
+            Pair.create(it, it.transitionName)
+        }.toTypedArray()
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(activity, *pairs)
+        startActivity(intent, options.toBundle())
+
+    } else {
+        startActivity(intent)
+    }
 }
 
 fun Fragment.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {

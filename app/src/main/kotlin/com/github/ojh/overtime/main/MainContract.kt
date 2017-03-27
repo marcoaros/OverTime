@@ -4,10 +4,10 @@ import com.github.ojh.overtime.base.BaseContract
 
 interface MainContract {
     interface View: BaseContract.View {
-        fun click()
+        fun navigateToWrite()
     }
 
     interface Presenter<V: MainContract.View>: BaseContract.Presenter<V> {
-        fun click()
+        fun clickWriteButton()
     }
 }

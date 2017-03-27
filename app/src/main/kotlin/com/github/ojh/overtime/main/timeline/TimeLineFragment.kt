@@ -1,13 +1,11 @@
 package com.github.ojh.overtime.main.timeline
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Pair
 import android.view.*
+import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -16,12 +14,15 @@ import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.detail.DetailActivity
+import com.github.ojh.overtime.edit.EditDialogFragment
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
-import com.github.ojh.overtime.edit.EditDialogFragment
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
+import com.github.ojh.overtime.util.startActivityWithTransition
 import com.github.ojh.overtime.util.toFilterType
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
@@ -50,16 +51,6 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
                 .plus(TimeLineModule(timeLineAdapter))
                 .inject(this)
     }
-
-//    override fun setComponent(appComponent: AppComponent) {
-//
-////        appComponent.
-////        DaggerTimeLineComponent.builder()
-////                .appComponent(appComponent)
-////                .timeLineModule(TimeLineModule(timeLineAdapter))
-////                .build()
-////                .inject(this)
-//    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_timeline, container, false)
@@ -105,7 +96,18 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
                 resources.getDimensionPixelSize(R.dimen.item_vertical_space)
         )
         rv_timeline.addItemDecoration(itemDecoration)
-        rv_timeline.adapter = timeLineAdapter
+
+        rv_timeline.itemAnimator = SlideInRightAnimator().apply {
+            addDuration = 500
+            setInterpolator(OvershootInterpolator(0.5f))
+        }
+
+        val alphaAdapter = SlideInRightAnimationAdapter(timeLineAdapter).apply {
+            setFirstOnly(false)
+            setDuration(500)
+            setInterpolator(OvershootInterpolator(0.5f))
+        }
+        rv_timeline.adapter = alphaAdapter
     }
 
     private fun initEventBus() {
@@ -131,16 +133,8 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra(TimeLine.KEY_TIMELINE_ID, timeLineId)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                && view.iv_timeline_image.visibility == View.VISIBLE) {
-
-            val p1 = with(view.iv_timeline_image) {
-                Pair.create<View, String>(this, this.transitionName)
-            }
-
-            val options = ActivityOptions.makeSceneTransitionAnimation(activity, p1)
-            startActivity(intent, options.toBundle())
-
+        if (view.iv_timeline_image.visibility == View.VISIBLE) {
+            startActivityWithTransition(intent, view.iv_timeline_image)
         } else {
             startActivity(intent)
         }
@@ -148,10 +142,5 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
 
     override fun scrollToPosition(position: Int) {
         rv_timeline.smoothScrollToPosition(position)
-    }
-
-    override fun onDestroy() {
-        presenter.detachView()
-        super.onDestroy()
     }
 }

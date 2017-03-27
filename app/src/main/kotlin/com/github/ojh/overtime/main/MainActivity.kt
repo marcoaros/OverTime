@@ -1,21 +1,18 @@
 package com.github.ojh.overtime.main
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.util.Pair
 import android.view.MenuItem
-import android.view.View
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.replaceFrament
+import com.github.ojh.overtime.util.startActivityWithTransition
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -67,26 +64,13 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
 
     private fun initEventListener() {
         fab_write.setOnClickListener {
-            presenter.click()
+            presenter.clickWriteButton()
         }
     }
 
-    override fun click() {
-        navigateToWrite()
-    }
-
-    fun navigateToWrite() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            val p1 = with(fab_write) {
-                Pair.create<View, String>(this, this.transitionName)
-            }
-
-            val options = ActivityOptions.makeSceneTransitionAnimation(this, p1)
-            startActivity(Intent(this, WriteActivity::class.java), options.toBundle())
-        } else {
-            startActivity(Intent(this, WriteActivity::class.java))
-        }
+    override fun navigateToWrite() {
+        val intent = Intent(this, WriteActivity::class.java)
+        startActivityWithTransition(intent, fab_write)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
