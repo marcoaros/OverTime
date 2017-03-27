@@ -20,7 +20,9 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
 ) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
 
-    private lateinit var filter: FilterType
+    companion object {
+        private var filterType: FilterType = FilterDateDescending()
+    }
 
     override fun initEventListener() {
         timeLineAdapterView.setOnClickViewHolder { view, position ->
@@ -40,7 +42,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     }
 
     override fun getTimeLines(filter: FilterType) {
-        this.filter = filter
+        filterType = filter
 
         compositeDisposable.add(
                 dataManager.getTimeLines(filter)
@@ -55,8 +57,14 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         )
     }
 
+    override fun getItemCount(): Int = timeLineAdapterModel.getSize()
+
+    override fun getFilterType(): FilterType {
+        return filterType
+    }
+
     override fun addTimeLine(timeLine: TimeLine) {
-        val insertedPosition = when(filter) {
+        val insertedPosition = when(filterType) {
             is FilterDateDescending -> 0
             is FilterDateAscending -> timeLineAdapterModel.getSize()
         }

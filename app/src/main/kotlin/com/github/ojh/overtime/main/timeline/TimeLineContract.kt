@@ -13,6 +13,8 @@ interface TimeLineContract {
     }
     interface Presenter<V : View>: BaseContract.Presenter<V> {
         fun initEventListener()
+        fun getFilterType(): FilterType
+        fun getItemCount(): Int
         fun getTimeLines(filter: FilterType = FilterDateDescending())
         fun addTimeLine(timeLine: TimeLine)
         fun updateTimeLine(timeLine: TimeLine)

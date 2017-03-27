@@ -6,7 +6,12 @@ fun Int.toFilterType() = when (this) {
     else -> throw IllegalStateException("$this is not filter type")
 }
 
-sealed class FilterType
+sealed class FilterType {
+    fun toPosition(): Int = when(this) {
+        is FilterDateDescending -> 0
+        is FilterDateAscending -> 1
+    }
+}
 
 class FilterDateDescending : FilterType()
 class FilterDateAscending : FilterType()

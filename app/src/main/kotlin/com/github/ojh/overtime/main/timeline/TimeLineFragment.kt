@@ -21,8 +21,9 @@ import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.util.startActivityWithTransition
 import com.github.ojh.overtime.util.toFilterType
+import io.reactivex.android.schedulers.AndroidSchedulers
 import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
@@ -65,9 +66,24 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
 
         val spinnerFilter = MenuItemCompat.getActionView(item) as Spinner
         spinnerFilter.adapter = filterAdapter
+
+        val filterType = presenter.getFilterType()
+        spinnerFilter.setSelection(filterType.toPosition())
+
+        if (presenter.getItemCount() == 0) {
+            presenter.getTimeLines(filterType)
+        }
+
         spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
+            var isFirst = true
+
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (isFirst) {
+                    isFirst = false
+                    return
+                }
+
                 presenter.getTimeLines(position.toFilterType())
             }
 
@@ -97,7 +113,7 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
         )
         rv_timeline.addItemDecoration(itemDecoration)
 
-        rv_timeline.itemAnimator = SlideInRightAnimator().apply {
+        rv_timeline.itemAnimator = SlideInLeftAnimator().apply {
             addDuration = 500
             setInterpolator(OvershootInterpolator(0.5f))
         }
@@ -111,13 +127,15 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
     }
 
     private fun initEventBus() {
-        EventBus.bus.subscribe {
-            when (it) {
-                is Events.WriteEvent -> presenter.addTimeLine(it.timeLine)
-                is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
-                is Events.DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
-            }
-        }
+        EventBus.bus
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when (it) {
+                        is Events.WriteEvent -> presenter.addTimeLine(it.timeLine)
+                        is Events.UpdateEvent -> presenter.updateTimeLine(it.timeLine)
+                        is Events.DeleteEvent -> presenter.deleteTimeLine(it.timeLineId)
+                    }
+                }
     }
 
     private fun initEventListener() {

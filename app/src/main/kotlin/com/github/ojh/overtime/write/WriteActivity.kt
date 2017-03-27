@@ -13,9 +13,9 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.util.*
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import kotlinx.android.synthetic.main.activity_write.*
