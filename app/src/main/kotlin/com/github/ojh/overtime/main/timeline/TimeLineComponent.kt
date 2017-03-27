@@ -1,13 +1,10 @@
 package com.github.ojh.overtime.main.timeline
 
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.di.PerFragment
-import com.github.ojh.overtime.main.timeline.TimeLineFragment
-import dagger.Component
+import com.github.ojh.overtime.base.scope.PerFragment
+import dagger.Subcomponent
 
 @PerFragment
-@Component(
-        dependencies = arrayOf(AppComponent::class),
+@Subcomponent(
         modules = arrayOf(TimeLineModule::class)
 )
 interface TimeLineComponent {

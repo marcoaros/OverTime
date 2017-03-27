@@ -1,7 +1,8 @@
 package com.github.ojh.overtime.splash
 
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.di.PerActivity
+import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.scope.PerActivity
 import dagger.Component
 
 @PerActivity
@@ -9,6 +10,6 @@ import dagger.Component
         dependencies = arrayOf(AppComponent::class),
         modules = arrayOf(SplashModule::class)
 )
-interface SplashComponent {
+interface SplashComponent : ActivityComponent {
     fun inject(splashActivity: SplashActivity)
 }

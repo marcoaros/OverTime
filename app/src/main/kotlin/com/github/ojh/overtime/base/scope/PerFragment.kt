@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.di
+package com.github.ojh.overtime.base.scope
 
 import javax.inject.Scope
 

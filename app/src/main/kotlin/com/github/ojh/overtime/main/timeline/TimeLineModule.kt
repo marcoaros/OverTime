@@ -3,7 +3,7 @@ package com.github.ojh.overtime.main.timeline
 import android.app.Application
 import android.widget.ArrayAdapter
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.di.PerFragment
+import com.github.ojh.overtime.base.scope.PerFragment
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapterContract
 import dagger.Module

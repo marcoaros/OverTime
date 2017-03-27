@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
 import android.util.Pair
 import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
+import com.github.ojh.overtime.base.view.BaseActivity
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
@@ -17,9 +18,22 @@ import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.replaceFrament
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+
+    @Inject
+    lateinit var presenter: MainPresenter<MainContract.View>
+
+    override fun setComponent(appComponent: AppComponent): MainComponent {
+        val component = DaggerMainComponent.builder()
+                .appComponent(appComponent)
+                .build()
+        component.inject(this)
+
+        return component
+    }
 
     private val backPressHandler by lazy(NONE) {
         BackPressCloseHandler(this)
@@ -29,9 +43,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        presenter.attachView(this)
         initToolbar()
         initFragments()
         initEventListener()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun initToolbar() {
@@ -48,8 +67,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun initEventListener() {
         fab_write.setOnClickListener {
-            navigateToWrite()
+            presenter.click()
         }
+    }
+
+    override fun click() {
+        navigateToWrite()
     }
 
     fun navigateToWrite() {

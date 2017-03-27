@@ -8,25 +8,28 @@ import android.transition.TransitionInflater
 import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseActivity
+import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
-import com.github.ojh.overtime.di.AppComponent
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.util.load
 import com.github.ojh.overtime.util.toFormatString
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
-class DetailActivity : BaseActivity(), DetailContract.View {
+class DetailActivity : BaseActivity<DetailComponent>(), DetailContract.View {
 
     @Inject
     lateinit var presenter: DetailPresenter<DetailContract.View>
 
-    override fun setComponent(appComponent: AppComponent) {
-        DaggerDetailComponent.builder()
+    override fun setComponent(appComponent: AppComponent): DetailComponent {
+        val component = DaggerDetailComponent.builder()
                 .appComponent(appComponent)
                 .build()
-                .inject(this)
+
+        component.inject(this)
+
+        return component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

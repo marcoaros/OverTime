@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.airbnb.lottie.LottieAnimationView
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseActivity
-import com.github.ojh.overtime.di.AppComponent
+import com.github.ojh.overtime.base.view.BaseActivity
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
-class SplashActivity : BaseActivity(), SplashContract.View {
+class SplashActivity : BaseActivity<SplashComponent>(), SplashContract.View {
 
     @Inject
     lateinit var presenter: SplashPresenter<SplashContract.View>
@@ -21,11 +21,14 @@ class SplashActivity : BaseActivity(), SplashContract.View {
         )
     }
 
-    override fun setComponent(appComponent: AppComponent) {
-        DaggerSplashComponent.builder()
+    override fun setComponent(appComponent: AppComponent): SplashComponent {
+        val component = DaggerSplashComponent.builder()
                 .appComponent(appComponent)
                 .build()
-                .inject(this)
+
+        component.inject(this)
+
+        return component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

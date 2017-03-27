@@ -1,10 +1,10 @@
-package com.github.ojh.overtime
+package com.github.ojh.overtime.app
 
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.di.AppModule
-import com.github.ojh.overtime.di.DaggerAppComponent
+import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.app.AppModule
+import com.github.ojh.overtime.app.DaggerAppComponent
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration

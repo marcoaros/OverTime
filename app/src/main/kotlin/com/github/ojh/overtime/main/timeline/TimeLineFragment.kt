@@ -12,20 +12,22 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseFragment
+import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.detail.DetailActivity
-import com.github.ojh.overtime.di.AppComponent
+import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
-import com.github.ojh.overtime.setting.TimeLineSettingDialog
-import com.github.ojh.overtime.util.*
+import com.github.ojh.overtime.edit.EditDialogFragment
+import com.github.ojh.overtime.util.EventBus
+import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
+import com.github.ojh.overtime.util.toFilterType
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.view_timeline.view.*
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
-class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.View {
+class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), TimeLineContract.View {
 
     companion object {
         private val fragment by lazy(NONE) { TimeLineFragment() }
@@ -43,13 +45,21 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
         TimeLineAdapter()
     }
 
-    override fun setComponent(appComponent: AppComponent) {
-        DaggerTimeLineComponent.builder()
-                .appComponent(appComponent)
-                .timeLineModule(TimeLineModule(timeLineAdapter))
-                .build()
+    override fun setComponent(activityComponent: MainComponent) {
+        activityComponent
+                .plus(TimeLineModule(timeLineAdapter))
                 .inject(this)
     }
+
+//    override fun setComponent(appComponent: AppComponent) {
+//
+////        appComponent.
+////        DaggerTimeLineComponent.builder()
+////                .appComponent(appComponent)
+////                .timeLineModule(TimeLineModule(timeLineAdapter))
+////                .build()
+////                .inject(this)
+//    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_timeline, container, false)
@@ -67,7 +77,7 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
         spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                TimeLineFragment.getInstance().presenter.getTimeLines(position.toFilterType())
+                presenter.getTimeLines(position.toFilterType())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -113,8 +123,8 @@ class TimeLineFragment private constructor() : BaseFragment(), TimeLineContract.
     }
 
     override fun navigateToSetting(timeLineId: Int) {
-        val dialog = TimeLineSettingDialog.newInstance(timeLineId)
-        dialog.show(fragmentManager, TimeLineSettingDialog::class.java.simpleName)
+        val dialog = EditDialogFragment.newInstance(timeLineId)
+        dialog.show(fragmentManager, EditDialogFragment::class.java.simpleName)
     }
 
     override fun navigateToDetail(view: View, timeLineId: Int) {

@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.setting
+package com.github.ojh.overtime.edit
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
@@ -10,10 +10,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @Inject constructor(
+class EditPresenter<V : EditContract.View> @Inject constructor(
         dataManager: DataManager,
         compositeDisposable: CompositeDisposable
-) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineSettingDialogContract.Presenter<V> {
+) : BasePresenter<V>(dataManager, compositeDisposable), EditContract.Presenter<V> {
 
     var timeLineId: Int by Delegates.notNull<Int>()
 
@@ -21,7 +21,7 @@ class TimeLineSettingDialogPresenter<V : TimeLineSettingDialogContract.View> @In
         this.timeLineId = timeLineId
     }
 
-    override fun updateTiemLine() {
+    override fun updateTimeLine() {
         compositeDisposable.add(
                 dataManager.getTimeLine(timeLineId)
                         .subscribeOn(Schedulers.io())

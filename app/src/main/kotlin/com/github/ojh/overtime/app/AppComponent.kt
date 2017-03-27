@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.di
+package com.github.ojh.overtime.app
 
 import android.app.Application
 import com.github.ojh.overtime.data.DataManager
