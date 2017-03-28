@@ -1,11 +1,10 @@
 package com.github.ojh.overtime.app
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
-import com.github.ojh.overtime.app.AppComponent
-import com.github.ojh.overtime.app.AppModule
-import com.github.ojh.overtime.app.DaggerAppComponent
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
+import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -21,6 +20,8 @@ class OverTimeApplication : Application() {
         super.onCreate()
 
         initRealmConfiguration()
+
+        Fabric.with(this, Crashlytics())
 
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)

@@ -15,7 +15,7 @@ class EditPresenter<V : EditContract.View> @Inject constructor(
         compositeDisposable: CompositeDisposable
 ) : BasePresenter<V>(dataManager, compositeDisposable), EditContract.Presenter<V> {
 
-    var timeLineId: Int by Delegates.notNull<Int>()
+    private var timeLineId: Int by Delegates.notNull<Int>()
 
     override fun init(timeLineId: Int) {
         this.timeLineId = timeLineId

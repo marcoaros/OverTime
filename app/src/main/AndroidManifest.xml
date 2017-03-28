@@ -44,6 +44,11 @@
         <service
             android:name=".alarm.AlarmService"
             android:enabled="true" />
+
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fa126086f2f276ccd73540ffb92ced5266c82c3c" />
     </application>
 
 </manifest>

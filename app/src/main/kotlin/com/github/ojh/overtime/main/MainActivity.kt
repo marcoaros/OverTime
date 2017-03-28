@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
+import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
@@ -77,16 +78,19 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
         return when (item.itemId) {
             R.id.navigation_dashboard -> {
                 replaceFrament(R.id.fragment_main, TimeLineFragment.getInstance())
+                fab_write.visibility = View.VISIBLE
                 true
             }
 
             R.id.navigation_calendar -> {
                 replaceFrament(R.id.fragment_main, CalendarFragment.getInstance())
+                fab_write.visibility = View.GONE
                 true
             }
 
             R.id.navigation_settings -> {
                 replaceFrament(R.id.fragment_main, SettingFragment.getInstance())
+                fab_write.visibility = View.GONE
                 true
             }
             else -> false
