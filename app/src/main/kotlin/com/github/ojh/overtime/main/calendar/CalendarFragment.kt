@@ -7,25 +7,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
+import kr.co.wplanet.android.presidentkim.kt.experience.resurve.component.calendar.CustomCaldroidFragment
+import kotlin.LazyThreadSafetyMode.NONE
+import com.roomorama.caldroid.CaldroidFragment
+import java.util.*
 
 
-/**
- * A simple [Fragment] subclass.
- */
-class CalendarFragment private constructor(): Fragment() {
+class CalendarFragment private constructor() : Fragment() {
+
+    private val caldroidFragment by lazy(NONE) {
+        CustomCaldroidFragment()
+    }
 
     companion object {
         private val fragment by lazy { CalendarFragment() }
-        fun getInstance(): CalendarFragment {
-            return fragment
-        }
-    }
 
+        fun getInstance(): CalendarFragment = fragment
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_calendar, container, false)
+
+        return inflater?.inflate(R.layout.fragment_calendar, container, false)
     }
 
-}// Required empty public constructor
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+
+
+        val args = Bundle()
+        val cal = Calendar.getInstance()
+        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1)
+        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR))
+        args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true)
+        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true)
+
+        caldroidFragment.arguments = args
+
+        childFragmentManager.beginTransaction()
+                .replace(R.id.calendar, caldroidFragment)
+                .commit()
+    }
+
+}

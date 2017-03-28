@@ -96,6 +96,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
+
+    //Calendar
+    compile "com.roomorama:caldroid:$rootProject.caldroidVersion"
 }
 
 repositories {
