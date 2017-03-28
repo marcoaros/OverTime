@@ -41,7 +41,8 @@ test:
     #    parallel: true
   override:
     # Generate a debug-apk
-    - ./gradlew assembleDebug
+    #- ./gradlew assembleDebug
+    - ./gradlew assembleDebug -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
 
     # Wait for emulator to boot
     #- circle-android wait-for-boot; sleep 20
