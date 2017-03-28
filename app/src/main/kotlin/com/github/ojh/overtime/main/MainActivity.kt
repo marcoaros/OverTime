@@ -23,6 +23,10 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
     @Inject
     lateinit var presenter: MainPresenter<MainContract.View>
 
+    private val backPressHandler by lazy(NONE) {
+        BackPressCloseHandler(this)
+    }
+
     override fun setComponent(appComponent: AppComponent): MainComponent {
         val component = DaggerMainComponent.builder()
                 .appComponent(appComponent)
@@ -30,10 +34,6 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
         component.inject(this)
 
         return component
-    }
-
-    private val backPressHandler by lazy(NONE) {
-        BackPressCloseHandler(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

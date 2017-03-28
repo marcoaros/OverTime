@@ -7,6 +7,7 @@ import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.DataSource
 import com.github.ojh.overtime.data.local.LocalDataSource
 import com.github.ojh.overtime.data.remote.RemoteDataSource
+import com.github.ojh.overtime.util.PropertyUtil
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -51,5 +52,11 @@ class AppModule(val application: Application) {
     @Provides
     fun provideFirebaseApi(retrofit: Retrofit): FirebaseAPI {
         return retrofit.create(FirebaseAPI::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providePropertyUtil(): PropertyUtil {
+        return PropertyUtil(application)
     }
 }

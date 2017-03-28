@@ -20,14 +20,12 @@
     <string name="permission_dialog_rational_positive_text">환경설정 바로가기</string>
     <string name="permission_dialog_rational_negative_text">취소</string>
 
-
     <string name="transition_reveal_write">transition_reveal_write</string>
     <string name="transition_image_detail">transition_image_detail</string>
-    <string name="title_dashboard">홈</string>
-    <string name="title_calendar">달력</string>
-    <string name="title_settings">설정</string>
+    <string name="main_title_dashboard">홈</string>
+    <string name="main_title_calendar">달력</string>
+    <string name="main_title_settings">설정</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_switch_push">푸쉬알림 On/Off</string>
 
 </resources>
