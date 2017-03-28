@@ -69,6 +69,9 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
+    //RxRelay
+    compile "com.jakewharton.rxrelay2:rxrelay:$rootProject.rxRelayVersion"
+
     //Stetho
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
     compile "com.uphyca:stetho_realm:$rootProject.stethoRealmVersion"

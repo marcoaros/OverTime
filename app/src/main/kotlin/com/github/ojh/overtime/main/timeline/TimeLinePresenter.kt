@@ -2,8 +2,10 @@ package com.github.ojh.overtime.main.timeline
 
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapterContract
+import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.FilterDateAscending
 import com.github.ojh.overtime.util.FilterDateDescending
 import com.github.ojh.overtime.util.FilterType
@@ -39,6 +41,16 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
             }
 
         }
+
+        compositeDisposable.add(EventBus.asFlowable()
+                .subscribe {
+                    when (it) {
+                        is Events.WriteEvent -> addTimeLine(it.timeLine)
+                        is Events.UpdateEvent -> updateTimeLine(it.timeLine)
+                        is Events.DeleteEvent -> deleteTimeLine(it.timeLineId)
+                    }
+                }
+        )
     }
 
     override fun getTimeLines(filter: FilterType) {
@@ -64,7 +76,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     }
 
     override fun addTimeLine(timeLine: TimeLine) {
-        val insertedPosition = when(filterType) {
+        val insertedPosition = when (filterType) {
             is FilterDateDescending -> 0
             is FilterDateAscending -> timeLineAdapterModel.getSize()
         }

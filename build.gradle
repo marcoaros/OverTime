@@ -12,6 +12,7 @@ buildscript {
         stethoRealmVersion = '2.0.0'
         rxJavaVersion = '2.0.4'
         rxAndroidVersion = '2.0.1'
+        rxRelayVersion = '2.0.0'
         retrofitVersion = '2.2.0'
         lottieVersion = '2.0.0-beta2'
         recyclerViewAnimatorsVersion = '2.2.6'
