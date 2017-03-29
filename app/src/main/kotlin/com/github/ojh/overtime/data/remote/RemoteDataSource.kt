@@ -3,7 +3,7 @@ package com.github.ojh.overtime.data.remote
 import com.github.ojh.overtime.api.FirebaseAPI
 import com.github.ojh.overtime.data.DataSource
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.util.FilterType
+import com.github.ojh.overtime.data.FilterType
 import io.reactivex.Flowable
 import javax.inject.Inject
 

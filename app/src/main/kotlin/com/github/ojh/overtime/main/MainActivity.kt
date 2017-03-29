@@ -12,8 +12,10 @@ import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.util.BackPressCloseHandler
-import com.github.ojh.overtime.util.replaceFrament
-import com.github.ojh.overtime.util.startActivityWithTransition
+import com.github.ojh.overtime.util.extensions.addFragment
+import com.github.ojh.overtime.util.extensions.hideFragment
+import com.github.ojh.overtime.util.extensions.showFragment
+import com.github.ojh.overtime.util.extensions.startActivityWithTransition
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -56,9 +58,18 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
     }
 
     private fun initFragments() {
-        supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_main, TimeLineFragment.getInstance())
-                .commit()
+
+        addFragment(
+                R.id.fragment_main,
+                TimeLineFragment.getInstance(),
+                CalendarFragment.getInstance(),
+                SettingFragment.getInstance()
+        )
+
+        hideFragment(
+                CalendarFragment.getInstance(),
+                SettingFragment.getInstance()
+        )
 
         navigation.setOnNavigationItemSelectedListener(this)
     }
@@ -75,21 +86,28 @@ class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNav
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        hideFragment(
+                TimeLineFragment.getInstance(),
+                CalendarFragment.getInstance(),
+                SettingFragment.getInstance()
+        )
+
         return when (item.itemId) {
             R.id.navigation_dashboard -> {
-                replaceFrament(R.id.fragment_main, TimeLineFragment.getInstance())
+                showFragment(TimeLineFragment.getInstance())
                 fab_write.visibility = View.VISIBLE
                 true
             }
 
             R.id.navigation_calendar -> {
-                replaceFrament(R.id.fragment_main, CalendarFragment.getInstance())
+                showFragment(CalendarFragment.getInstance())
                 fab_write.visibility = View.GONE
                 true
             }
 
             R.id.navigation_settings -> {
-                replaceFrament(R.id.fragment_main, SettingFragment.getInstance())
+                showFragment(SettingFragment.getInstance())
                 fab_write.visibility = View.GONE
                 true
             }

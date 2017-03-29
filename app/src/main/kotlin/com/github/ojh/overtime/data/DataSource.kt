@@ -1,6 +1,6 @@
 package com.github.ojh.overtime.data
 
-import com.github.ojh.overtime.util.FilterType
+import com.github.ojh.overtime.data.FilterType
 import io.reactivex.Flowable
 
 interface DataSource {

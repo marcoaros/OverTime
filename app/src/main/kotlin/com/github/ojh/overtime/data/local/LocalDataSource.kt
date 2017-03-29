@@ -2,9 +2,9 @@ package com.github.ojh.overtime.data.local
 
 import com.github.ojh.overtime.data.DataSource
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.util.FilterDateAscending
-import com.github.ojh.overtime.util.FilterDateDescending
-import com.github.ojh.overtime.util.FilterType
+import com.github.ojh.overtime.data.FilterDateAscending
+import com.github.ojh.overtime.data.FilterDateDescending
+import com.github.ojh.overtime.data.FilterType
 import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.Flowable
 import io.realm.Realm

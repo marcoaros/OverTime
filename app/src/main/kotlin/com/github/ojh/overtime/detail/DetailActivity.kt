@@ -12,8 +12,8 @@ import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
 import com.github.ojh.overtime.app.AppComponent
-import com.github.ojh.overtime.util.load
-import com.github.ojh.overtime.util.toFormatString
+import com.github.ojh.overtime.util.extensions.load
+import com.github.ojh.overtime.util.extensions.toFormatString
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 

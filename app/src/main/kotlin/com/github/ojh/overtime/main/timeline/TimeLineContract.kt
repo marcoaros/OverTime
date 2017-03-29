@@ -2,8 +2,8 @@ package com.github.ojh.overtime.main.timeline
 
 import com.github.ojh.overtime.base.BaseContract
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.util.FilterDateDescending
-import com.github.ojh.overtime.util.FilterType
+import com.github.ojh.overtime.data.FilterDateDescending
+import com.github.ojh.overtime.data.FilterType
 
 interface TimeLineContract {
     interface View: BaseContract.View {

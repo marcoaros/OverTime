@@ -6,9 +6,9 @@ import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapterContract
 import com.github.ojh.overtime.util.EventBus
-import com.github.ojh.overtime.util.FilterDateAscending
-import com.github.ojh.overtime.util.FilterDateDescending
-import com.github.ojh.overtime.util.FilterType
+import com.github.ojh.overtime.data.FilterDateAscending
+import com.github.ojh.overtime.data.FilterDateDescending
+import com.github.ojh.overtime.data.FilterType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

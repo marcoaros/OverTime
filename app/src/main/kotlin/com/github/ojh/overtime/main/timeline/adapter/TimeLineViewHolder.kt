@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
-import com.github.ojh.overtime.util.load
-import com.github.ojh.overtime.util.toFormatString
-import com.github.ojh.overtime.util.toWeekString
+import com.github.ojh.overtime.util.extensions.load
+import com.github.ojh.overtime.util.extensions.toFormatString
+import com.github.ojh.overtime.util.extensions.toWeekString
 import kotlinx.android.synthetic.main.view_timeline.view.*
 
 class TimeLineViewHolder(

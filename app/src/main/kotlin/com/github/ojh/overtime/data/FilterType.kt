@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.util
+package com.github.ojh.overtime.data
 
 fun Int.toFilterType() = when (this) {
     0 -> FilterDateDescending()
