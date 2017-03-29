@@ -39,6 +39,29 @@ fun Date.toWeekString(): String {
     }
 }
 
+fun Date.getBetweenDates() : Pair<Date, Date> {
+
+    val curCal = Calendar.getInstance()
+    curCal.time = this
+
+    val year = curCal.get(Calendar.YEAR)
+    val month = curCal.get(Calendar.MONTH)
+    val day = curCal.get(Calendar.DAY_OF_MONTH)
+
+    val startCal = Calendar.getInstance()
+    startCal.set(year, month, day, 0, 0, 0)
+
+    val endCal = Calendar.getInstance()
+    endCal.set(year, month, day, 0, 0, 0)
+    endCal.add(Calendar.DAY_OF_MONTH, 1)
+    endCal.add(Calendar.SECOND, -1)
+
+    val startDate = startCal.time
+    val endDate = endCal.time
+
+    return Pair(startDate, endDate)
+}
+
 fun EditText.setOnSimpleTextWather(listener: (text: String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {

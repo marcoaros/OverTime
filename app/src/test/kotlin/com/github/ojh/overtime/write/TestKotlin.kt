@@ -1,35 +1,31 @@
 package com.github.ojh.overtime.write
 
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import org.junit.Test
-import java.util.concurrent.TimeUnit
+import java.util.*
 
 class TestKotlin {
 
     @Test
-    fun test() {
-
-        val startTime = System.currentTimeMillis()
-
-        val views = listOf(1, 2, 3, 4, 5)
+    fun calendarTest() {
 
 
-        Observable.intervalRange(0, views.size.toLong(), 0, 300, TimeUnit.MILLISECONDS)
-                .map(Long::toInt)
-                .delay(300, TimeUnit.MICROSECONDS, Schedulers.trampoline())
-                .doOnComplete {
-                    println("complete time = ${System.currentTimeMillis() - startTime}")
-                }
-                .doOnEach {
-                    println("doOnEach $it.value = ${System.currentTimeMillis() - startTime}")
-                }
-                .subscribe {
-                    println("subsribe - ${System.currentTimeMillis() - startTime}")
-                }
+        val curCal = Calendar.getInstance()
 
+        val year = curCal.get(Calendar.YEAR)
+        val month = curCal.get(Calendar.MONTH)
+        val day = curCal.get(Calendar.DAY_OF_MONTH)
 
+        val startCal = Calendar.getInstance()
+        startCal.set(year, month, day, 0, 0, 0)
 
-        Thread.sleep(5000)
+        val endCal = Calendar.getInstance()
+        endCal.set(year, month, day, 0, 0, 0)
+        endCal.add(Calendar.DAY_OF_MONTH, 1)
+        endCal.add(Calendar.SECOND, -1)
+
+        println(startCal)
+        println(endCal)
     }
+
+
 }

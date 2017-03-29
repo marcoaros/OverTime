@@ -1,14 +1,17 @@
 package com.github.ojh.overtime.main.calendar
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.view.BaseFragment
+import com.github.ojh.overtime.list.ListActivity
 import com.github.ojh.overtime.main.MainComponent
 import com.roomorama.caldroid.CaldroidFragment
+import com.roomorama.caldroid.CaldroidListener
 import kr.co.wplanet.android.presidentkim.kt.experience.resurve.component.calendar.CustomCaldroidFragment
 import java.util.*
 import javax.inject.Inject
@@ -21,6 +24,8 @@ class CalendarFragment private constructor() : BaseFragment<MainComponent>(), Ca
     lateinit var presenter: CalendarContract.Presenter<CalendarContract.View>
 
     companion object {
+        const val KEY_DATE = "key_date"
+
         private val fragment by lazy { CalendarFragment() }
 
         fun getInstance(): CalendarFragment = fragment
@@ -52,7 +57,7 @@ class CalendarFragment private constructor() : BaseFragment<MainComponent>(), Ca
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         initCalendar()
         presenter.initWrittenDates()
-        presenter.initEventListener()
+        presenter.initEventBus()
     }
 
     private fun initCalendar() {
@@ -65,11 +70,16 @@ class CalendarFragment private constructor() : BaseFragment<MainComponent>(), Ca
 
         caldroidFragment.arguments = args
 
+        caldroidFragment.caldroidListener = object : CaldroidListener() {
+            override fun onSelectDate(date: Date?, view: View?) {
+                presenter.onSelectDate(date, view)
+            }
+        }
+
         childFragmentManager.beginTransaction()
                 .add(R.id.calendar, caldroidFragment)
                 .commit()
     }
-
 
     override fun setWrittenDate(dateList: List<Date>) {
         caldroidFragment.clearSelectedDates()
@@ -78,6 +88,14 @@ class CalendarFragment private constructor() : BaseFragment<MainComponent>(), Ca
         }
 
         caldroidFragment.refreshView()
+    }
+
+    override fun navigateToList(date: Date?) {
+        if (caldroidFragment.isSelectedDate(date)) {
+            val intent = Intent(activity, ListActivity::class.java)
+            intent.putExtra(KEY_DATE, date)
+            startActivity(intent)
+        }
     }
 
 }

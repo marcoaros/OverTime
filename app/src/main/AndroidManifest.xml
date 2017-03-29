@@ -34,6 +34,11 @@
         <activity
             android:name=".detail.DetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".list.ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <receiver android:name=".alarm.AlarmReceiver">
             <intent-filter>
@@ -45,10 +50,11 @@
             android:name=".alarm.AlarmService"
             android:enabled="true" />
 
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fa126086f2f276ccd73540ffb92ced5266c82c3c" />
+
+
     </application>
 
 </manifest>

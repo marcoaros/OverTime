@@ -64,7 +64,6 @@ dependencies {
     //DI
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
 
     //Rx2
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
@@ -99,6 +98,8 @@ dependencies {
 
     //Calendar
     compile "com.roomorama:caldroid:$rootProject.caldroidVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 
 repositories {

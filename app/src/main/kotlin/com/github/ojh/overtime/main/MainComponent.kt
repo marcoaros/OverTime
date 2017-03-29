@@ -18,7 +18,7 @@ import dagger.Component
         dependencies = arrayOf(AppComponent::class),
         modules = arrayOf(MainModule::class)
 )
-interface MainComponent : ActivityComponent{
+interface MainComponent : ActivityComponent {
     fun inject(mainActivity: MainActivity)
     fun plus(timeLineModule: TimeLineModule): TimeLineComponent
     fun plus(editModule: EditModule): EditComponent

@@ -1,7 +1,9 @@
 package com.github.ojh.overtime.data.local
 
+import android.util.Log
 import com.github.ojh.overtime.data.*
 import com.github.ojh.overtime.util.RealmUtil
+import com.github.ojh.overtime.util.extensions.getBetweenDates
 import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.Sort
@@ -22,12 +24,38 @@ class LocalDataSource : DataSource {
 
     override fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
         val realm = Realm.getDefaultInstance()
-        val results = realm.where(TimeLineRealm::class.java).findAll()
+        val results = realm.where(TimeLineRealm::class.java)
 
         return when (filter) {
+
+            is FilterEqualDate -> {
+                val curDate = filter.date
+                val datePair = curDate.getBetweenDates()
+
+                Log.d("ddate pair", datePair.toString())
+
+
+                Log.d("ddate realm", results
+                        .between("date", datePair.first, datePair.second)
+                        .findAll()
+                        .sort("date", Sort.DESCENDING)
+                        .toList()
+                        .map(TimeLineRealm::toDto)
+                        .toString())
+
+                Flowable.just(
+                        results
+                                .between("date", datePair.first, datePair.second)
+                                .findAll()
+                                .sort("date", Sort.DESCENDING)
+                                .toList()
+                                .map(TimeLineRealm::toDto)
+                )
+            }
+
             is FilterDateDescending -> {
                 Flowable.just(
-                        results.sort("date", Sort.DESCENDING)
+                        results.findAll().sort("date", Sort.DESCENDING)
                                 .toList()
                                 .map(TimeLineRealm::toDto)
                 )
@@ -35,7 +63,7 @@ class LocalDataSource : DataSource {
 
             is FilterDateAscending -> {
                 Flowable.just(
-                        results.sort("date", Sort.ASCENDING)
+                        results.findAll().sort("date", Sort.ASCENDING)
                                 .toList()
                                 .map(TimeLineRealm::toDto)
                 )

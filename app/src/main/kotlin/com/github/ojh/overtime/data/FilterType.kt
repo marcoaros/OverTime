@@ -1,5 +1,7 @@
 package com.github.ojh.overtime.data
 
+import java.util.*
+
 fun Int.toFilterType() = when (this) {
     0 -> FilterDateDescending()
     1 -> FilterDateAscending()
@@ -13,8 +15,9 @@ sealed class FilterType {
     }
 }
 
-class FilterDateDescending : FilterType()
-class FilterDateAscending : FilterType()
+open class FilterDateDescending : FilterType()
+open class FilterDateAscending : FilterType()
+class FilterEqualDate(val date: Date): FilterDateDescending()
 
 
 

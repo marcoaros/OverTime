@@ -7,7 +7,7 @@ import com.github.ojh.overtime.app.OverTimeApplication
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.BaseContract
 
-abstract class BaseActivity<C: ActivityComponent> : AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity<out C: ActivityComponent> : AppCompatActivity(), BaseContract.View {
 
     private lateinit var component: C
 
