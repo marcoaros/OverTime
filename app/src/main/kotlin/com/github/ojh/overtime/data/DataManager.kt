@@ -1,7 +1,7 @@
 package com.github.ojh.overtime.data
 
-import com.github.ojh.overtime.data.FilterType
 import io.reactivex.Flowable
+import java.util.*
 import javax.inject.Inject
 
 class DataManager @Inject constructor(
@@ -26,5 +26,9 @@ class DataManager @Inject constructor(
 
     fun deleteTimeLine(timeLineId: Int) {
         dataSource.deleteTimeLine(timeLineId)
+    }
+
+    fun getWrittenDates(): Flowable<List<Date>> {
+        return dataSource.getWrittenDates()
     }
 }

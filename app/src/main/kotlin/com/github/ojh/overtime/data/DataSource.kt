@@ -1,7 +1,7 @@
 package com.github.ojh.overtime.data
 
-import com.github.ojh.overtime.data.FilterType
 import io.reactivex.Flowable
+import java.util.*
 
 interface DataSource {
     fun getTimeLine(timeLineId: Int): Flowable<TimeLine>
@@ -9,4 +9,5 @@ interface DataSource {
     fun saveTimeLine(timeLine: TimeLine)
     fun updateTimeLine(timeLine: TimeLine)
     fun deleteTimeLine(timeLineId: Int)
+    fun getWrittenDates(): Flowable<List<Date>>
 }

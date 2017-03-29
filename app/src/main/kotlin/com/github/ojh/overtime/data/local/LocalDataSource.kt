@@ -1,10 +1,6 @@
 package com.github.ojh.overtime.data.local
 
-import com.github.ojh.overtime.data.DataSource
-import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.data.FilterDateAscending
-import com.github.ojh.overtime.data.FilterDateDescending
-import com.github.ojh.overtime.data.FilterType
+import com.github.ojh.overtime.data.*
 import com.github.ojh.overtime.util.RealmUtil
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -15,20 +11,34 @@ class LocalDataSource : DataSource {
 
     override fun getTimeLine(timeLineId: Int): Flowable<TimeLine> {
         val realm = Realm.getDefaultInstance()
-        val timeLine = realm.where(TimeLineRealm::class.java).equalTo("id", timeLineId).findFirst()
-        return Flowable.just(timeLine.toDto())
+
+        val timeLine = realm.where(TimeLineRealm::class.java)
+                .equalTo("id", timeLineId)
+                .findFirst()
+                .toDto()
+
+        return Flowable.just(timeLine)
     }
 
     override fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
         val realm = Realm.getDefaultInstance()
         val results = realm.where(TimeLineRealm::class.java).findAll()
 
-        when (filter) {
+        return when (filter) {
             is FilterDateDescending -> {
-                return Flowable.just(results.sort("date", Sort.DESCENDING).toList().map { it.toDto() })
+                Flowable.just(
+                        results.sort("date", Sort.DESCENDING)
+                                .toList()
+                                .map(TimeLineRealm::toDto)
+                )
             }
+
             is FilterDateAscending -> {
-                return Flowable.just(results.sort("date", Sort.ASCENDING).toList().map { it.toDto() })
+                Flowable.just(
+                        results.sort("date", Sort.ASCENDING)
+                                .toList()
+                                .map(TimeLineRealm::toDto)
+                )
             }
         }
     }
@@ -48,7 +58,24 @@ class LocalDataSource : DataSource {
 
     override fun deleteTimeLine(timeLineId: Int) {
         val realm = Realm.getDefaultInstance()
-        val timeLine = realm.where(TimeLineRealm::class.java).equalTo("id", timeLineId).findFirst()
+
+        val timeLine = realm.where(TimeLineRealm::class.java)
+                .equalTo("id", timeLineId)
+                .findFirst()
+
         RealmUtil.delete(timeLine)
+    }
+
+    override fun getWrittenDates(): Flowable<List<Date>> {
+        val realm = Realm.getDefaultInstance()
+
+        val writtenDates = realm.where(TimeLineRealm::class.java).findAll()
+                .toList()
+                .map {
+                    it.toDto().mDate
+                }
+                .filterNotNull()
+
+        return Flowable.just(writtenDates)
     }
 }

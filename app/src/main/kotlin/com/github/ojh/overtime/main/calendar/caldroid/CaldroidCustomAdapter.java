@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.main.calendar;
+package com.github.ojh.overtime.main.calendar.caldroid;
 
 import android.content.Context;
 import android.content.res.Resources;

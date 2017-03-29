@@ -1,6 +1,6 @@
 package kr.co.wplanet.android.presidentkim.kt.experience.resurve.component.calendar
 
-import com.github.ojh.overtime.main.calendar.CaldroidCustomAdapter
+import com.github.ojh.overtime.main.calendar.caldroid.CaldroidCustomAdapter
 import com.roomorama.caldroid.CaldroidFragment
 import com.roomorama.caldroid.CaldroidGridAdapter
 
