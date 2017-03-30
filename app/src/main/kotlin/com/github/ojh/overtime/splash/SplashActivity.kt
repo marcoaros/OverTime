@@ -10,7 +10,7 @@ import com.github.ojh.overtime.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
-class SplashActivity : BaseActivity<SplashComponent>(), SplashContract.View {
+class SplashActivity : BaseActivity(), SplashContract.View {
 
     @Inject
     lateinit var presenter: SplashPresenter<SplashContract.View>

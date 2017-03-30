@@ -7,16 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseDialogFragment
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
-import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.write.WriteActivity
 import kotlinx.android.synthetic.main.fragment_dialog_timeline.*
 import org.parceler.Parcels
 import javax.inject.Inject
 
-class EditDialogFragment private constructor() : BaseDialogFragment<MainComponent>(), EditContract.View {
+class EditDialogFragment private constructor() : BaseDialogFragment(), EditContract.View {
 
     companion object {
         fun newInstance(timeLineId: Int): EditDialogFragment {
@@ -31,10 +31,12 @@ class EditDialogFragment private constructor() : BaseDialogFragment<MainComponen
     @Inject
     lateinit var presenter: EditPresenter<EditContract.View>
 
-    override fun setComponent(activityComponent: MainComponent) {
-        activityComponent
-                .plus(EditModule())
+    override fun setComponent(appComponent: AppComponent) {
+        DaggerEditComponent.builder()
+                .appComponent(appComponent)
+                .build()
                 .inject(this)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

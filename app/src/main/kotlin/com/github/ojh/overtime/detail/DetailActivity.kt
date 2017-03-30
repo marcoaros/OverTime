@@ -8,16 +8,16 @@ import android.transition.TransitionInflater
 import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
+import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
-import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.util.extensions.load
 import com.github.ojh.overtime.util.extensions.toFormatString
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
-class DetailActivity : BaseActivity<DetailComponent>(), DetailContract.View {
+class DetailActivity : BaseActivity(), DetailContract.View {
 
     @Inject
     lateinit var presenter: DetailPresenter<DetailContract.View>

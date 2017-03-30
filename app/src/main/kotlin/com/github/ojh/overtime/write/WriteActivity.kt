@@ -27,7 +27,7 @@ import org.parceler.Parcels
 import javax.inject.Inject
 
 
-class WriteActivity : BaseActivity<WriteComponent>(), WriteContract.View {
+class WriteActivity : BaseActivity(), WriteContract.View {
 
     private var isShowingAnimation = false
     private var isUpdate = false

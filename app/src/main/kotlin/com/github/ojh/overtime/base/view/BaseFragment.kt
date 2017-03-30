@@ -10,11 +10,11 @@ abstract class BaseFragment<in C: ActivityComponent> : Fragment(), BaseContract.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val activityComponent = (activity as BaseActivity).getActivityComponent()
+
         @Suppress("UNCHECKED_CAST")
-        val component: C = (activity as BaseActivity<C>).getActivityComponent()
-        setComponent(component)
+        setComponent(activityComponent as C)
     }
 
     abstract fun setComponent(activityComponent: C)
-
 }

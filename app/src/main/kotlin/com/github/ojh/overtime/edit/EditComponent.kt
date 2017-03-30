@@ -1,10 +1,12 @@
 package com.github.ojh.overtime.edit
 
-import com.github.ojh.overtime.base.scope.PerFragment
-import dagger.Subcomponent
+import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.scope.PerDialog
+import dagger.Component
 
-@PerFragment
-@Subcomponent(
+@PerDialog
+@Component(
+        dependencies = arrayOf(AppComponent::class),
         modules = arrayOf(EditModule::class)
 )
 interface EditComponent {

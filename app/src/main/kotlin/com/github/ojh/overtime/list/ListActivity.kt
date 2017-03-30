@@ -10,6 +10,7 @@ import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.detail.DetailActivity
+import com.github.ojh.overtime.edit.EditDialogFragment
 import com.github.ojh.overtime.main.DaggerListComponent
 import com.github.ojh.overtime.main.ListComponent
 import com.github.ojh.overtime.main.ListContract
@@ -26,7 +27,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
-class ListActivity : BaseActivity<ListComponent>(), ListContract.View {
+class ListActivity : BaseActivity(), ListContract.View {
 
     @Inject
     lateinit var presenter: ListContract.Presenter<ListContract.View>
@@ -103,5 +104,14 @@ class ListActivity : BaseActivity<ListComponent>(), ListContract.View {
         } else {
             startActivity(intent)
         }
+    }
+
+    override fun navigateToSetting(timeLineId: Int) {
+        val dialog = EditDialogFragment.newInstance(timeLineId)
+        dialog.show(supportFragmentManager, EditDialogFragment::class.java.simpleName)
+    }
+
+    override fun scrollToPosition(position: Int) {
+        rv_list.smoothScrollToPosition(position)
     }
 }

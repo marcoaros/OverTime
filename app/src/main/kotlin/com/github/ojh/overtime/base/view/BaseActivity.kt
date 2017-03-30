@@ -7,17 +7,17 @@ import com.github.ojh.overtime.app.OverTimeApplication
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.BaseContract
 
-abstract class BaseActivity<out C: ActivityComponent> : AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
-    private lateinit var component: C
+    private lateinit var activityComponent: ActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        component = setComponent(OverTimeApplication.appComponent)
+        activityComponent = setComponent(OverTimeApplication.appComponent)
 
     }
 
-    abstract fun setComponent(appComponent: AppComponent): C
+    abstract fun setComponent(appComponent: AppComponent): ActivityComponent
 
-    fun getActivityComponent() = component
+    fun getActivityComponent() = activityComponent
 }

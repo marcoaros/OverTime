@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
-class MainActivity : BaseActivity<MainComponent>(), MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var presenter: MainPresenter<MainContract.View>
