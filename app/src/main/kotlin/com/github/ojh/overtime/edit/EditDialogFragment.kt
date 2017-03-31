@@ -32,11 +32,9 @@ class EditDialogFragment private constructor() : BaseDialogFragment(), EditContr
     lateinit var presenter: EditPresenter<EditContract.View>
 
     override fun setComponent(appComponent: AppComponent) {
-        DaggerEditComponent.builder()
-                .appComponent(appComponent)
-                .build()
+        appComponent
+                .plus(EditModule())
                 .inject(this)
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

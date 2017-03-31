@@ -1,6 +1,5 @@
 package com.github.ojh.overtime.main
 
-import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.scope.PerActivity
 import com.github.ojh.overtime.main.calendar.CalendarComponent
@@ -9,11 +8,10 @@ import com.github.ojh.overtime.main.setting.SettingComponent
 import com.github.ojh.overtime.main.setting.SettingModule
 import com.github.ojh.overtime.main.timeline.TimeLineComponent
 import com.github.ojh.overtime.main.timeline.TimeLineModule
-import dagger.Component
+import dagger.Subcomponent
 
 @PerActivity
-@Component(
-        dependencies = arrayOf(AppComponent::class),
+@Subcomponent(
         modules = arrayOf(MainModule::class)
 )
 interface MainComponent : ActivityComponent {

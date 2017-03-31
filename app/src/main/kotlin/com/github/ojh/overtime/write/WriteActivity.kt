@@ -14,9 +14,11 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.util.*
+import com.github.ojh.overtime.util.GUIUtils
+import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.extensions.addSimpleEndTransitionListener
 import com.github.ojh.overtime.util.extensions.cropIntent
 import com.github.ojh.overtime.util.extensions.load
@@ -36,12 +38,9 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     lateinit var writePresenter: WritePresenter<WriteContract.View>
 
 
-    override fun setComponent(appComponent: AppComponent): WriteComponent {
-        val component = DaggerWriteComponent.builder()
-                .appComponent(appComponent)
-                .build()
+    override fun setComponent(appComponent: AppComponent): ActivityComponent {
+        val component = appComponent.plus(WriteModule())
         component.inject(this)
-
         return component
     }
 

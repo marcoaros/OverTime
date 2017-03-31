@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
@@ -30,12 +31,9 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         BackPressCloseHandler(this)
     }
 
-    override fun setComponent(appComponent: AppComponent): MainComponent {
-        val component = DaggerMainComponent.builder()
-                .appComponent(appComponent)
-                .build()
+    override fun setComponent(appComponent: AppComponent): ActivityComponent {
+        val component = appComponent.plus(MainModule())
         component.inject(this)
-
         return component
     }
 

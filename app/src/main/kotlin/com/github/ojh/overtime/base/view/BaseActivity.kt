@@ -11,9 +11,11 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     private lateinit var activityComponent: ActivityComponent
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityComponent = setComponent(OverTimeApplication.appComponent)
+        setComponent(OverTimeApplication.appComponent)
 
     }
 

@@ -7,12 +7,11 @@ import android.view.View
 import android.view.animation.OvershootInterpolator
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.detail.DetailActivity
 import com.github.ojh.overtime.edit.EditDialogFragment
-import com.github.ojh.overtime.main.DaggerListComponent
-import com.github.ojh.overtime.main.ListComponent
 import com.github.ojh.overtime.main.ListContract
 import com.github.ojh.overtime.main.ListModule
 import com.github.ojh.overtime.main.calendar.CalendarFragment.Companion.KEY_DATE
@@ -36,14 +35,9 @@ class ListActivity : BaseActivity(), ListContract.View {
         TimeLineAdapter()
     }
 
-    override fun setComponent(appComponent: AppComponent): ListComponent {
-        val component = DaggerListComponent.builder()
-                .appComponent(appComponent)
-                .listModule(ListModule(timeLineAdapter))
-                .build()
-
+    override fun setComponent(appComponent: AppComponent): ActivityComponent {
+        val component = appComponent.plus(ListModule(timeLineAdapter))
         component.inject(this)
-
         return component
     }
 
