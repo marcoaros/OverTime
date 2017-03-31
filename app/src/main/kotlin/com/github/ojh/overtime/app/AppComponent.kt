@@ -1,8 +1,5 @@
 package com.github.ojh.overtime.app
 
-import android.app.Application
-import com.github.ojh.overtime.api.FirebaseAPI
-import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.detail.DetailComponent
 import com.github.ojh.overtime.detail.DetailModule
 import com.github.ojh.overtime.edit.EditComponent
@@ -13,22 +10,14 @@ import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.MainModule
 import com.github.ojh.overtime.splash.SplashComponent
 import com.github.ojh.overtime.splash.SplashModule
-import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.write.WriteComponent
 import com.github.ojh.overtime.write.WriteModule
 import dagger.Component
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
-    fun application(): Application
-    fun dataManager(): DataManager
-    fun compositeDisables(): CompositeDisposable
-    fun firebaseApi(): FirebaseAPI
-    fun propertyUtil(): PropertyUtil
-
     fun inject(overTimeApplication: OverTimeApplication)
 
     fun plus(splashModule: SplashModule): SplashComponent

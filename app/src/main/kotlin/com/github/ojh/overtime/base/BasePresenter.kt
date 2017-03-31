@@ -3,9 +3,8 @@ package com.github.ojh.overtime.base
 import com.github.ojh.overtime.data.DataManager
 import io.reactivex.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
-import javax.inject.Inject
 
-open class BasePresenter<V : BaseContract.View> @Inject constructor(
+open class BasePresenter<V : BaseContract.View> (
         protected val dataManager: DataManager,
         protected val compositeDisposable: CompositeDisposable
 
