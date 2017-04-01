@@ -20,10 +20,9 @@ import javax.inject.Inject
 
 
 class WritePresenter<V : WriteContract.View> @Inject constructor(
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val dataManager: DataManager
 
-) : BasePresenter<V>(dataManager, compositeDisposable), WriteContract.Presenter<V> {
+) : BasePresenter<V>(), WriteContract.Presenter<V> {
 
     private lateinit var timeLine: TimeLine
 

@@ -17,10 +17,9 @@ import javax.inject.Inject
 class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
         private val timeLineAdapterModel: TimeLineAdapterContract.Model,
         private val timeLineAdapterView: TimeLineAdapterContract.View,
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val dataManager: DataManager
 
-) : BasePresenter<V>(dataManager, compositeDisposable), TimeLineContract.Presenter<V> {
+) : BasePresenter<V>(), TimeLineContract.Presenter<V> {
 
     companion object {
         private var filterType: FilterType = FilterDateDescending()

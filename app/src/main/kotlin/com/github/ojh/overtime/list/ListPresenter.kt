@@ -16,10 +16,9 @@ import javax.inject.Inject
 class ListPresenter<V: ListContract.View> @Inject constructor(
         private val timeLineAdapterModel: TimeLineAdapterContract.Model,
         private val timeLineAdapterView: TimeLineAdapterContract.View,
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val dataManager: DataManager
 
-) : BasePresenter<V>(dataManager, compositeDisposable), ListContract.Presenter<V> {
+) : BasePresenter<V>(), ListContract.Presenter<V> {
 
     private lateinit var date: Date
 

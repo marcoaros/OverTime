@@ -11,9 +11,9 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class EditPresenter<V : EditContract.View> @Inject constructor(
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
-) : BasePresenter<V>(dataManager, compositeDisposable), EditContract.Presenter<V> {
+        private val dataManager: DataManager
+
+) : BasePresenter<V>(), EditContract.Presenter<V> {
 
     private var timeLineId: Int by Delegates.notNull<Int>()
 

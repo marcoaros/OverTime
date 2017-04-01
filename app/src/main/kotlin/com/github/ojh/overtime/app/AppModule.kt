@@ -22,9 +22,6 @@ class AppModule(val application: Application) {
     @Provides
     fun providesApplication(): Application = application
 
-    @Provides
-    fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
     @Singleton
     @Provides
     fun provideDataSource(firebaseApi: FirebaseAPI): DataSource =

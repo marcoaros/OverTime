@@ -17,11 +17,9 @@ import javax.inject.Inject
 
 class SplashPresenter<V : SplashContract.View> @Inject constructor(
         private val application: Application,
-        private val propertyUtil: PropertyUtil,
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val propertyUtil: PropertyUtil
 
-) : BasePresenter<V>(dataManager, compositeDisposable), SplashContract.Presenter<V> {
+) : BasePresenter<V>(), SplashContract.Presenter<V> {
 
     override fun init(views: Array<LottieAnimationView>) {
 

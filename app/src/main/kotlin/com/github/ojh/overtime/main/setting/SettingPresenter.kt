@@ -12,11 +12,9 @@ import javax.inject.Inject
 
 class SettingPresenter<V : SettingContract.View> @Inject constructor(
         private val application: Application,
-        private val propertyUtil: PropertyUtil,
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val propertyUtil: PropertyUtil
 
-) : BasePresenter<V>(dataManager, compositeDisposable), SettingContract.Presenter<V> {
+) : BasePresenter<V>(), SettingContract.Presenter<V> {
 
     override fun initSetting() {
         val isChecked = propertyUtil.getBoolean(KEY_ALARM, true)
