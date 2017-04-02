@@ -10,6 +10,9 @@ import android.widget.AdapterView
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.main.MainComponent
+import com.github.ojh.overtime.main.setting.backup.BackUpDialogFragment
+import com.github.ojh.overtime.util.PermissionUtil
+import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
 import kotlinx.android.synthetic.main.fragment_setting.*
 import javax.inject.Inject
@@ -63,6 +66,12 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+        btn_backup.setOnClickListener { settingPresenter.backupData() }
+
+        btn_load.setOnClickListener {
+            settingPresenter.checkStoragePermission(this)
+        }
     }
 
     override fun setAlarmSwitch(isChecked: Boolean) {
@@ -81,5 +90,24 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
     override fun onDestroyView() {
         settingPresenter.detachView()
         super.onDestroyView()
+    }
+
+    override fun showBackUpDialog() {
+        val dialog = BackUpDialogFragment()
+        dialog.show(fragmentManager, BackUpDialogFragment::class.java.simpleName)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        settingPresenter.onRequestPermissionsResult(context, requestCode, permissions, grantResults)
+    }
+
+    override fun showRationalDialog() {
+        val deniedMessage = getString(R.string.permission_storage_message)
+        PermissionUtil.showRationalDialog(context, deniedMessage)
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 }

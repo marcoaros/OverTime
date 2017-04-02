@@ -10,4 +10,7 @@ interface DataSource {
     fun updateTimeLine(timeLine: TimeLine)
     fun deleteTimeLine(timeLineId: Int)
     fun getWrittenDates(): Flowable<List<Date>>
+
+    fun backUpData(): Flowable<String>
+    fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String>
 }

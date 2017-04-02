@@ -31,8 +31,24 @@
         android:entries="@array/theme_array"
         android:spinnerMode="dropdown" />
 
+    <Button
+        android:layout_marginTop="24dp"
+        android:id="@+id/btn_backup"
+        android:text="데이터 백업"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_load"
+        android:text="데이터 불러오기"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
     <com.airbnb.lottie.LottieAnimationView
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

@@ -1,29 +1,28 @@
 package com.github.ojh.overtime.data.local
 
-import android.util.Log
 import com.github.ojh.overtime.data.*
 import com.github.ojh.overtime.util.RealmUtil
 import com.github.ojh.overtime.util.extensions.getBetweenDates
 import io.reactivex.Flowable
-import io.realm.Realm
 import io.realm.Sort
 import java.util.*
 
 class LocalDataSource : DataSource {
 
     override fun getTimeLine(timeLineId: Int): Flowable<TimeLine> {
-        val realm = Realm.getDefaultInstance()
+        val realm = RealmUtil.getRealmInstance()
 
         val timeLine = realm.where(TimeLineRealm::class.java)
                 .equalTo("id", timeLineId)
                 .findFirst()
                 .toDto()
 
+        realm.close()
         return Flowable.just(timeLine)
     }
 
     override fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
-        val realm = Realm.getDefaultInstance()
+        val realm = RealmUtil.getRealmInstance()
         val results = realm.where(TimeLineRealm::class.java)
 
         return when (filter) {
@@ -32,41 +31,37 @@ class LocalDataSource : DataSource {
                 val curDate = filter.date
                 val datePair = curDate.getBetweenDates()
 
-                Log.d("ddate pair", datePair.toString())
-
-
-                Log.d("ddate realm", results
+                val timeLines = results
                         .between("date", datePair.first, datePair.second)
                         .findAll()
                         .sort("date", Sort.DESCENDING)
                         .toList()
                         .map(TimeLineRealm::toDto)
-                        .toString())
 
-                Flowable.just(
-                        results
-                                .between("date", datePair.first, datePair.second)
-                                .findAll()
-                                .sort("date", Sort.DESCENDING)
-                                .toList()
-                                .map(TimeLineRealm::toDto)
-                )
+                realm.close()
+                Flowable.just(timeLines)
             }
 
             is FilterDateDescending -> {
-                Flowable.just(
-                        results.findAll().sort("date", Sort.DESCENDING)
-                                .toList()
-                                .map(TimeLineRealm::toDto)
-                )
+                val timeLines = results
+                        .findAll()
+                        .sort("date", Sort.DESCENDING)
+                        .toList()
+                        .map(TimeLineRealm::toDto)
+
+                realm.close()
+                Flowable.just(timeLines)
             }
 
             is FilterDateAscending -> {
-                Flowable.just(
-                        results.findAll().sort("date", Sort.ASCENDING)
-                                .toList()
-                                .map(TimeLineRealm::toDto)
-                )
+                val timeLines = results
+                        .findAll()
+                        .sort("date", Sort.ASCENDING)
+                        .toList()
+                        .map(TimeLineRealm::toDto)
+
+                realm.close()
+                Flowable.just(timeLines)
             }
         }
     }
@@ -85,17 +80,18 @@ class LocalDataSource : DataSource {
     }
 
     override fun deleteTimeLine(timeLineId: Int) {
-        val realm = Realm.getDefaultInstance()
+        val realm = RealmUtil.getRealmInstance()
 
         val timeLine = realm.where(TimeLineRealm::class.java)
                 .equalTo("id", timeLineId)
                 .findFirst()
 
         RealmUtil.delete(timeLine)
+        realm.close()
     }
 
     override fun getWrittenDates(): Flowable<List<Date>> {
-        val realm = Realm.getDefaultInstance()
+        val realm = RealmUtil.getRealmInstance()
 
         val writtenDates = realm.where(TimeLineRealm::class.java).findAll()
                 .toList()
@@ -104,6 +100,16 @@ class LocalDataSource : DataSource {
                 }
                 .filterNotNull()
 
+        realm.close()
+
         return Flowable.just(writtenDates)
+    }
+
+    override fun backUpData(): Flowable<String> {
+        return Flowable.just(RealmUtil.backup())
+    }
+
+    override fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String> {
+        return Flowable.just(RealmUtil.restore(internalFilePath, exportFilePath))
     }
 }

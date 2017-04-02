@@ -35,4 +35,12 @@ class RemoteDataSource @Inject constructor(
     override fun deleteTimeLine(timeLineId: Int) {
 
     }
+
+    override fun backUpData(): Flowable<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

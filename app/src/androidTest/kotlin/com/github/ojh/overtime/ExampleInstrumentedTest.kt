@@ -1,5 +1,6 @@
 package com.github.ojh.overtime
 
+import android.os.Environment
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertEquals
@@ -49,6 +50,17 @@ class ExampleInstrumentedTest {
             }
         } catch (e: IOException) {
 
+        }
+    }
+
+
+    @Test
+    fun fileRealmListTest() {
+        val exportRealmPATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        exportRealmPATH.listFiles().filter {
+            it.name.contains("realm")
+        }.forEach {
+            println(it.path)
         }
     }
 }

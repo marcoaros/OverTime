@@ -31,4 +31,12 @@ class DataManager @Inject constructor(
     fun getWrittenDates(): Flowable<List<Date>> {
         return dataSource.getWrittenDates()
     }
+
+    fun backUpData(): Flowable<String> {
+        return dataSource.backUpData()
+    }
+
+    fun restoreData(internalFilePath:String, restoreFilePath: String): Flowable<String> {
+        return dataSource.restoreData(internalFilePath, restoreFilePath)
+    }
 }

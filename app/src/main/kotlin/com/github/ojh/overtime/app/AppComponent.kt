@@ -8,6 +8,8 @@ import com.github.ojh.overtime.main.ListComponent
 import com.github.ojh.overtime.main.ListModule
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.MainModule
+import com.github.ojh.overtime.main.setting.backup.BackUpComponent
+import com.github.ojh.overtime.main.setting.backup.BackUpModule
 import com.github.ojh.overtime.splash.SplashComponent
 import com.github.ojh.overtime.splash.SplashModule
 import com.github.ojh.overtime.write.WriteComponent
@@ -26,4 +28,5 @@ interface AppComponent {
     fun plus(detailModule: DetailModule): DetailComponent
     fun plus(editModule: EditModule): EditComponent
     fun plus(listModule: ListModule): ListComponent
+    fun plus(backUpModule: BackUpModule): BackUpComponent
 }

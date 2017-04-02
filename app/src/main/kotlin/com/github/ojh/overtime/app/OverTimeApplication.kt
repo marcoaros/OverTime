@@ -3,10 +3,9 @@ package com.github.ojh.overtime.app
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.github.ojh.overtime.util.RealmUtil
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.fabric.sdk.android.Fabric
-import io.realm.Realm
-import io.realm.RealmConfiguration
 
 
 class OverTimeApplication : Application() {
@@ -21,7 +20,7 @@ class OverTimeApplication : Application() {
 
         application = this
 
-        initRealmConfiguration()
+        RealmUtil.initRealm(this)
 
         Fabric.with(this, Crashlytics())
 
@@ -36,25 +35,5 @@ class OverTimeApplication : Application() {
                 .appModule(AppModule(this))
                 .build()
 
-    }
-
-    private fun initRealmConfiguration() {
-        Realm.init(this)
-
-        val config = RealmConfiguration.Builder()
-                .name("overtime")
-                .schemaVersion(1)
-//                .migration { mi, oldVersion, newVersion ->
-//                    var targetVersion = oldVersion
-//
-//                    if (targetVersion == 0L) {
-//                        mi.schema.get("TimeLine")
-//                                .addField("imgUrl", String::class.java)
-//                    }
-//                }
-//                .deleteRealmIfMigrationNeeded()
-                .build()
-
-        Realm.setDefaultConfiguration(config)
     }
 }
