@@ -67,6 +67,6 @@ class TimeLineAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     }
 
     override fun refreshAll() {
-        notifyItemRangeChanged(0, itemCount)
+        notifyDataSetChanged()
     }
 }

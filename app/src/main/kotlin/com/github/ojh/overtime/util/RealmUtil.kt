@@ -5,8 +5,6 @@ import android.os.Environment
 import com.github.ojh.overtime.util.extensions.toFormatString
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.disposables.Disposables
 import io.realm.Realm
 import io.realm.RealmChangeListener
@@ -76,30 +74,6 @@ object RealmUtil {
         }, BackpressureStrategy.LATEST)
 
     }
-
-    fun getObservableRealm(): Observable<Realm> {
-        return Observable.create {
-            ObservableOnSubscribe<Realm> { emitter ->
-                val observableRealm = Realm.getDefaultInstance()
-
-                val listener = RealmChangeListener<Realm> { _realm ->
-                    if (!emitter.isDisposed) {
-                        emitter.onNext(_realm)
-                    }
-                }
-
-                emitter.setDisposable(Disposables.fromRunnable {
-                    observableRealm.removeChangeListener(listener)
-                    observableRealm.close()
-                })
-
-                observableRealm.addChangeListener(listener)
-                emitter.onNext(observableRealm)
-            }
-
-        }
-    }
-
 
     fun backup(): String {
 
