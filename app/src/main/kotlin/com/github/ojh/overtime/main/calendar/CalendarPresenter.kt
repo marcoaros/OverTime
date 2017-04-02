@@ -30,7 +30,7 @@ class CalendarPresenter<V : CalendarContract.View> @Inject constructor(
         compositeDisposable.add(EventBus.asFlowable()
                 .subscribe {
                     when (it) {
-                        is Events.WriteEvent, is Events.DeleteEvent -> {
+                        is Events.WriteEvent, is Events.DeleteEvent, is Events.RefreshEvent -> {
                             initWrittenDates()
                         }
                     }

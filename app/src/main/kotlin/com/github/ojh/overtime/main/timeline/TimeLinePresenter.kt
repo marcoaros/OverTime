@@ -41,6 +41,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
                         is Events.WriteEvent -> addTimeLine(it.timeLine)
                         is Events.UpdateEvent -> updateTimeLine(it.timeLine)
                         is Events.DeleteEvent -> deleteTimeLine(it.timeLineId)
+                        is Events.RefreshEvent -> getTimeLines(filterType)
                     }
                 }
         )

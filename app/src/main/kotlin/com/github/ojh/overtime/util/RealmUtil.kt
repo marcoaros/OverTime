@@ -132,6 +132,6 @@ object RealmUtil {
         Realm.deleteRealm(realmConfiguration)
         exportFile.copyTo(internalFile, true)
 
-        return "파일이 복구되었습니다. 앱을 다시 시작해주세요."
+        return "파일이 복구되었습니다."
     }
 }
