@@ -23,25 +23,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="58dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginRight="58dp"
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/iv_timeline_image"
             android:layout_toRightOf="@+id/iv_timeline_image"
             android:ellipsize="end"
             android:gravity="start|left"
             android:maxLines="3"
-            android:layout_marginRight="58dp"
-            android:layout_marginEnd="58dp"
             android:text=""
             android:textSize="14sp" />
 
         <RelativeLayout
             android:id="@+id/rl_right"
+            style="?backgroundColorPrimaryDemiLight"
             android:layout_width="52dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@color/colorPrimaryDemiLight">
+            android:layout_alignParentRight="true">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/iv_setting"
@@ -54,16 +54,17 @@
 
             <TextView
                 android:id="@+id/tv_timeline_date"
+                style="?textColorPrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/tv_timeline_day"
                 android:layout_centerHorizontal="true"
                 android:text=""
-                android:textColor="@color/colorPrimaryLight"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_timeline_day"
+                style="?textColorDateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -71,9 +72,8 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
                 android:text=""
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

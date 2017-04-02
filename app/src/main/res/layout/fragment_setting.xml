@@ -7,14 +7,30 @@
     tools:context="com.github.ojh.overtime.main.setting.SettingFragment">
 
     <android.support.v7.widget.SwitchCompat
-        android:layout_marginTop="24dp"
-        android:layout_gravity="center_horizontal"
         android:id="@+id/switch_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
         android:text="@string/setting_switch_push"
         app:switchMinWidth="60dp"
         app:switchPadding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="테마" />
+
+    <Spinner
+        android:id="@+id/spinner_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/theme_array"
+        android:spinnerMode="dropdown" />
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"

@@ -6,6 +6,9 @@ import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.app.OverTimeApplication
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.BaseContract
+import com.github.ojh.overtime.util.PropertyUtil
+import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_THEME
+import com.github.ojh.overtime.util.theme.ThemeUtil
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
@@ -14,6 +17,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val theme = PropertyUtil(OverTimeApplication.application).getInt(KEY_THEME)
+        ThemeUtil.onActivityCreateSetTheme(this, theme)
         activityComponent = setComponent(OverTimeApplication.appComponent)
         setComponent(OverTimeApplication.appComponent)
 

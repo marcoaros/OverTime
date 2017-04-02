@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundColorPrimary" format="reference" />
+    <attr name="backgroundColorPrimaryDemiLight" format="reference" />
+    <attr name="textColorPrimaryText" format="reference" />
+    <attr name="textColorSecondaryText" format="reference" />
+    <attr name="textColorDateText" format="reference" />
+
+</resources>

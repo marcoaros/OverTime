@@ -12,12 +12,14 @@ import io.realm.RealmConfiguration
 class OverTimeApplication : Application() {
 
     companion object {
-        @JvmStatic
+        lateinit var application: Application
         lateinit var appComponent: AppComponent
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        application = this
 
         initRealmConfiguration()
 

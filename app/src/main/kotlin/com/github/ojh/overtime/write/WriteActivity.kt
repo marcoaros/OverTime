@@ -124,7 +124,16 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             isShowingAnimation = true
 
             transition.addSimpleEndTransitionListener {
-                animateRevealShow(rl_write_reveal_hide)
+                GUIUtils.animateRevealShow(
+                        rl_write_reveal_hide,
+                        {
+                            val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+                            animation.duration = 300
+                            ll_write_reveal_show.startAnimation(animation)
+                            ll_write_reveal_show.visibility = View.VISIBLE
+                            isShowingAnimation = false
+                        }
+                )
             }
 
             val fade = Fade().apply {
@@ -139,26 +148,6 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         }
     }
 
-    private fun animateRevealShow(viewRoot: View) {
-        val cx = (viewRoot.left + viewRoot.right) / 2
-        val cy = (viewRoot.top + viewRoot.bottom) / 2
-        GUIUtils.animateRevealShow(
-                this,
-                viewRoot,
-                fab_write.width / 2,
-                R.color.colorAccent,
-                cx,
-                cy,
-                {
-                    val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-                    animation.duration = 300
-                    ll_write_reveal_show.startAnimation(animation)
-                    ll_write_reveal_show.visibility = View.VISIBLE
-                    isShowingAnimation = false
-                }
-        )
-    }
-
     override fun onBackPressed() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUpdate) {
 
@@ -167,15 +156,14 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             isShowingAnimation = true
+
             GUIUtils.animateRevealHide(
-                    this,
                     rl_write_reveal_hide,
-                    R.color.colorAccent,
-                    fab_write.width / 2,
                     {
                         super.onBackPressed()
                     }
             )
+
         } else {
             super.onBackPressed()
         }

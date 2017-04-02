@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_write"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        style="?backgroundColorPrimary"
         app:title="@string/write_button_ok_text" />
 
     <ScrollView
@@ -41,7 +41,7 @@
                 android:id="@+id/ll_write_reveal_show"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                style="?backgroundColorPrimary"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/activity_horizontal_margin"
@@ -73,7 +73,7 @@
                             android:layout_centerHorizontal="true"
                             android:paddingBottom="48dp"
                             android:text="@string/write_img_label"
-                            android:textColor="@color/colorSecondaryText"
+                            style="?textColorPrimaryText"
                             android:textSize="14sp" />
 
                         <!--<ImageView-->
@@ -128,7 +128,7 @@
                                 android:hint="@string/write_content_hint"
                                 android:paddingBottom="16dp"
                                 android:paddingTop="6dp"
-                                android:textColor="@color/colorPrimaryText"
+                                android:textColor="@color/colorPrimaryText_brown"
                                 android:textSize="16sp" />
 
                         </android.support.design.widget.TextInputLayout>
