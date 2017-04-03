@@ -14,9 +14,9 @@ interface SettingContract {
         fun showRationalDialog()
         fun showToast(message: String)
         fun showRestoreDialog(pathList: List<String>)
-
         fun showProgress()
         fun dismissProgress()
+        fun setLottieView(url: String)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

@@ -18,6 +18,7 @@ import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
 import kotlinx.android.synthetic.main.fragment_setting.*
+import org.json.JSONObject
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -132,5 +133,9 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
     override fun dismissProgress() {
         if(progressDialog.isShowing)
             progressDialog.dismiss()
+    }
+
+    override fun setLottieView(url: String) {
+        lottie_setting.setAnimation(JSONObject(url))
     }
 }

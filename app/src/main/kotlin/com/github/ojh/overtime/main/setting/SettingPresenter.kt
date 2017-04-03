@@ -16,6 +16,7 @@ import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_ALARM
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_THEME
+import com.github.ojh.overtime.util.firebase.FirebaseUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -34,6 +35,10 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     }
 
     override fun initSetting() {
+
+        val lottieUrl = FirebaseUtil.getString("setting_url")
+        getView()?.setLottieView(lottieUrl)
+
         val isChecked = propertyUtil.getBoolean(KEY_ALARM, true)
         getView()?.setAlarmSwitch(isChecked)
 
@@ -110,7 +115,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
                     it.path
                 }
 
-        if(backUpFileList.isEmpty()) {
+        if (backUpFileList.isEmpty()) {
             getView()?.showToast("백업을 할 파일이 없습니다. download 폴더에 .realm 파일을 넣어주세요")
             return
         }

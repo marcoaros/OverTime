@@ -4,6 +4,7 @@ import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.github.ojh.overtime.util.RealmUtil
+import com.github.ojh.overtime.util.firebase.FirebaseUtil
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.fabric.sdk.android.Fabric
 
@@ -19,6 +20,8 @@ class OverTimeApplication : Application() {
         super.onCreate()
 
         application = this
+
+        FirebaseUtil.fetch()
 
         RealmUtil.initRealm(this)
 

@@ -3,14 +3,12 @@ package com.github.ojh.overtime.splash
 import android.app.Application
 import android.os.Handler
 import com.airbnb.lottie.LottieAnimationView
-import com.github.ojh.overtime.base.BasePresenter
-import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.alarm.AlarmUtil
+import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_ALARM
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
