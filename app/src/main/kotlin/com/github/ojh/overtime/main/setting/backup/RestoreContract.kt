@@ -2,10 +2,13 @@ package com.github.ojh.overtime.main.setting.backup
 
 import com.github.ojh.overtime.base.BaseContract
 
-interface BackUpContract {
+interface RestoreContract {
     interface View : BaseContract.View {
-        fun setBackUpRecyclerView(pathList: List<String>)
+        fun setRecyclerView(pathList: List<String>)
         fun showRestoreResult(message: String)
+
+        fun showProgress()
+        fun dismissProgress()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

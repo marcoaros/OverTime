@@ -14,7 +14,6 @@ import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
-import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import javax.inject.Inject
 
@@ -62,7 +61,10 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     }
 
     override fun checkStoragePermission(activity: Activity) {
-        PermissionUtil.checkPermissionFromActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_GALLERY)
+        PermissionUtil.checkPermissionFromActivity(
+                activity,
+                REQUEST_GALLERY,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.main.setting
 
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,15 @@ import android.widget.AdapterView
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.main.MainComponent
-import com.github.ojh.overtime.main.setting.backup.BackUpDialogFragment
+import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_BACKUP
+import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_RESTORE
+import com.github.ojh.overtime.main.setting.backup.RestoreDialogFragment
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
 import kotlinx.android.synthetic.main.fragment_setting.*
 import javax.inject.Inject
+import kotlin.LazyThreadSafetyMode.NONE
 
 
 /**
@@ -23,7 +27,14 @@ import javax.inject.Inject
  */
 class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
-    var isFirst = true
+    private val progressDialog by lazy(NONE) {
+        ProgressDialog(context).apply {
+            setTitle("백업")
+            setMessage("데이터를 백업중입니다...")
+        }
+    }
+
+    private var isFirst = true
 
     companion object {
         private val fragment by lazy { SettingFragment() }
@@ -67,10 +78,12 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        btn_backup.setOnClickListener { settingPresenter.backupData() }
+        btn_backup.setOnClickListener {
+            settingPresenter.checkStoragePermission(this, REQUEST_BACKUP)
+        }
 
         btn_load.setOnClickListener {
-            settingPresenter.checkStoragePermission(this)
+            settingPresenter.checkStoragePermission(this, REQUEST_RESTORE)
         }
     }
 
@@ -93,8 +106,8 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
     }
 
     override fun showBackUpDialog() {
-        val dialog = BackUpDialogFragment()
-        dialog.show(fragmentManager, BackUpDialogFragment::class.java.simpleName)
+        val dialog = RestoreDialogFragment()
+        dialog.show(fragmentManager, RestoreDialogFragment::class.java.simpleName)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -109,5 +122,15 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
     override fun showToast(message: String) {
         toast(message)
+    }
+
+    override fun showProgress() {
+        if(!progressDialog.isShowing)
+            progressDialog.show()
+    }
+
+    override fun dismissProgress() {
+        if(progressDialog.isShowing)
+            progressDialog.dismiss()
     }
 }

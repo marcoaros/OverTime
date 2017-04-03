@@ -5,8 +5,8 @@ import dagger.Subcomponent
 
 @PerDialog
 @Subcomponent(
-        modules = arrayOf(BackUpModule::class)
+        modules = arrayOf(RestoreModule::class)
 )
-interface BackUpComponent {
-    fun inject(backUpDialogFragment: BackUpDialogFragment)
+interface RestoreComponent {
+    fun inject(restoreDialogFragment: RestoreDialogFragment)
 }

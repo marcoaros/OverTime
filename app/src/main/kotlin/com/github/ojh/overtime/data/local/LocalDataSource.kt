@@ -3,6 +3,7 @@ package com.github.ojh.overtime.data.local
 import com.github.ojh.overtime.data.*
 import com.github.ojh.overtime.util.RealmUtil
 import com.github.ojh.overtime.util.extensions.getBetweenDates
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.realm.Sort
 import java.util.*
@@ -106,10 +107,25 @@ class LocalDataSource : DataSource {
     }
 
     override fun backUpData(): Flowable<String> {
-        return Flowable.just(RealmUtil.backup())
+        return Flowable.create(
+                {
+                    val resultString = RealmUtil.backup()
+                    it.onNext(resultString)
+                    it.onComplete()
+                },
+                BackpressureStrategy.LATEST
+        )
     }
 
     override fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String> {
-        return Flowable.just(RealmUtil.restore(internalFilePath, exportFilePath))
+        return Flowable.create(
+                {
+                    val resultString = RealmUtil.restore(internalFilePath, exportFilePath)
+                    it.onNext(resultString)
+                    it.onComplete()
+                },
+                BackpressureStrategy.LATEST
+        )
     }
+
 }

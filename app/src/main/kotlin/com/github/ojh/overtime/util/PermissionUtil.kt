@@ -13,14 +13,12 @@ import com.github.ojh.overtime.R
 
 object PermissionUtil {
 
-    const val REQUEST_STORAGE = 111
-
-    fun checkPermissionFromActivity(activity: Activity, permission: String, requestCode: Int) {
-        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
+    fun checkPermissionFromActivity(activity: Activity, requestCode: Int, vararg permission: String) {
+        ActivityCompat.requestPermissions(activity, permission, requestCode)
     }
 
-    fun checkPermissionFromFragment(fragment: Fragment, permission: String, requestCode: Int) {
-        fragment.requestPermissions(arrayOf(permission), requestCode)
+    fun checkPermissionFromFragment(fragment: Fragment, requestCode: Int, vararg permission: String) {
+        fragment.requestPermissions(permission, requestCode)
     }
 
 

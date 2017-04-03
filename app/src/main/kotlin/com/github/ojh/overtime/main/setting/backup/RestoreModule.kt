@@ -5,12 +5,12 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class BackUpModule {
+class RestoreModule {
 
     @PerDialog
     @Provides
-    fun provideBackUpPresenter(
-            presenter: BackUpPresenter<BackUpContract.View>
+    fun provideRestorePresenter(
+            presenter: RestorePresenter<RestoreContract.View>
 
-    ): BackUpContract.Presenter<BackUpContract.View> = presenter
+    ): RestoreContract.Presenter<RestoreContract.View> = presenter
 }

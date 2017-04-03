@@ -14,6 +14,9 @@ interface SettingContract {
         fun showRationalDialog()
         fun showToast(message: String)
         fun showBackUpDialog()
+
+        fun showProgress()
+        fun dismissProgress()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
@@ -21,7 +24,7 @@ interface SettingContract {
         fun setOnThemeSelectedListener(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long)
         fun initSetting()
 
-        fun checkStoragePermission(fragment: Fragment)
+        fun checkStoragePermission(fragment: Fragment, requestCode: Int)
         fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
         fun backupData()
     }

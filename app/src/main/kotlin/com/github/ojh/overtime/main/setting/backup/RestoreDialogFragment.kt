@@ -1,5 +1,6 @@
 package com.github.ojh.overtime.main.setting.backup
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -9,31 +10,38 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseDialogFragment
 import com.github.ojh.overtime.data.Events
-import com.github.ojh.overtime.main.setting.backup.adapter.BackUpAdapter
+import com.github.ojh.overtime.main.setting.backup.adapter.RestoreAdapter
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.extensions.toast
-import kotlinx.android.synthetic.main.fragment_dialog_backup.*
+import kotlinx.android.synthetic.main.fragment_dialog_restore.*
 import java.io.File
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
-class BackUpDialogFragment : BaseDialogFragment(), BackUpContract.View {
+class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
 
     @Inject
-    lateinit var presenter: BackUpContract.Presenter<BackUpContract.View>
+    lateinit var presenter: RestoreContract.Presenter<RestoreContract.View>
+
+    private val progressDialog by lazy(NONE) {
+        ProgressDialog(context).apply {
+            setTitle("복원")
+            setMessage("데이터를 복원중입니다...")
+        }
+    }
 
     private val backUpAdapter by lazy(NONE) {
-        BackUpAdapter()
+        RestoreAdapter()
     }
 
     override fun setComponent(appComponent: AppComponent) {
         appComponent
-                .plus(BackUpModule())
+                .plus(RestoreModule())
                 .inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_dialog_backup, container, false)
+        val view = inflater?.inflate(R.layout.fragment_dialog_restore, container, false)
         presenter.attachView(this)
         return view
     }
@@ -59,7 +67,10 @@ class BackUpDialogFragment : BaseDialogFragment(), BackUpContract.View {
         }
     }
 
-    override fun setBackUpRecyclerView(pathList: List<String>) {
+    override fun setRecyclerView(pathList: List<String>) {
+        if(pathList.isEmpty())
+            dismiss()
+
         backUpAdapter.setBackupFilePath(pathList)
     }
 
@@ -67,5 +78,17 @@ class BackUpDialogFragment : BaseDialogFragment(), BackUpContract.View {
         toast(message)
         EventBus.post(Events.RefreshEvent())
         dismiss()
+    }
+
+    override fun showProgress() {
+        if(!progressDialog.isShowing) {
+            progressDialog.show()
+        }
+    }
+
+    override fun dismissProgress() {
+        if(progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 }

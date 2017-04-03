@@ -9,10 +9,10 @@ import com.github.ojh.overtime.util.ViewClickHandler
 import kotlinx.android.synthetic.main.view_backup.view.*
 import java.io.File
 
-class BackUpAdapter(
+class RestoreAdapter(
         var onClickHandler: ViewClickHandler? = null
 
-): RecyclerView.Adapter<BackUpViewHolder>() {
+): RecyclerView.Adapter<RestoreViewHolder>() {
 
     val backUpFilePathList = mutableListOf<String>()
 
@@ -20,13 +20,13 @@ class BackUpAdapter(
         return backUpFilePathList.size
     }
 
-    override fun onBindViewHolder(holder: BackUpViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RestoreViewHolder?, position: Int) {
         holder?.bind(backUpFilePathList[position])
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BackUpViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RestoreViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.view_backup, parent, false)
-        val holder = BackUpViewHolder(view)
+        val holder = RestoreViewHolder(view)
 
         view.setOnClickListener {
             onClickHandler?.invoke(it, holder.adapterPosition)
@@ -40,7 +40,7 @@ class BackUpAdapter(
     }
 }
 
-class BackUpViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class RestoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(backUpFilePath: String) {
         itemView.tv_path.text = File(backUpFilePath).name
