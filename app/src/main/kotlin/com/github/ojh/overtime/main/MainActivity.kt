@@ -48,6 +48,7 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
     }
 
     override fun onDestroy() {
+        presenter.detachView()
         super.onDestroy()
     }
 

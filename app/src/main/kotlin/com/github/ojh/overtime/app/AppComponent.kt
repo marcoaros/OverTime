@@ -8,8 +8,8 @@ import com.github.ojh.overtime.main.ListComponent
 import com.github.ojh.overtime.main.ListModule
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.MainModule
-import com.github.ojh.overtime.main.setting.backup.RestoreComponent
-import com.github.ojh.overtime.main.setting.backup.RestoreModule
+import com.github.ojh.overtime.main.setting.restore.RestoreComponent
+import com.github.ojh.overtime.main.setting.restore.RestoreModule
 import com.github.ojh.overtime.splash.SplashComponent
 import com.github.ojh.overtime.splash.SplashModule
 import com.github.ojh.overtime.write.WriteComponent

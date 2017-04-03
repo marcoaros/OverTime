@@ -13,7 +13,7 @@ import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_BACKUP
 import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_RESTORE
-import com.github.ojh.overtime.main.setting.backup.RestoreDialogFragment
+import com.github.ojh.overtime.main.setting.restore.RestoreDialogFragment
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
@@ -105,8 +105,8 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
         super.onDestroyView()
     }
 
-    override fun showBackUpDialog() {
-        val dialog = RestoreDialogFragment()
+    override fun showRestoreDialog(pathList: List<String>) {
+        val dialog = RestoreDialogFragment.newInstance(pathList)
         dialog.show(fragmentManager, RestoreDialogFragment::class.java.simpleName)
     }
 

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Environment
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.AdapterView
@@ -85,7 +86,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_RESTORE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getView()?.showBackUpDialog()
+                loadBackUpFilePaths()
             } else {
                 getView()?.showRationalDialog()
             }
@@ -96,5 +97,23 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
                 getView()?.showRationalDialog()
             }
         }
+    }
+
+    override fun loadBackUpFilePaths() {
+        val exportRealmPATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+        val backUpFileList = exportRealmPATH.listFiles()
+                .filter {
+                    it.name.contains(".realm")
+                }
+                .map {
+                    it.path
+                }
+
+        if(backUpFileList.isEmpty()) {
+            getView()?.showToast("백업을 할 파일이 없습니다. download 폴더에 .realm 파일을 넣어주세요")
+            return
+        }
+        getView()?.showRestoreDialog(backUpFileList)
     }
 }

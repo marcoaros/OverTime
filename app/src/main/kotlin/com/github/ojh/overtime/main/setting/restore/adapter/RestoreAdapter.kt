@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.main.setting.backup.adapter
+package com.github.ojh.overtime.main.setting.restore.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

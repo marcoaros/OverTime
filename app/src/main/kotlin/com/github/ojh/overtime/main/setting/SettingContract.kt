@@ -13,7 +13,7 @@ interface SettingContract {
         fun changeTheme(theme: Int)
         fun showRationalDialog()
         fun showToast(message: String)
-        fun showBackUpDialog()
+        fun showRestoreDialog(pathList: List<String>)
 
         fun showProgress()
         fun dismissProgress()
@@ -23,7 +23,7 @@ interface SettingContract {
         fun setOnCheckedPushChangeListener(view: CompoundButton, isChecked: Boolean)
         fun setOnThemeSelectedListener(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long)
         fun initSetting()
-
+        fun loadBackUpFilePaths()
         fun checkStoragePermission(fragment: Fragment, requestCode: Int)
         fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
         fun backupData()

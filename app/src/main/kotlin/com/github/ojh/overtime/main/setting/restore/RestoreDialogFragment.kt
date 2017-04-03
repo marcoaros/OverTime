@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.main.setting.backup
+package com.github.ojh.overtime.main.setting.restore
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.app.AppComponent
 import com.github.ojh.overtime.base.view.BaseDialogFragment
 import com.github.ojh.overtime.data.Events
-import com.github.ojh.overtime.main.setting.backup.adapter.RestoreAdapter
+import com.github.ojh.overtime.main.setting.restore.adapter.RestoreAdapter
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.extensions.toast
 import kotlinx.android.synthetic.main.fragment_dialog_restore.*
@@ -22,6 +22,18 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
 
     @Inject
     lateinit var presenter: RestoreContract.Presenter<RestoreContract.View>
+
+    companion object {
+        const val KEY_PATH_LIST = "key_path_list"
+
+        fun newInstance(pathList: List<String>): RestoreDialogFragment {
+            val fragment = RestoreDialogFragment()
+            val args = Bundle()
+            args.putStringArrayList(KEY_PATH_LIST, ArrayList(pathList))
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     private val progressDialog by lazy(NONE) {
         ProgressDialog(context).apply {
@@ -53,24 +65,19 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
-        presenter.loadBackUpFilePaths()
+
+        val pathList = arguments.getStringArrayList(KEY_PATH_LIST)
+        initRecyclerView(pathList)
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(pathList: List<String>) {
         rv_backup.layoutManager = LinearLayoutManager(context)
         rv_backup.adapter = backUpAdapter
-        backUpAdapter.onClickHandler = { _ ,position ->
+        backUpAdapter.onClickHandler = { _, position ->
             val internalFilePath = File(context.filesDir, "overtime.realm").path
-            val selectedFilePath = backUpAdapter.backUpFilePathList[position]
+            val selectedFilePath = pathList[position]
             presenter.restoreData(internalFilePath, selectedFilePath)
         }
-    }
-
-    override fun setRecyclerView(pathList: List<String>) {
-        if(pathList.isEmpty())
-            dismiss()
-
         backUpAdapter.setBackupFilePath(pathList)
     }
 
@@ -81,13 +88,13 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
     }
 
     override fun showProgress() {
-        if(!progressDialog.isShowing) {
+        if (!progressDialog.isShowing) {
             progressDialog.show()
         }
     }
 
     override fun dismissProgress() {
-        if(progressDialog.isShowing) {
+        if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
     }
