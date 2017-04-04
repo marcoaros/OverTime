@@ -32,7 +32,7 @@ class ListActivity : BaseActivity(), ListContract.View {
     lateinit var presenter: ListContract.Presenter<ListContract.View>
 
     private val timeLineAdapter by lazy(NONE) {
-        TimeLineAdapter()
+        TimeLineAdapter(this)
     }
 
     override fun setComponent(appComponent: AppComponent): ActivityComponent {

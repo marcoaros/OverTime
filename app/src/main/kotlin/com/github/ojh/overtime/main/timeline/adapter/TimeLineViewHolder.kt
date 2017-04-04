@@ -1,52 +1,16 @@
 package com.github.ojh.overtime.main.timeline.adapter
 
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.BitmapRequestBuilder
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.ImageViewTarget
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.ViewClickHandler
-import com.github.ojh.overtime.util.extensions.load
 import com.github.ojh.overtime.util.extensions.toFormatString
 import com.github.ojh.overtime.util.extensions.toWeekString
+import com.github.ojh.overtime.util.palette.PaletteBitmap
+import com.github.ojh.overtime.util.palette.PaletteBitmapTranscoder
+import com.github.ojh.overtime.util.palette.PaletteUtil
 import kotlinx.android.synthetic.main.view_timeline.view.*
-
-class TimeLineViewHolder(
-        itemView: View,
-        itemClickListener: ViewClickHandler?,
-        settingClickListener: ViewClickHandler?
-
-) : RecyclerView.ViewHolder(itemView) {
-
-    private var timeLine: TimeLine? = null
-
-    init {
-        itemView.setOnClickListener {
-            itemClickListener?.invoke(it, adapterPosition)
-        }
-
-        itemView.iv_setting.setOnClickListener {
-            settingClickListener?.invoke(it, adapterPosition)
-        }
-    }
-
-    fun bind(item: TimeLine) {
-        this.timeLine = item
-        with(item) {
-            mContent?.let {
-                itemView.tv_timeline_content.text = it
-            }
-
-            mDate?.let {
-                itemView.tv_timeline_date.text = it.toFormatString()
-                itemView.tv_timeline_day.text = it.toWeekString()
-            }
-
-            if (mImgUri != null) {
-                itemView.iv_timeline_image.load(Uri.parse(mImgUri))
-                itemView.iv_timeline_image.visibility = View.VISIBLE
-            } else {
-                itemView.iv_timeline_image.visibility = View.GONE
-            }
-        }
-    }
-}

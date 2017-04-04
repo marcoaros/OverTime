@@ -12,13 +12,13 @@ import android.widget.Spinner
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.data.TimeLine
+import com.github.ojh.overtime.data.toFilterType
 import com.github.ojh.overtime.detail.DetailActivity
 import com.github.ojh.overtime.edit.EditDialogFragment
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapter
 import com.github.ojh.overtime.util.VerticalSpaceItemDecoration
 import com.github.ojh.overtime.util.extensions.startActivityWithTransition
-import com.github.ojh.overtime.data.toFilterType
 import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_timeline.*
@@ -41,7 +41,7 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
     lateinit var presenter: TimeLinePresenter<TimeLineContract.View>
 
     private val timeLineAdapter by lazy(NONE) {
-        TimeLineAdapter()
+        TimeLineAdapter(context)
     }
 
     override fun setComponent(activityComponent: MainComponent) {
