@@ -107,8 +107,9 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
     }
 
     override fun showRestoreDialog(pathList: List<String>) {
-        val dialog = RestoreDialogFragment.newInstance(pathList)
-        dialog.show(fragmentManager, RestoreDialogFragment::class.java.simpleName)
+        val ft = fragmentManager.beginTransaction()
+        ft.add(RestoreDialogFragment.newInstance(pathList), RestoreDialogFragment::class.java.simpleName)
+        ft.commitAllowingStateLoss()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

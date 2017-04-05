@@ -16,7 +16,7 @@ interface WriteContract {
         fun setErrorContent(isError: Boolean)
         fun navigateToMain()
         fun navigateToGallery(uri: Uri)
-        fun loadCroppedImage(uri: Uri)
+        fun loadCroppedImage(uri: String)
         fun showRationalDialog()
     }
 

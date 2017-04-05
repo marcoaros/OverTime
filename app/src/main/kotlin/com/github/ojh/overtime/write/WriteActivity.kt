@@ -100,7 +100,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         }
 
         timeLine.mImgUri?.let {
-            iv_gallery.load(Uri.parse(it))
+            iv_gallery.load(it)
         }
     }
 
@@ -215,7 +215,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         writePresenter.onActivityResult(this, requestCode, resultCode, data)
     }
 
-    override fun loadCroppedImage(uri: Uri) {
+    override fun loadCroppedImage(uri: String) {
         iv_gallery.load(uri)
     }
 }

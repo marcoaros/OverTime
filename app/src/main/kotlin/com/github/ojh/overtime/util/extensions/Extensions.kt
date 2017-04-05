@@ -1,7 +1,6 @@
 package com.github.ojh.overtime.util.extensions
 
 import android.annotation.TargetApi
-import android.net.Uri
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,14 +8,49 @@ import android.transition.Transition
 import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.ImageViewTarget
+import com.github.ojh.overtime.util.PaletteColorCallback
+import com.github.ojh.overtime.util.palette.PaletteBitmap
+import com.github.ojh.overtime.util.palette.PaletteBitmapTranscoder
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun ImageView.load(uri: Uri) {
+fun ImageView.load(uri: String) {
     Glide.with(context)
             .load(uri)
             .centerCrop()
             .into(this)
+}
+
+fun ImageView.loadFromPalette(url: String, paletteColorCallback: PaletteColorCallback) {
+    Glide.with(context)
+            .fromString()
+            .asBitmap()
+            .transcode(PaletteBitmapTranscoder(context), PaletteBitmap::class.java)
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .load(url)
+            .into(object : ImageViewTarget<PaletteBitmap>(this) {
+
+                override fun setResource(resource: PaletteBitmap?) {
+                    super.view.setImageBitmap(resource?.bitmap)
+
+                    val swatch = resource?.palette?.run {
+                        vibrantSwatch
+                                ?: darkVibrantSwatch
+                                ?: lightVibrantSwatch
+                                ?: mutedSwatch
+                                ?: darkMutedSwatch
+                                ?: lightMutedSwatch
+                    }
+
+                    swatch?.let {
+                        paletteColorCallback.invoke(it.rgb, it.titleTextColor, it.bodyTextColor)
+                    }
+
+                }
+            })
 }
 
 fun Date.toFormatString(format: String = "MM/dd"): String {
@@ -39,7 +73,7 @@ fun Date.toWeekString(): String {
     }
 }
 
-fun Date.getBetweenDates() : Pair<Date, Date> {
+fun Date.getBetweenDates(): Pair<Date, Date> {
 
     val curCal = Calendar.getInstance()
     curCal.time = this

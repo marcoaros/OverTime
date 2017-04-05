@@ -108,7 +108,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
             timeLine.mImgUri = uri.toString()
 
             uri?.let {
-                getView()?.loadCroppedImage(it)
+                getView()?.loadCroppedImage(it.toString())
             }
         }
     }
