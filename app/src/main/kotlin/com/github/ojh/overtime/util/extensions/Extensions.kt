@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.ImageViewTarget
 import com.github.ojh.overtime.util.PaletteColorCallback
+import com.github.ojh.overtime.util.SimpleCallback
 import com.github.ojh.overtime.util.palette.PaletteBitmap
 import com.github.ojh.overtime.util.palette.PaletteBitmapTranscoder
 import java.text.SimpleDateFormat
@@ -96,7 +97,7 @@ fun Date.getBetweenDates(): Pair<Date, Date> {
     return Pair(startDate, endDate)
 }
 
-fun EditText.setOnSimpleTextWather(listener: (text: String) -> Unit) {
+fun EditText.setOnSimpleTextWather(listener: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             listener.invoke(s.toString())
@@ -109,7 +110,7 @@ fun EditText.setOnSimpleTextWather(listener: (text: String) -> Unit) {
 
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-fun Transition.addSimpleEndTransitionListener(action: () -> Unit) {
+fun Transition.addSimpleEndTransitionListener(action: SimpleCallback) {
     this.addListener(object : Transition.TransitionListener {
         override fun onTransitionEnd(transition: Transition) {
             removeListener(this)

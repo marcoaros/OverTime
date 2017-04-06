@@ -28,4 +28,14 @@ class TestKotlin {
     }
 
 
+    @Test
+    fun testFlatMap() {
+        val list = listOf(listOf("1", "2"), listOf(3), listOf("4" to "44", "5" to "55", "6" to "66"))
+
+        list.flatMap {
+            it
+        }.forEach(::println)
+
+    }
+
 }

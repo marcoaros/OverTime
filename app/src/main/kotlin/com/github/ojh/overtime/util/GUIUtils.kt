@@ -13,7 +13,7 @@ import com.github.ojh.overtime.R
 object GUIUtils {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    fun animateRevealHide(view: View, animEndListener: () -> Unit) {
+    fun animateRevealHide(view: View, animEndListener: SimpleCallback) {
         val ctx = view.context
         val cx = (view.left + view.right) / 2
         val cy = (view.top + view.bottom) / 2
@@ -47,7 +47,7 @@ object GUIUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    fun animateRevealShow(view: View, animEndListener: () -> Unit) {
+    fun animateRevealShow(view: View, animEndListener: SimpleCallback) {
         val ctx = view.context
         val x = (view.left + view.right) / 2
         val y = (view.top + view.bottom) / 2

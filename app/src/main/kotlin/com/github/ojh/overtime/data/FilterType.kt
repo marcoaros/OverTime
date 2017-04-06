@@ -16,7 +16,9 @@ sealed class FilterType {
 }
 
 open class FilterDateDescending : FilterType()
+
 open class FilterDateAscending : FilterType()
+
 class FilterEqualDate(val date: Date): FilterDateDescending()
 
 

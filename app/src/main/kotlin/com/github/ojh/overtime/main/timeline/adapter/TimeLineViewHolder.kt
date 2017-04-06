@@ -47,16 +47,15 @@ class TimeLineViewHolder(
             itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             tv_timeline_content.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryText_brown))
 
-            if (timeLine.mImgUri != null) {
 
-                timeLine.mImgUri?.let {
-                    iv_timeline_image.loadFromPalette(it, { rgb, _, bodyColor ->
-                        itemView.setBackgroundColor(rgb)
-                        tv_timeline_content.setTextColor(bodyColor)
-                        iv_timeline_image.visibility = View.VISIBLE
-                    })
-                }
+            val imgUrl = timeLine.mImgUri
 
+            if (imgUrl != null) {
+                iv_timeline_image.loadFromPalette(imgUrl, { rgb, _, bodyColor ->
+                    itemView.setBackgroundColor(rgb)
+                    tv_timeline_content.setTextColor(bodyColor)
+                    iv_timeline_image.visibility = View.VISIBLE
+                })
             } else {
                 Glide.clear(iv_timeline_image)
                 iv_timeline_image.visibility = View.GONE

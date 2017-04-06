@@ -7,8 +7,8 @@ import android.transition.TransitionInflater
 import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
@@ -79,22 +79,27 @@ class DetailActivity : BaseActivity(), DetailContract.View {
 
     override fun initView(timeLine: TimeLine) {
         with(timeLine) {
-            if (mImgUri != null) {
 
-                mImgUri?.let {
-                    iv_img.loadFromPalette(it, { rgb, _, bodyColor ->
-                        ll_detail.setBackgroundColor(rgb)
-                        tv_content.setTextColor(bodyColor)
-                        tv_date.setTextColor(bodyColor)
-                    })
-                }
+            mContent?.let {
+                tv_content.text = it
+            }
+
+            mDate?.let {
+                tv_date.text = it.toFormatString()
+            }
+
+            val imgUrl = mImgUri
+
+            if (imgUrl != null) {
+                iv_img.loadFromPalette(imgUrl, { rgb, _, bodyColor ->
+                    ll_detail.setBackgroundColor(rgb)
+                    tv_content.setTextColor(bodyColor)
+                    tv_date.setTextColor(bodyColor)
+                })
 
             } else {
                 iv_img.visibility = View.GONE
             }
-
-            mContent?.let { tv_content.text = it }
-            mDate?.let { tv_date.text = it.toFormatString() }
         }
     }
 }
