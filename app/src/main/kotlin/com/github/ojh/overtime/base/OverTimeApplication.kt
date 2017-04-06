@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.app
+package com.github.ojh.overtime.base
 
 import android.app.Application
 import com.crashlytics.android.Crashlytics

@@ -79,15 +79,16 @@ object RealmUtil {
 
         val realm = Realm.getInstance(realmConfiguration)
 
-        val exportRealmPATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val exportRealmFileName = "overtime_${Date().toFormatString("yyyyMMdd_HHmmss")}.realm"
+        val externalPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val fileName = "overtime_${Date().toFormatString("yyyyMMdd_HHmmss")}.realm"
 
-        var resultMessage = "download폴더에 $exportRealmFileName 파일을 저장하였습니다"
+        var resultMessage = "download폴더에 $fileName 파일을 저장하였습니다"
 
         try {
-            val exportRealmFile = File(exportRealmPATH, exportRealmFileName)
-            exportRealmFile.delete()
-            realm.writeCopyTo(exportRealmFile)
+            val realmBackUpFile = File(externalPath, fileName)
+            realmBackUpFile.delete()
+            realm.writeCopyTo(realmBackUpFile)
+
         } catch (e: IOException) {
             e.printStackTrace()
             resultMessage = "파일저장 실패"
@@ -98,13 +99,13 @@ object RealmUtil {
         return resultMessage
     }
 
-    fun restore(internalFilePath: String, exportFilePath: String): String {
+    fun restore(internalFilePath: String, externalFilePath: String): String {
 
-        val exportFile = File(exportFilePath)
+        val externalFile = File(externalFilePath)
         val internalFile = File(internalFilePath)
 
         Realm.deleteRealm(realmConfiguration)
-        exportFile.copyTo(internalFile, true)
+        externalFile.copyTo(internalFile, true)
 
         return "파일이 복구되었습니다."
     }

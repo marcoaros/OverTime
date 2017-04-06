@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.airbnb.lottie.LottieAnimationView
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.main.MainActivity

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.view.BaseDialogFragment
 import com.github.ojh.overtime.data.Events
 import com.github.ojh.overtime.main.setting.restore.adapter.RestoreAdapter
@@ -23,6 +23,13 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
     @Inject
     lateinit var presenter: RestoreContract.Presenter<RestoreContract.View>
 
+    private val progressDialog by lazy(NONE) {
+        ProgressDialog(context).apply {
+            setTitle("복원")
+            setMessage("데이터를 복원중입니다...")
+        }
+    }
+
     companion object {
         const val KEY_PATH_LIST = "key_path_list"
 
@@ -33,17 +40,6 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
             fragment.arguments = args
             return fragment
         }
-    }
-
-    private val progressDialog by lazy(NONE) {
-        ProgressDialog(context).apply {
-            setTitle("복원")
-            setMessage("데이터를 복원중입니다...")
-        }
-    }
-
-    private val backUpAdapter by lazy(NONE) {
-        RestoreAdapter()
     }
 
     override fun setComponent(appComponent: AppComponent) {
@@ -72,18 +68,21 @@ class RestoreDialogFragment : BaseDialogFragment(), RestoreContract.View {
 
     private fun initRecyclerView(pathList: List<String>) {
         rv_backup.layoutManager = LinearLayoutManager(context)
-        rv_backup.adapter = backUpAdapter
-        backUpAdapter.onClickHandler = { _, position ->
-            val internalFilePath = File(context.filesDir, "overtime.realm").path
-            val selectedFilePath = pathList[position]
-            presenter.restoreData(internalFilePath, selectedFilePath)
-        }
-        backUpAdapter.setBackupFilePath(pathList)
+
+        val restoreAdapter = RestoreAdapter(
+                pathList,
+                { _, position ->
+                    val internalFilePath = File(context.filesDir, "overtime.realm").path
+                    val selectedFilePath = pathList[position]
+                    presenter.restoreData(internalFilePath, selectedFilePath)
+                }
+        )
+
+        rv_backup.adapter = restoreAdapter
     }
 
     override fun showRestoreResult(message: String) {
         toast(message)
-        EventBus.post(Events.RefreshEvent())
         dismiss()
     }
 

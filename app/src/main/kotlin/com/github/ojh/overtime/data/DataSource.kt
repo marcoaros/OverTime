@@ -12,5 +12,5 @@ interface DataSource {
     fun getWrittenDates(): Flowable<List<Date>>
 
     fun backUpData(): Flowable<String>
-    fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String>
+    fun restoreData(internalFilePath: String, externalFilePath: String): Flowable<String>
 }

@@ -35,8 +35,6 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
         }
     }
 
-    private var isFirst = true
-
     companion object {
         private val fragment by lazy { SettingFragment() }
         fun getInstance(): SettingFragment {
@@ -62,18 +60,22 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         settingPresenter.initSetting()
+        initEventListener()
+    }
 
+    private fun initEventListener() {
         switch_alarm.setOnCheckedChangeListener { view, isChecked ->
-            settingPresenter.setOnCheckedPushChangeListener(view, isChecked)
+            settingPresenter.changeAlarm(view, isChecked)
         }
 
         spinner_theme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            var isFirst = true
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (isFirst) {
                     isFirst = false
                     return
                 }
-                settingPresenter.setOnThemeSelectedListener(parent, view, position, id)
+                settingPresenter.selectTheme(parent, view, position, id)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -92,12 +94,11 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
         switch_alarm.isChecked = isChecked
     }
 
-    override fun setThemeView(theme: Int) {
+    override fun setThemeSpinner(theme: Int) {
         spinner_theme.setSelection(theme)
     }
 
     override fun changeTheme(theme: Int) {
-        isFirst = true
         ThemeUtil.changeToTheme(activity)
     }
 

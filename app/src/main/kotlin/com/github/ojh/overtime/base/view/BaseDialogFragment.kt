@@ -3,8 +3,8 @@ package com.github.ojh.overtime.base.view
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.app.AppComponent
-import com.github.ojh.overtime.app.OverTimeApplication
+import com.github.ojh.overtime.base.AppComponent
+import com.github.ojh.overtime.base.OverTimeApplication
 import com.github.ojh.overtime.base.BaseContract
 
 abstract class BaseDialogFragment : DialogFragment(), BaseContract.View {

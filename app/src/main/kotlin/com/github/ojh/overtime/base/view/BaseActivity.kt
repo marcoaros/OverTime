@@ -2,8 +2,8 @@ package com.github.ojh.overtime.base.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.github.ojh.overtime.app.AppComponent
-import com.github.ojh.overtime.app.OverTimeApplication
+import com.github.ojh.overtime.base.AppComponent
+import com.github.ojh.overtime.base.OverTimeApplication
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.BaseContract
 import com.github.ojh.overtime.util.PropertyUtil

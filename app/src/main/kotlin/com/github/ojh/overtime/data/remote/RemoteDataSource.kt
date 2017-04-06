@@ -40,7 +40,7 @@ class RemoteDataSource @Inject constructor(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String> {
+    override fun restoreData(internalFilePath: String, externalFilePath: String): Flowable<String> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

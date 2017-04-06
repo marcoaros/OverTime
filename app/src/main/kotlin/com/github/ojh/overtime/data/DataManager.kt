@@ -36,7 +36,7 @@ class DataManager @Inject constructor(
         return dataSource.backUpData()
     }
 
-    fun restoreData(internalFilePath:String, restoreFilePath: String): Flowable<String> {
-        return dataSource.restoreData(internalFilePath, restoreFilePath)
+    fun restoreData(internalFilePath:String, externalFilePath: String): Flowable<String> {
+        return dataSource.restoreData(internalFilePath, externalFilePath)
     }
 }

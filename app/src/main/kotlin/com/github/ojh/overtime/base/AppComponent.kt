@@ -1,4 +1,4 @@
-package com.github.ojh.overtime.app
+package com.github.ojh.overtime.base
 
 import com.github.ojh.overtime.detail.DetailComponent
 import com.github.ojh.overtime.detail.DetailModule

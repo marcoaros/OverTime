@@ -117,10 +117,10 @@ class LocalDataSource : DataSource {
         )
     }
 
-    override fun restoreData(internalFilePath: String, exportFilePath: String): Flowable<String> {
+    override fun restoreData(internalFilePath: String, externalFilePath: String): Flowable<String> {
         return Flowable.create(
                 {
-                    val resultString = RealmUtil.restore(internalFilePath, exportFilePath)
+                    val resultString = RealmUtil.restore(internalFilePath, externalFilePath)
                     it.onNext(resultString)
                     it.onComplete()
                 },

@@ -9,7 +9,7 @@ interface CalendarContract {
         fun navigateToList(date: Date?)
     }
 
-    interface Presenter<V: BaseContract.View>: BaseContract.Presenter<V> {
+    interface Presenter<V: View>: BaseContract.Presenter<V> {
         fun initWrittenDates()
         fun initEventBus()
         fun onSelectDate(date: Date?, view: android.view.View?)

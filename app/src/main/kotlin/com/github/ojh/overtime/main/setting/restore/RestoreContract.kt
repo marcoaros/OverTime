@@ -10,6 +10,6 @@ interface RestoreContract {
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun restoreData(internalFilePath: String, exportFilePath: String)
+        fun restoreData(internalFilePath: String, externalFilePath: String)
     }
 }

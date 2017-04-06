@@ -43,11 +43,11 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
         getView()?.setAlarmSwitch(isChecked)
 
         val theme = propertyUtil.getInt(KEY_THEME)
-        getView()?.setThemeView(theme)
+        getView()?.setThemeSpinner(theme)
 
     }
 
-    override fun setOnCheckedPushChangeListener(view: CompoundButton, isChecked: Boolean) {
+    override fun changeAlarm(view: CompoundButton, isChecked: Boolean) {
 
         if (isChecked) {
             AlarmUtil.setOnceAlarm(application, AlarmUtil.DEFAULT_ALARM_HOUR, AlarmUtil.DEFAULT_ALARM_MINUTE)
@@ -59,9 +59,33 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
 
     }
 
-    override fun setOnThemeSelectedListener(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun selectTheme(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         propertyUtil.setInt(KEY_THEME, position)
         getView()?.changeTheme(position)
+    }
+
+
+    override fun checkStoragePermission(fragment: Fragment, requestCode: Int) {
+        PermissionUtil.checkPermissionFromFragment(
+                fragment,
+                requestCode,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    }
+    override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == REQUEST_RESTORE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadBackUpFilePath()
+            } else {
+                getView()?.showRationalDialog()
+            }
+        } else if (requestCode == REQUEST_BACKUP) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                backupData()
+            } else {
+                getView()?.showRationalDialog()
+            }
+        }
     }
 
     override fun backupData() {
@@ -80,36 +104,12 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
         )
     }
 
-    override fun checkStoragePermission(fragment: Fragment, requestCode: Int) {
-        PermissionUtil.checkPermissionFromFragment(
-                fragment,
-                requestCode,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-    }
+    override fun loadBackUpFilePath() {
+        val backUpFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
-    override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_RESTORE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                loadBackUpFilePaths()
-            } else {
-                getView()?.showRationalDialog()
-            }
-        } else if (requestCode == REQUEST_BACKUP) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                backupData()
-            } else {
-                getView()?.showRationalDialog()
-            }
-        }
-    }
-
-    override fun loadBackUpFilePaths() {
-        val exportRealmPATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-        val backUpFileList = exportRealmPATH.listFiles()
+        val backUpFileList = backUpFilePath.listFiles()
                 .filter {
-                    it.name.contains(".realm")
+                    it.name.endsWith(".realm")
                 }
                 .map {
                     it.path
@@ -119,6 +119,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
             getView()?.showToast("백업을 할 파일이 없습니다. download 폴더에 .realm 파일을 넣어주세요")
             return
         }
+
         getView()?.showRestoreDialog(backUpFileList)
     }
 }

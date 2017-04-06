@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.app.AppComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.view.BaseDialogFragment
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
