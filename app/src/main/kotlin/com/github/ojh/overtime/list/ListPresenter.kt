@@ -8,7 +8,6 @@ import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.main.timeline.adapter.TimeLineAdapterContract
 import com.github.ojh.overtime.util.EventBus
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
@@ -22,11 +21,7 @@ class ListPresenter<V: ListContract.View> @Inject constructor(
 
     private lateinit var date: Date
 
-    override fun initDate(date: Date) {
-        this.date = date
-    }
-
-    override fun initEventListener() {
+    init {
         timeLineAdapterView.setOnClickViewHolder { view, position ->
             val timeLineId = timeLineAdapterModel.findTimeLineId(position)
             timeLineId?.let {
@@ -45,13 +40,18 @@ class ListPresenter<V: ListContract.View> @Inject constructor(
         compositeDisposable.add(EventBus.asFlowable()
                 .subscribe {
                     when (it) {
-                        is Events.WriteEvent -> addTimeLine(it.timeLine)
-                        is Events.UpdateEvent -> updateTimeLine(it.timeLine)
-                        is Events.DeleteEvent -> deleteTimeLine(it.timeLineId)
+                        is Events.WriteEvent -> subscribeAddTimeLine(it.timeLine)
+                        is Events.UpdateEvent -> subsribeUpdateTimeLine(it.timeLine)
+                        is Events.DeleteEvent -> subscribeDeleteTimeLine(it.timeLineId)
                     }
                 }
         )
     }
+
+    override fun initDate(date: Date) {
+        this.date = date
+    }
+
 
     override fun getTimeLines() {
         compositeDisposable.add(
@@ -67,16 +67,16 @@ class ListPresenter<V: ListContract.View> @Inject constructor(
         )
     }
 
-    override fun addTimeLine(timeLine: TimeLine) {
+    override fun subscribeAddTimeLine(timeLine: TimeLine) {
         timeLineAdapterModel.addTimeLine(timeLine, 0)
         getView()?.scrollToPosition(0)
     }
 
-    override fun updateTimeLine(timeLine: TimeLine) {
+    override fun subsribeUpdateTimeLine(timeLine: TimeLine) {
         timeLineAdapterModel.updateTimeLine(timeLine)
     }
 
-    override fun deleteTimeLine(timeLineId: Int) {
+    override fun subscribeDeleteTimeLine(timeLineId: Int) {
         timeLineAdapterModel.deleteTimeLine(timeLineId)
     }
 }

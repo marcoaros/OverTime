@@ -73,7 +73,7 @@ class TimeLineFragment private constructor() : BaseFragment<MainComponent>(), Ti
 
         spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            var isFirst = true
+            private var isFirst = true
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (isFirst) {

@@ -16,6 +16,7 @@ import dagger.Subcomponent
 )
 interface MainComponent : ActivityComponent {
     fun inject(mainActivity: MainActivity)
+
     fun plus(timeLineModule: TimeLineModule): TimeLineComponent
     fun plus(settingModule: SettingModule): SettingComponent
     fun plus(calendarModule: CalendarModule): CalendarComponent

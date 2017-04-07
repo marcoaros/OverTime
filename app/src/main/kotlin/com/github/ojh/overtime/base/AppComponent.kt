@@ -26,7 +26,7 @@ interface AppComponent {
     fun plus(mainModule: MainModule): MainComponent
     fun plus(writeModule: WriteModule): WriteComponent
     fun plus(detailModule: DetailModule): DetailComponent
-    fun plus(editModule: EditModule): EditComponent
     fun plus(listModule: ListModule): ListComponent
+    fun plus(editModule: EditModule): EditComponent
     fun plus(restoreModule: RestoreModule): RestoreComponent
 }

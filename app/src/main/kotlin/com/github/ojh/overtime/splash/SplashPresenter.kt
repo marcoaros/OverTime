@@ -7,6 +7,7 @@ import com.github.ojh.overtime.alarm.AlarmUtil
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_ALARM
+import com.github.ojh.overtime.util.firebase.FirebaseUtil
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,13 +22,15 @@ class SplashPresenter<V : SplashContract.View> @Inject constructor(
 
     override fun init(views: Array<LottieAnimationView>) {
 
+        FirebaseUtil.fetch()
+        initAlarm()
+
         compositeDisposable.add(
                 Observable.intervalRange(0, views.size.toLong(), 0, 300, TimeUnit.MILLISECONDS)
                         .map(Long::toInt)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete {
-                            initAlarm()
                             Handler().postDelayed({
                                 getView()?.navigateToTimeLine()
                             }, 1000)

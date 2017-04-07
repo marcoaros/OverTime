@@ -13,10 +13,9 @@ interface ListContract {
 
     interface Presenter<V: ListContract.View>: BaseContract.Presenter<V> {
         fun initDate(date: Date)
-        fun initEventListener()
         fun getTimeLines()
-        fun addTimeLine(timeLine: TimeLine)
-        fun updateTimeLine(timeLine: TimeLine)
-        fun deleteTimeLine(timeLineId: Int)
+        fun subscribeAddTimeLine(timeLine: TimeLine)
+        fun subsribeUpdateTimeLine(timeLine: TimeLine)
+        fun subscribeDeleteTimeLine(timeLineId: Int)
     }
 }

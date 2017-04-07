@@ -6,8 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.detail.DetailActivity
@@ -50,7 +50,6 @@ class ListActivity : BaseActivity(), ListContract.View {
 
         initToolbar()
         initRecyclerView()
-        initEventListener()
         presenter.initDate(date)
         presenter.getTimeLines()
     }
@@ -83,10 +82,6 @@ class ListActivity : BaseActivity(), ListContract.View {
             setInterpolator(OvershootInterpolator(0.5f))
         }
         rv_list.adapter = alphaAdapter
-    }
-
-    private fun initEventListener() {
-        presenter.initEventListener()
     }
 
     override fun navigateToDetail(view: View, timeLineId: Int) {
