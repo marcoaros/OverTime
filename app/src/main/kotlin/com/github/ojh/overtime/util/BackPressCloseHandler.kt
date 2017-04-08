@@ -1,9 +1,8 @@
 package com.github.ojh.overtime.util
 
-import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.github.ojh.overtime.ads.AdDialog
+import com.github.ojh.overtime.ads.AdDialogFragment
 
 class BackPressCloseHandler(private val activity: AppCompatActivity) {
 
@@ -17,8 +16,8 @@ class BackPressCloseHandler(private val activity: AppCompatActivity) {
             return
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            val dialog = AdDialog()
-            dialog.show(activity.supportFragmentManager, AdDialog::class.java.simpleName)
+            val dialog = AdDialogFragment()
+            dialog.show(activity.supportFragmentManager, AdDialogFragment::class.java.simpleName)
 
             toast?.cancel()
         }
