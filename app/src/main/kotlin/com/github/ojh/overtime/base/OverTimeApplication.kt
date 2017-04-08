@@ -3,7 +3,9 @@ package com.github.ojh.overtime.base
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.github.ojh.overtime.R
 import com.github.ojh.overtime.util.RealmUtil
+import com.google.android.gms.ads.MobileAds
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.fabric.sdk.android.Fabric
 
@@ -20,11 +22,10 @@ class OverTimeApplication : Application() {
 
         application = this
 
-//        FirebaseUtil.fetch()
-
-        RealmUtil.initRealm(this)
-
         Fabric.with(this, Crashlytics())
+        RealmUtil.initRealm(this)
+        MobileAds.initialize(this, getString(R.string.ad_app_id))
+
 
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)

@@ -28,4 +28,7 @@
 
     <string name="setting_switch_push">푸쉬알림 On/Off</string>
 
+    <string name="ad_app_id">ca-app-pub-7013713714750259~9349926320</string>
+    <string name="ad_unit_id">ca-app-pub-7013713714750259/4780125920</string>
+
 </resources>
