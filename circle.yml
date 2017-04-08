@@ -6,7 +6,7 @@ machine:
     # Java Settings
     JAVA_OPTS: "-Xms512m -Xmx4096m"
     # Gradle Settings
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=1024m -Xms512m -XX:+HeapDumpOnOutOfMemoryError"'
      # AVD Settings
     ADB_INSTALL_TIMEOUT: 5000
 
@@ -42,7 +42,7 @@ test:
   override:
     # Generate a debug-apk
     #- ./gradlew assembleDebug
-    - ./gradlew assembleDebug -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
+    - ./gradlew assembleDebug
 
     # Wait for emulator to boot
     #- circle-android wait-for-boot; sleep 20
