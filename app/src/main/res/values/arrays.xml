@@ -4,4 +4,10 @@
         <item>최신 순</item>
         <item>오래된 순</item>
     </string-array>
+
+    <string-array name="theme_array">
+        <item>Brown</item>
+        <item>Purple</item>
+        <item>Yellow</item>
+    </string-array>
 </resources>

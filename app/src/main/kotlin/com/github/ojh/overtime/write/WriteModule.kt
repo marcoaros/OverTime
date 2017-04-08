@@ -1,6 +1,6 @@
 package com.github.ojh.overtime.write
 
-import com.github.ojh.overtime.di.PerActivity
+import com.github.ojh.overtime.base.scope.PerActivity
 import dagger.Module
 import dagger.Provides
 

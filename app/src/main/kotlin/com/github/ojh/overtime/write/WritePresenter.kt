@@ -14,16 +14,14 @@ import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.util.EventBus
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
-import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import javax.inject.Inject
 
 
 class WritePresenter<V : WriteContract.View> @Inject constructor(
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
+        private val dataManager: DataManager
 
-) : BasePresenter<V>(dataManager, compositeDisposable), WriteContract.Presenter<V> {
+) : BasePresenter<V>(), WriteContract.Presenter<V> {
 
     private lateinit var timeLine: TimeLine
 
@@ -63,7 +61,10 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
     }
 
     override fun checkStoragePermission(activity: Activity) {
-        PermissionUtil.checkPermissionFromActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_GALLERY)
+        PermissionUtil.checkPermissionFromActivity(
+                activity,
+                REQUEST_GALLERY,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -98,8 +99,6 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
                 Uri.fromFile(internalImgFile)
             }
 
-            timeLine.apply {  }
-
             tempImgFile?.let {
                 if (it.exists()) {
                     it.delete()
@@ -109,7 +108,7 @@ class WritePresenter<V : WriteContract.View> @Inject constructor(
             timeLine.mImgUri = uri.toString()
 
             uri?.let {
-                getView()?.loadCroppedImage(it)
+                getView()?.loadCroppedImage(it.toString())
             }
         }
     }

@@ -1,14 +1,13 @@
 package com.github.ojh.overtime.detail
 
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.di.PerActivity
-import dagger.Component
+import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.scope.PerActivity
+import dagger.Subcomponent
 
 @PerActivity
-@Component(
-        dependencies = arrayOf(AppComponent::class),
+@Subcomponent(
         modules = arrayOf(DetailModule::class)
 )
-interface DetailComponent {
+interface DetailComponent : ActivityComponent {
     fun inject(detailActivity: DetailActivity)
 }

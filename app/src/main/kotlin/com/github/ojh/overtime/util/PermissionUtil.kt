@@ -4,22 +4,23 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import com.github.ojh.overtime.R
 
 object PermissionUtil {
 
-    fun checkPermissionFromActivity(activity: Activity, permission: String, requestCode: Int) {
-        if (ActivityCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
-        } else {
-            ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
-        }
+    fun checkPermissionFromActivity(activity: Activity, requestCode: Int, vararg permission: String) {
+        ActivityCompat.requestPermissions(activity, permission, requestCode)
     }
+
+    fun checkPermissionFromFragment(fragment: Fragment, requestCode: Int, vararg permission: String) {
+        fragment.requestPermissions(permission, requestCode)
+    }
+
 
     fun showRationalDialog(context: Context, message: String) {
         val dialogBuilder = AlertDialog.Builder(context)

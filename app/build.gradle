@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 25
@@ -56,6 +57,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:palette-v7:$rootProject.supportLibraryVersion"
 
     //Image Processing
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
@@ -69,6 +71,9 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
+    //RxRelay
+    compile "com.jakewharton.rxrelay2:rxrelay:$rootProject.rxRelayVersion"
+
     //Stetho
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
     compile "com.uphyca:stetho_realm:$rootProject.stethoRealmVersion"
@@ -81,10 +86,40 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+
+    //Lottie
+    compile "com.airbnb.android:lottie:$rootProject.lottieVersion"
+
+    //RecyclerView Animators
+    compile "jp.wasabeef:recyclerview-animators:$rootProject.recyclerViewAnimatorsVersion"
+
+    //Fabric
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
+        transitive = true;
+    }
+
+    //Calendar
+    compile "com.roomorama:caldroid:$rootProject.caldroidVersion"
+
+    //Firebase
+    compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+    compile "com.google.firebase:firebase-config:$rootProject.firebaseVersion"
+
 }
 
 repositories {
-    maven {
-        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

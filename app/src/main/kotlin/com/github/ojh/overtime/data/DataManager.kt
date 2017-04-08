@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.data
 
 import io.reactivex.Flowable
+import java.util.*
 import javax.inject.Inject
 
 class DataManager @Inject constructor(
@@ -11,7 +12,7 @@ class DataManager @Inject constructor(
         return dataSource.getTimeLine(timeLineId)
     }
 
-    fun getTimeLines(filter: Int = 0): Flowable<List<TimeLine>> {
+    fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
         return dataSource.getTimeLines(filter)
     }
 
@@ -25,5 +26,17 @@ class DataManager @Inject constructor(
 
     fun deleteTimeLine(timeLineId: Int) {
         dataSource.deleteTimeLine(timeLineId)
+    }
+
+    fun getWrittenDates(): Flowable<List<Date>> {
+        return dataSource.getWrittenDates()
+    }
+
+    fun backUpData(): Flowable<String> {
+        return dataSource.backUpData()
+    }
+
+    fun restoreData(internalFilePath:String, externalFilePath: String): Flowable<String> {
+        return dataSource.restoreData(internalFilePath, externalFilePath)
     }
 }

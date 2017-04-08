@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="BrownTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 기본 머티리얼 색상 -->
+        <item name="colorPrimary">@color/colorPrimary_brown</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_brown</item>
+        <item name="colorAccent">@color/colorAccent_brown</item>
+
+        <!-- 툴바 색깔 -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText_brown</item>
+
+        <item name="backgroundColorPrimary">@style/backgroundColorPrimary_brown</item>
+        <item name="backgroundColorPrimaryDemiLight">@style/backgroundColorPrimaryDemiLight_brown</item>
+        <item name="textColorPrimaryText">@style/textColorPrimaryText_brown</item>
+        <item name="textColorSecondaryText">@style/textColorSecondaryText_brown</item>
+        <item name="textColorDateText">@style/textColorDateText_brown</item>
+
+    </style>
+
+    <style name="BrownTheme.NoActionBar" parent="BrownTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- purple theme -->
+
+    <style name="PurpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 기본 머티리얼 색상 -->
+        <item name="colorPrimary">@color/colorPrimary_purple</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_purple</item>
+        <item name="colorAccent">@color/colorAccent_purple</item>
+
+        <!-- 툴바 색깔 -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText_brown</item>
+
+        <!-- 커스텀 색 -->
+        <item name="backgroundColorPrimary">@style/backgroundColorPrimary_purple</item>
+        <item name="backgroundColorPrimaryDemiLight">@style/backgroundColorPrimaryDemiLight_purple</item>
+        <item name="textColorPrimaryText">@style/textColorPrimaryText_purple</item>
+        <item name="textColorSecondaryText">@style/textColorSecondaryText_purple</item>
+        <item name="textColorDateText">@style/textColorDateText_purple</item>
+    </style>
+
+    <style name="PurpleTheme.NoActionBar" parent="PurpleTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- yellow theme -->
+    <style name="YellowTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 기본 머티리얼 색상 -->
+        <item name="colorPrimary">@color/colorPrimary_yellow</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_yellow</item>
+        <item name="colorAccent">@color/colorAccent_yellow</item>
+
+        <!-- 툴바 색깔 -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText_yellow</item>
+
+        <!-- 커스텀 색 -->
+        <item name="backgroundColorPrimary">@style/backgroundColorPrimary_yellow</item>
+        <item name="backgroundColorPrimaryDemiLight">@style/backgroundColorPrimaryDemiLight_yellow</item>
+        <item name="textColorPrimaryText">@style/textColorPrimaryText_yellow</item>
+        <item name="textColorSecondaryText">@style/textColorSecondaryText_yellow</item>
+        <item name="textColorDateText">@style/textColorDateText_yellow</item>
+    </style>
+
+    <style name="YellowTheme.NoActionBar" parent="YellowTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>

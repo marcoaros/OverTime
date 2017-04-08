@@ -8,9 +8,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class DetailPresenter<V : DetailContract.View> @Inject constructor(
-        dataManager: DataManager,
-        compositeDisposable: CompositeDisposable
-) : BasePresenter<V>(dataManager, compositeDisposable), DetailContract.Presenter<V> {
+        private val dataManager: DataManager
+) : BasePresenter<V>(), DetailContract.Presenter<V> {
 
     override fun init(timeLineId: Int) {
         compositeDisposable.add(

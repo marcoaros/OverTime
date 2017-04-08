@@ -1,20 +1,19 @@
 package com.github.ojh.overtime.detail
 
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.transition.Explode
 import android.transition.Fade
-import android.transition.Slide
 import android.transition.TransitionInflater
+import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseActivity
+import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.AppComponent
+import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
 import com.github.ojh.overtime.data.TimeLine.Companion.KEY_TIMELINE_ID
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.util.load
-import com.github.ojh.overtime.util.toFormatString
+import com.github.ojh.overtime.util.extensions.loadFromPalette
+import com.github.ojh.overtime.util.extensions.toFormatString
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
@@ -23,11 +22,10 @@ class DetailActivity : BaseActivity(), DetailContract.View {
     @Inject
     lateinit var presenter: DetailPresenter<DetailContract.View>
 
-    override fun setComponent(appComponent: AppComponent) {
-        DaggerDetailComponent.builder()
-                .appComponent(appComponent)
-                .build()
-                .inject(this)
+    override fun setComponent(appComponent: AppComponent): ActivityComponent {
+        val component = appComponent.plus(DetailModule())
+        component.inject(this)
+        return component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +39,18 @@ class DetailActivity : BaseActivity(), DetailContract.View {
         }
 
         presenter.init(timeLineId)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initAnimation()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
@@ -70,14 +79,27 @@ class DetailActivity : BaseActivity(), DetailContract.View {
 
     override fun initView(timeLine: TimeLine) {
         with(timeLine) {
-            if (mImgUri != null) {
-                iv_img.load(Uri.parse(mImgUri))
+
+            mContent?.let {
+                tv_content.text = it
+            }
+
+            mDate?.let {
+                tv_date.text = it.toFormatString()
+            }
+
+            val imgUrl = mImgUri
+
+            if (imgUrl != null) {
+                iv_img.loadFromPalette(imgUrl, { rgb, _, bodyColor ->
+                    ll_detail.setBackgroundColor(rgb)
+                    tv_content.setTextColor(bodyColor)
+                    tv_date.setTextColor(bodyColor)
+                })
+
             } else {
                 iv_img.visibility = View.GONE
             }
-
-            mContent?.let { tv_content.text = it }
-            mDate?.let { tv_date.text = it.toFormatString() }
         }
     }
 }

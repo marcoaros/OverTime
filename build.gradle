@@ -3,16 +3,21 @@
 buildscript {
     ext {
         kotlinVersion = '1.1.1'
-        supportLibraryVersion = '25.3.0'
+        supportLibraryVersion = '25.3.1'
         glideVersion = '3.7.0'
-        daggerVersion = '2.10-rc2'
+        daggerVersion = '2.10'
         parcelerVersion = '1.1.6'
         realmVersion = '3.0.0'
         stethoVersion = '1.4.2'
         stethoRealmVersion = '2.0.0'
-        rxJavaVersion = '2.0.4'
+        rxJavaVersion = '2.0.8'
         rxAndroidVersion = '2.0.1'
+        rxRelayVersion = '2.0.0'
         retrofitVersion = '2.2.0'
+        lottieVersion = '2.0.0-beta3'
+        recyclerViewAnimatorsVersion = '2.2.6'
+        caldroidVersion = '3.0.1'
+        firebaseVersion = '10.2.1'
 
         junitVersion = '4.12'
         mockitoVersion = '2.7.17'
@@ -22,7 +27,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:2.3.0"
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath "com.google.gms:google-services:3.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "io.realm:realm-gradle-plugin:$realmVersion"

@@ -43,7 +43,7 @@ captures/
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+#google-services.json
 
 # Freeline
 freeline.py
@@ -52,3 +52,6 @@ freeline_project_description.json
 
 ### Android Patch ###
 gen-external-apklibs
+
+# Fabric files
+fabric.properties

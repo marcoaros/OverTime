@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "159237361316",
+    "firebase_url": "https://overtime-5a599.firebaseio.com",
+    "project_id": "overtime-5a599",
+    "storage_bucket": "overtime-5a599.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159237361316:android:4a0bd72a60e64caf",
+        "android_client_info": {
+          "package_name": "com.github.ojh.overtime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159237361316-sj4c6kjqt8fbgp35004samod6jh7ebot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ylanM8n7tNQmAeyRFGt5GBc_nqmVNdg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

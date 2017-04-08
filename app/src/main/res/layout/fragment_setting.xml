@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.github.ojh.overtime.main.setting.SettingFragment">
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="@string/setting_switch_push"
+        app:switchMinWidth="60dp"
+        app:switchPadding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="테마" />
+
+    <Spinner
+        android:id="@+id/spinner_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/theme_array"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:layout_marginTop="24dp"
+        android:id="@+id/btn_backup"
+        android:text="데이터 백업"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_load"
+        android:text="데이터 불러오기"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_setting"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+</LinearLayout>

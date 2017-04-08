@@ -13,10 +13,16 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.BaseActivity
+import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.AppComponent
+import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.data.TimeLine
-import com.github.ojh.overtime.di.AppComponent
-import com.github.ojh.overtime.util.*
+import com.github.ojh.overtime.util.GUIUtils
+import com.github.ojh.overtime.util.PermissionUtil
+import com.github.ojh.overtime.util.extensions.addSimpleEndTransitionListener
+import com.github.ojh.overtime.util.extensions.cropIntent
+import com.github.ojh.overtime.util.extensions.load
+import com.github.ojh.overtime.util.extensions.setOnSimpleTextWather
 import com.github.ojh.overtime.write.WriteContract.Companion.REQUEST_GALLERY
 import kotlinx.android.synthetic.main.activity_write.*
 import org.parceler.Parcels
@@ -31,11 +37,11 @@ class WriteActivity : BaseActivity(), WriteContract.View {
     @Inject
     lateinit var writePresenter: WritePresenter<WriteContract.View>
 
-    override fun setComponent(appComponent: AppComponent) {
-        DaggerWriteComponent.builder()
-                .appComponent(appComponent)
-                .build()
-                .inject(this)
+
+    override fun setComponent(appComponent: AppComponent): ActivityComponent {
+        val component = appComponent.plus(WriteModule())
+        component.inject(this)
+        return component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,7 +100,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         }
 
         timeLine.mImgUri?.let {
-            iv_gallery.load(Uri.parse(it))
+            iv_gallery.load(it)
         }
     }
 
@@ -118,7 +124,16 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             isShowingAnimation = true
 
             transition.addSimpleEndTransitionListener {
-                animateRevealShow(rl_write_reveal_hide)
+                GUIUtils.animateRevealShow(
+                        rl_write_reveal_hide,
+                        {
+                            val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+                            animation.duration = 300
+                            ll_write_reveal_show.startAnimation(animation)
+                            ll_write_reveal_show.visibility = View.VISIBLE
+                            isShowingAnimation = false
+                        }
+                )
             }
 
             val fade = Fade().apply {
@@ -126,30 +141,11 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             window.returnTransition = fade
+
         } else {
             fab_write.visibility = View.INVISIBLE
             ll_write_reveal_show.visibility = View.VISIBLE
         }
-    }
-
-    private fun animateRevealShow(viewRoot: View) {
-        val cx = (viewRoot.left + viewRoot.right) / 2
-        val cy = (viewRoot.top + viewRoot.bottom) / 2
-        GUIUtils.animateRevealShow(
-                this,
-                viewRoot,
-                fab_write.width / 2,
-                R.color.colorAccent,
-                cx,
-                cy,
-                {
-                    val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-                    animation.duration = 300
-                    ll_write_reveal_show.startAnimation(animation)
-                    ll_write_reveal_show.visibility = View.VISIBLE
-                    isShowingAnimation = false
-                }
-        )
     }
 
     override fun onBackPressed() {
@@ -160,15 +156,14 @@ class WriteActivity : BaseActivity(), WriteContract.View {
             }
 
             isShowingAnimation = true
+
             GUIUtils.animateRevealHide(
-                    this,
                     rl_write_reveal_hide,
-                    R.color.colorAccent,
-                    fab_write.width / 2,
                     {
                         super.onBackPressed()
                     }
             )
+
         } else {
             super.onBackPressed()
         }
@@ -220,7 +215,7 @@ class WriteActivity : BaseActivity(), WriteContract.View {
         writePresenter.onActivityResult(this, requestCode, resultCode, data)
     }
 
-    override fun loadCroppedImage(uri: Uri) {
+    override fun loadCroppedImage(uri: String) {
         iv_gallery.load(uri)
     }
 }

@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#795548</color>
-    <color name="colorPrimaryDark">#5D4037</color>
-    <color name="colorPrimaryLight">#D7CCC8</color>
-    <color name="colorAccent">#795548</color>
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
-    <color name="colorIcons">#FFFFFF</color>
-    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorPrimary_brown">#795548</color>
+    <color name="colorPrimaryDark_brown">#5D4037</color>
+    <color name="colorPrimaryDemiLight_brown">#86665A</color>
+    <color name="colorPrimaryLight_brown">#D7CCC8</color>
+    <color name="colorAccent_brown">#795548</color>
+    <color name="colorPrimaryText_brown">#212121</color>
+    <color name="colorSecondaryText_brown">#757575</color>
+
+
+    <color name="colorPrimary_purple">#9C27B0</color>
+    <color name="colorPrimaryDark_purple">#7B1FA2</color>
+    <color name="colorPrimaryDemiLight_purple">#8438a4</color>
+    <color name="colorPrimaryLight_purple">#E1BEE7</color>
+    <color name="colorAccent_purple">#7C4DFF</color>
+    <color name="colorPrimaryText_purple">#212121</color>
+    <color name="colorSecondaryText_purple">#757575</color>
+
+
+    <color name="colorPrimary_yellow">#FFEB3B</color>
+    <color name="colorPrimaryDark_yellow">#FBC02D</color>
+    <color name="colorPrimaryDemiLight_yellow">#f2c34e</color>
+    <color name="colorPrimaryLight_yellow">#FFF9C4</color>
+    <color name="colorAccent_yellow">#FFC107</color>
+    <color name="colorPrimaryText_yellow">#212121</color>
+    <color name="colorSecondaryText_yellow">#757575</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="red">#FF5252</color>
+    <color name="backgroundGray">#E6E6E6</color>
 </resources>
