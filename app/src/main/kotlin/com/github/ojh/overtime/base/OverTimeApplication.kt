@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.base
 
 import android.app.Application
+import android.support.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.github.ojh.overtime.R
@@ -10,7 +11,7 @@ import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.fabric.sdk.android.Fabric
 
 
-class OverTimeApplication : Application() {
+class OverTimeApplication : MultiDexApplication() {
 
     companion object {
         lateinit var application: Application
