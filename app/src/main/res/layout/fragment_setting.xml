@@ -32,26 +32,33 @@
         android:spinnerMode="dropdown" />
 
     <Button
-        android:layout_marginTop="24dp"
-        android:id="@+id/btn_backup"
-        android:text="데이터 백업"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/btn_pin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="비밀번호 설정" />
+
+    <Button
+        android:id="@+id/btn_backup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="데이터 백업" />
 
     <Button
         android:id="@+id/btn_load"
-        android:text="데이터 불러오기"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="데이터 불러오기" />
 
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_setting"
-        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />

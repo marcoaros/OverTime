@@ -39,6 +39,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/BrownTheme.NoActionBar" />
 
+        <activity
+            android:name=".pin.CustomPinActivity"
+            android:screenOrientation="portrait" />
+
 
         <receiver android:name=".alarm.AlarmReceiver">
             <intent-filter>

@@ -6,18 +6,20 @@ import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import android.view.View
 import com.github.ojh.overtime.R
-import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.ActivityComponent
+import com.github.ojh.overtime.base.AppComponent
 import com.github.ojh.overtime.base.view.BaseActivity
 import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
+import com.github.ojh.overtime.pin.CustomPinActivity
 import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.extensions.addFragment
 import com.github.ojh.overtime.util.extensions.hideFragment
 import com.github.ojh.overtime.util.extensions.showFragment
 import com.github.ojh.overtime.util.extensions.startActivityWithTransition
 import com.github.ojh.overtime.write.WriteActivity
+import com.github.orangegangsters.lollipin.lib.managers.AppLock
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
@@ -45,6 +47,7 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         initToolbar()
         initFragments()
         initEventListener()
+        initPinDialog()
     }
 
     override fun onDestroy() {
@@ -77,6 +80,10 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         fab_write.setOnClickListener {
             presenter.clickWriteButton()
         }
+    }
+
+    private fun initPinDialog() {
+        presenter.getPinSettings()
     }
 
     override fun navigateToWrite() {
@@ -116,5 +123,11 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
 
     override fun onBackPressed() {
         backPressHandler.onBackPressed()
+    }
+
+    override fun showPinDialog() {
+        val intent = Intent(this@MainActivity, CustomPinActivity::class.java)
+        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN)
+        startActivity(intent)
     }
 }

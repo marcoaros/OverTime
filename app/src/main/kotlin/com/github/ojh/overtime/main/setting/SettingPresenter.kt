@@ -3,6 +3,7 @@ package com.github.ojh.overtime.main.setting
 import android.Manifest
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Environment
 import android.support.v4.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.CompoundButton
 import com.github.ojh.overtime.alarm.AlarmUtil
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
+import com.github.ojh.overtime.main.MainPresenter.Companion.KEY_PIN
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_ALARM
@@ -32,6 +34,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     companion object {
         const val REQUEST_BACKUP = 100
         const val REQUEST_RESTORE = 200
+        const val REQUEST_ENABLE_PIN = 300
     }
 
     override fun initSetting() {
@@ -64,6 +67,11 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
         getView()?.changeTheme(position)
     }
 
+    override fun setPin() {
+        val enablePin = propertyUtil.getBoolean(KEY_PIN, false)
+        getView()?.showSetPinDialog(!enablePin)
+    }
+
 
     override fun checkStoragePermission(fragment: Fragment, requestCode: Int) {
         PermissionUtil.checkPermissionFromFragment(
@@ -72,6 +80,13 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_ENABLE_PIN -> propertyUtil.setBoolean(KEY_PIN, true)
+        }
+    }
+
     override fun onRequestPermissionsResult(context: Context, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_RESTORE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

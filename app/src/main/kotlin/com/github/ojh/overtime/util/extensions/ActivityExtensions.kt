@@ -1,5 +1,6 @@
 package com.github.ojh.overtime.util.extensions
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +12,7 @@ import android.util.Pair
 import android.view.View
 import android.widget.Toast
 
-fun AppCompatActivity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
 

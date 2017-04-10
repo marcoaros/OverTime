@@ -110,6 +110,10 @@ dependencies {
     compile "com.google.firebase:firebase-config:$rootProject.firebaseVersion"
     compile "com.google.firebase:firebase-ads:$rootProject.firebaseVersion"
 
+    // Lollipin
+    compile ('com.github.orangegangsters:lollipin:2.0.0@aar') {
+        transitive = true
+    }
 }
 
 repositories {

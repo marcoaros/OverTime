@@ -2,6 +2,7 @@ package com.github.ojh.overtime.main.setting
 
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,11 +13,14 @@ import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.view.BaseFragment
 import com.github.ojh.overtime.main.MainComponent
 import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_BACKUP
+import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_ENABLE_PIN
 import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_RESTORE
 import com.github.ojh.overtime.main.setting.restore.RestoreDialogFragment
+import com.github.ojh.overtime.pin.CustomPinActivity
 import com.github.ojh.overtime.util.PermissionUtil
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
+import com.github.orangegangsters.lollipin.lib.managers.AppLock
 import kotlinx.android.synthetic.main.fragment_setting.*
 import org.json.JSONObject
 import javax.inject.Inject
@@ -37,6 +41,7 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
     companion object {
         private val fragment by lazy { SettingFragment() }
+
         fun getInstance(): SettingFragment {
             return fragment
         }
@@ -88,6 +93,10 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
         btn_load.setOnClickListener {
             settingPresenter.checkStoragePermission(this, REQUEST_RESTORE)
         }
+
+        btn_pin.setOnClickListener {
+            settingPresenter.setPin()
+        }
     }
 
     override fun setAlarmSwitch(isChecked: Boolean) {
@@ -100,6 +109,25 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
     override fun changeTheme(theme: Int) {
         ThemeUtil.changeToTheme(activity)
+    }
+
+
+    override fun showSetPinDialog(isFirst: Boolean) {
+        val intent = Intent(context, CustomPinActivity::class.java)
+
+        if(isFirst) {
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK)
+            startActivityForResult(intent, REQUEST_ENABLE_PIN)
+        }  else {
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.CHANGE_PIN)
+            startActivity(intent)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        settingPresenter.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroyView() {
