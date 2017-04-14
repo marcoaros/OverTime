@@ -50,6 +50,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
     // Multi Dex
+    //noinspection GradleCompatible
     compile "com.android.support:multidex:$rootProject.multiDexVersion"
 
     // Kotlin
