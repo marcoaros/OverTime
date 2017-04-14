@@ -8,7 +8,7 @@ buildscript {
         glideVersion = '3.7.0'
         daggerVersion = '2.10'
         parcelerVersion = '1.1.6'
-        realmVersion = '3.0.0'
+        realmVersion = '3.1.0'
         stethoVersion = '1.4.2'
         stethoRealmVersion = '2.0.0'
         rxJavaVersion = '2.0.8'

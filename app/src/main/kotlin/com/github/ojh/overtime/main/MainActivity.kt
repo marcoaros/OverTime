@@ -1,6 +1,7 @@
 package com.github.ojh.overtime.main
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
@@ -13,25 +14,18 @@ import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.pin.CustomPinActivity
-import com.github.ojh.overtime.util.BackPressCloseHandler
-import com.github.ojh.overtime.util.extensions.addFragment
-import com.github.ojh.overtime.util.extensions.hideFragment
-import com.github.ojh.overtime.util.extensions.showFragment
-import com.github.ojh.overtime.util.extensions.startActivityWithTransition
+import com.github.ojh.overtime.util.extensions.*
 import com.github.ojh.overtime.write.WriteActivity
 import com.github.orangegangsters.lollipin.lib.managers.AppLock
+import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_ad.*
 import javax.inject.Inject
-import kotlin.LazyThreadSafetyMode.NONE
 
 class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var presenter: MainPresenter<MainContract.View>
-
-    private val backPressHandler by lazy(NONE) {
-        BackPressCloseHandler(this)
-    }
 
     override fun setComponent(appComponent: AppComponent): ActivityComponent {
         val component = appComponent.plus(MainModule())
@@ -48,6 +42,7 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         initFragments()
         initEventListener()
         initPinDialog()
+        initAd()
     }
 
     override fun onDestroy() {
@@ -80,10 +75,29 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         fab_write.setOnClickListener {
             presenter.clickWriteButton()
         }
+
+        btn_cancel.setOnClickListener {
+            presenter.clickAdCancel()
+        }
+
+        btn_close.setOnClickListener {
+            presenter.clickAdClose()
+        }
+
+        layout_ad.setOnTouchListener { _, _ ->
+            true
+        }
     }
 
     private fun initPinDialog() {
         presenter.getPinSettings()
+    }
+
+    private fun initAd() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout_ad.elevation = 24f //다이얼로그가 24의 elevation을 가진다.
+        }
+        presenter.initAd()
     }
 
     override fun navigateToWrite() {
@@ -122,7 +136,9 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
     }
 
     override fun onBackPressed() {
-        backPressHandler.onBackPressed()
+        if (layout_ad.visibility != View.VISIBLE) {
+            presenter.onBackPress()
+        }
     }
 
     override fun showPinDialog() {
@@ -130,4 +146,21 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
         intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN)
         startActivity(intent)
     }
+
+    override fun initAdView(adRequest: AdRequest) {
+        adView.loadAd(adRequest)
+    }
+
+    override fun showAdView() {
+        layout_ad.visibility = View.VISIBLE
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
+    }
+
+    override fun dismissAdView() {
+        layout_ad.visibility = View.GONE
+    }
+
 }

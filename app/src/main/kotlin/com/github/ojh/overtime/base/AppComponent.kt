@@ -1,7 +1,5 @@
 package com.github.ojh.overtime.base
 
-import com.github.ojh.overtime.ads.AdComponent
-import com.github.ojh.overtime.ads.AdModule
 import com.github.ojh.overtime.detail.DetailComponent
 import com.github.ojh.overtime.detail.DetailModule
 import com.github.ojh.overtime.edit.EditComponent
@@ -31,5 +29,4 @@ interface AppComponent {
     fun plus(listModule: ListModule): ListComponent
     fun plus(editModule: EditModule): EditComponent
     fun plus(restoreModule: RestoreModule): RestoreComponent
-    fun plus(adModule: AdModule): AdComponent
 }
