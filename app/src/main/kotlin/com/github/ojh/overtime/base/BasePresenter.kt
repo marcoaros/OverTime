@@ -4,7 +4,7 @@ import io.reactivex.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 import kotlin.LazyThreadSafetyMode.NONE
 
-open class BasePresenter<V : BaseContract.View>
+abstract class BasePresenter<V : BaseContract.View>
     : BaseContract.Presenter<V> {
 
     protected val compositeDisposable: CompositeDisposable by lazy(NONE) {
