@@ -25,15 +25,10 @@ class SplashPresenter<V : SplashContract.View> @Inject constructor(
     }
 
     override fun initAlarm() {
-        addDisposable(
-                propertyManager.getBoolean(KEY_ALARM, true)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            AlarmUtil.setOnceAlarm(application, 22, 0)
-                        }
-        )
 
+        if(propertyManager.getBoolean(KEY_ALARM, true)) {
+            AlarmUtil.setOnceAlarm(application, 22, 0)
+        }
     }
 
     override fun initLottieView(views: Array<LottieAnimationView>) {

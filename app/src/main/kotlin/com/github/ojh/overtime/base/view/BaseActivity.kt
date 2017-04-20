@@ -10,8 +10,6 @@ import com.github.ojh.overtime.util.PropertyManager
 import com.github.ojh.overtime.util.PropertyManager.Companion.KEY_THEME
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
@@ -19,16 +17,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        PropertyManager(OverTimeApplication.application).getInt(KEY_THEME)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    ThemeUtil.onActivityCreateSetTheme(this, it)
-                }
-                .dispose()
-
-
+        val theme = PropertyManager(this).getInt(KEY_THEME)
+        ThemeUtil.onActivityCreateSetTheme(this, theme)
         activityComponent = setComponent(OverTimeApplication.appComponent)
     }
 

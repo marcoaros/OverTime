@@ -2,8 +2,6 @@ package com.github.ojh.overtime.util
 
 import android.content.Context
 import android.preference.PreferenceManager
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
 import kotlin.LazyThreadSafetyMode.NONE
 
 class PropertyManager(context: Context) {
@@ -26,12 +24,8 @@ class PropertyManager(context: Context) {
         editor.apply()
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean = false): Flowable<Boolean> {
-
-        return Flowable.create( {
-            pref.getBoolean(key, defaultValue)
-
-        }, BackpressureStrategy.LATEST)
+    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean {
+        return pref.getBoolean(key, defaultValue)
     }
 
     fun setInt(key: String, value: Int) {
@@ -39,12 +33,7 @@ class PropertyManager(context: Context) {
         editor.apply()
     }
 
-    fun getInt(key: String): Flowable<Int> {
-
-        return Flowable.create({
-            pref.getInt(key, 0)
-
-        }, BackpressureStrategy.LATEST)
+    fun getInt(key: String): Int {
+        return pref.getInt(key, 0)
     }
-
 }

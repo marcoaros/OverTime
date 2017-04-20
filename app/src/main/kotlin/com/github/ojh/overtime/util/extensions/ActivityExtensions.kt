@@ -1,6 +1,5 @@
 package com.github.ojh.overtime.util.extensions
 
-import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
@@ -25,12 +24,10 @@ fun AppCompatActivity.addFragment(@IdRes containerViewId: Int, vararg fragments:
     }
 }
 
-fun AppCompatActivity.showFragment(vararg fragments: Fragment) {
-    fragments.forEach {
-        supportFragmentManager.beginTransaction()
-                .show(it)
-                .commit()
-    }
+fun AppCompatActivity.showFragment(fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+            .show(fragment)
+            .commit()
 }
 
 fun AppCompatActivity.hideFragment(vararg fragments: Fragment) {
@@ -42,7 +39,7 @@ fun AppCompatActivity.hideFragment(vararg fragments: Fragment) {
 }
 
 fun AppCompatActivity.replaceFragment(@IdRes containerViewId: Int, fragment: Fragment, hasBackStack: Boolean = true) {
-    if(hasBackStack) {
+    if (hasBackStack) {
         supportFragmentManager.beginTransaction()
                 .replace(containerViewId, fragment)
                 .addToBackStack(null)
