@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.github.ojh.overtime.base.ActivityComponent
 import com.github.ojh.overtime.base.BaseContract
+import com.github.ojh.overtime.util.extensions.toast
 
 abstract class BaseFragment<in C: ActivityComponent> : Fragment(), BaseContract.View {
 
@@ -17,4 +18,8 @@ abstract class BaseFragment<in C: ActivityComponent> : Fragment(), BaseContract.
     }
 
     abstract fun setComponent(activityComponent: C)
+
+    override fun showToast(message: String, duration: Int) {
+        toast(message, duration)
+    }
 }

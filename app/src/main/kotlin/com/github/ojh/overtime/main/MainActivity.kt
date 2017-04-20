@@ -14,7 +14,10 @@ import com.github.ojh.overtime.main.calendar.CalendarFragment
 import com.github.ojh.overtime.main.setting.SettingFragment
 import com.github.ojh.overtime.main.timeline.TimeLineFragment
 import com.github.ojh.overtime.pin.CustomPinActivity
-import com.github.ojh.overtime.util.extensions.*
+import com.github.ojh.overtime.util.extensions.addFragment
+import com.github.ojh.overtime.util.extensions.hideFragment
+import com.github.ojh.overtime.util.extensions.showFragment
+import com.github.ojh.overtime.util.extensions.startActivityWithTransition
 import com.github.ojh.overtime.write.WriteActivity
 import com.github.orangegangsters.lollipin.lib.managers.AppLock
 import com.google.android.gms.ads.AdRequest
@@ -153,10 +156,6 @@ class MainActivity : BaseActivity(), MainContract.View, BottomNavigationView.OnN
 
     override fun showAdView() {
         layout_ad.visibility = View.VISIBLE
-    }
-
-    override fun showToast(message: String) {
-        toast(message)
     }
 
     override fun dismissAdView() {

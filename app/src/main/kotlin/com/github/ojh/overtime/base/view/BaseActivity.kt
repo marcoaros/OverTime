@@ -8,6 +8,7 @@ import com.github.ojh.overtime.base.BaseContract
 import com.github.ojh.overtime.base.OverTimeApplication
 import com.github.ojh.overtime.util.PropertyUtil
 import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_THEME
+import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
@@ -24,4 +25,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     abstract fun setComponent(appComponent: AppComponent): ActivityComponent
 
     fun getActivityComponent() = activityComponent
+
+    override fun showToast(message: String, duration: Int) {
+        toast(message, duration)
+    }
 }

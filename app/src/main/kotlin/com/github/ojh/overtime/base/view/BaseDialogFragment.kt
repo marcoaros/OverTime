@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.github.ojh.overtime.R
 import com.github.ojh.overtime.base.AppComponent
-import com.github.ojh.overtime.base.OverTimeApplication
 import com.github.ojh.overtime.base.BaseContract
+import com.github.ojh.overtime.base.OverTimeApplication
+import com.github.ojh.overtime.util.extensions.toast
 
 abstract class BaseDialogFragment : DialogFragment(), BaseContract.View {
 
@@ -16,5 +17,9 @@ abstract class BaseDialogFragment : DialogFragment(), BaseContract.View {
     }
 
     abstract fun setComponent(appComponent: AppComponent)
+
+    override fun showToast(message: String, duration: Int) {
+        toast(message, duration)
+    }
 
 }

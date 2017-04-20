@@ -13,7 +13,6 @@ interface SettingContract {
         fun setThemeSpinner(theme: Int)
         fun changeTheme(theme: Int)
         fun showRationalDialog()
-        fun showToast(message: String)
         fun showRestoreDialog(pathList: List<String>)
         fun showProgress()
         fun dismissProgress()

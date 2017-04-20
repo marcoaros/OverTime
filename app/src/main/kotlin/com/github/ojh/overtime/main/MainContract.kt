@@ -10,7 +10,6 @@ interface MainContract {
         fun initAdView(adRequest: AdRequest)
         fun dismissAdView()
         fun showAdView()
-        fun showToast(message: String)
     }
 
     interface Presenter<V: MainContract.View>: BaseContract.Presenter<V> {

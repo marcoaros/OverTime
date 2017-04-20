@@ -18,7 +18,6 @@ import com.github.ojh.overtime.main.setting.SettingPresenter.Companion.REQUEST_R
 import com.github.ojh.overtime.main.setting.restore.RestoreDialogFragment
 import com.github.ojh.overtime.pin.CustomPinActivity
 import com.github.ojh.overtime.util.PermissionUtil
-import com.github.ojh.overtime.util.extensions.toast
 import com.github.ojh.overtime.util.theme.ThemeUtil
 import com.github.orangegangsters.lollipin.lib.managers.AppLock
 import kotlinx.android.synthetic.main.fragment_setting.*
@@ -149,10 +148,6 @@ class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
     override fun showRationalDialog() {
         val deniedMessage = getString(R.string.permission_storage_message)
         PermissionUtil.showRationalDialog(context, deniedMessage)
-    }
-
-    override fun showToast(message: String) {
-        toast(message)
     }
 
     override fun showProgress() {
