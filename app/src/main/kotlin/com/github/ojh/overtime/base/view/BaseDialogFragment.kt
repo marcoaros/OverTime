@@ -18,7 +18,7 @@ abstract class BaseDialogFragment : DialogFragment(), BaseContract.View {
 
     abstract fun setComponent(appComponent: AppComponent)
 
-    override fun showToast(message: String, duration: Int) {
+    final override fun showToast(message: String, duration: Int) {
         toast(message, duration)
     }
 

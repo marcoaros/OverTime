@@ -7,7 +7,7 @@ import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.data.DataSource
 import com.github.ojh.overtime.data.local.LocalDataSource
 import com.github.ojh.overtime.data.remote.RemoteDataSource
-import com.github.ojh.overtime.util.PropertyUtil
+import com.github.ojh.overtime.util.PropertyManager
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -17,6 +17,7 @@ import javax.inject.Singleton
 
 @Module
 class AppModule(val application: Application) {
+
     @Singleton
     @Provides
     fun providesApplication(): Application = application
@@ -52,7 +53,7 @@ class AppModule(val application: Application) {
 
     @Singleton
     @Provides
-    fun providePropertyUtil(): PropertyUtil {
-        return PropertyUtil(application)
+    fun providePropertyManager(): PropertyManager {
+        return PropertyManager(application)
     }
 }

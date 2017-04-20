@@ -11,60 +11,75 @@ import java.util.*
 class LocalDataSource : DataSource {
 
     override fun getTimeLine(timeLineId: Int): Flowable<TimeLine> {
-        val realm = RealmUtil.getRealmInstance()
 
-        val timeLine = realm.where(TimeLineRealm::class.java)
-                .equalTo("id", timeLineId)
-                .findFirst()
-                .toDto()
+        return Flowable.create(
+                {
+                    val realm = RealmUtil.getRealmInstance()
 
-        realm.close()
-        return Flowable.just(timeLine)
+                    val timeLine = realm.where(TimeLineRealm::class.java)
+                            .equalTo("id", timeLineId)
+                            .findFirst()
+                            .toDto()
+
+                    realm.close()
+
+                    it.onNext(timeLine)
+                    it.onComplete()
+                }
+                , BackpressureStrategy.LATEST
+        )
     }
 
     override fun getTimeLines(filter: FilterType): Flowable<List<TimeLine>> {
-        val realm = RealmUtil.getRealmInstance()
-        val results = realm.where(TimeLineRealm::class.java)
 
-        return when (filter) {
+        return Flowable.create(
+                {
+                    val realm = RealmUtil.getRealmInstance()
+                    val results = realm.where(TimeLineRealm::class.java)
 
-            is FilterEqualDate -> {
-                val curDate = filter.date
-                val datePair = curDate.getBetweenDates()
+                    when (filter) {
+                        is FilterEqualDate -> {
+                            val curDate = filter.date
+                            val datePair = curDate.getBetweenDates()
 
-                val timeLines = results
-                        .between("date", datePair.first, datePair.second)
-                        .findAll()
-                        .sort("date", Sort.DESCENDING)
-                        .toList()
-                        .map(TimeLineRealm::toDto)
+                            val timeLines = results
+                                    .between("date", datePair.first, datePair.second)
+                                    .findAll()
+                                    .sort("date", Sort.DESCENDING)
+                                    .toList()
+                                    .map(TimeLineRealm::toDto)
 
-                realm.close()
-                Flowable.just(timeLines)
-            }
+                            realm.close()
+                            it.onNext(timeLines)
+                        }
 
-            is FilterDateDescending -> {
-                val timeLines = results
-                        .findAll()
-                        .sort("date", Sort.DESCENDING)
-                        .toList()
-                        .map(TimeLineRealm::toDto)
+                        is FilterDateDescending -> {
+                            val timeLines = results
+                                    .findAll()
+                                    .sort("date", Sort.DESCENDING)
+                                    .toList()
+                                    .map(TimeLineRealm::toDto)
 
-                realm.close()
-                Flowable.just(timeLines)
-            }
+                            realm.close()
+                            it.onNext(timeLines)
+                        }
 
-            is FilterDateAscending -> {
-                val timeLines = results
-                        .findAll()
-                        .sort("date", Sort.ASCENDING)
-                        .toList()
-                        .map(TimeLineRealm::toDto)
+                        is FilterDateAscending -> {
+                            val timeLines = results
+                                    .findAll()
+                                    .sort("date", Sort.ASCENDING)
+                                    .toList()
+                                    .map(TimeLineRealm::toDto)
 
-                realm.close()
-                Flowable.just(timeLines)
-            }
-        }
+                            realm.close()
+                            it.onNext(timeLines)
+                        }
+                    }
+
+                    it.onComplete()
+                }
+                , BackpressureStrategy.LATEST
+        )
     }
 
     override fun saveTimeLine(timeLine: TimeLine) {
@@ -92,18 +107,25 @@ class LocalDataSource : DataSource {
     }
 
     override fun getWrittenDates(): Flowable<List<Date>> {
-        val realm = RealmUtil.getRealmInstance()
+        return Flowable.create(
+                {
+                    val realm = RealmUtil.getRealmInstance()
 
-        val writtenDates = realm.where(TimeLineRealm::class.java).findAll()
-                .toList()
-                .map {
-                    it.toDto().mDate
+                    val writtenDates = realm.where(TimeLineRealm::class.java).findAll()
+                            .toList()
+                            .map {
+                                it.toDto().mDate
+                            }
+                            .filterNotNull()
+
+                    realm.close()
+
+                    it.onNext(writtenDates)
+                    it.onComplete()
+
                 }
-                .filterNotNull()
-
-        realm.close()
-
-        return Flowable.just(writtenDates)
+                , BackpressureStrategy.LATEST
+        )
     }
 
     override fun backUpData(): Flowable<String> {
@@ -112,8 +134,8 @@ class LocalDataSource : DataSource {
                     val resultString = RealmUtil.backup()
                     it.onNext(resultString)
                     it.onComplete()
-                },
-                BackpressureStrategy.LATEST
+                }
+                , BackpressureStrategy.LATEST
         )
     }
 
@@ -123,8 +145,8 @@ class LocalDataSource : DataSource {
                     val resultString = RealmUtil.restore(internalFilePath, externalFilePath)
                     it.onNext(resultString)
                     it.onComplete()
-                },
-                BackpressureStrategy.LATEST
+                }
+                , BackpressureStrategy.LATEST
         )
     }
 

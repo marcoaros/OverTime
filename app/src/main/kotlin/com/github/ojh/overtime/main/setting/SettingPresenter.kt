@@ -15,9 +15,9 @@ import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.data.DataManager
 import com.github.ojh.overtime.main.MainPresenter.Companion.KEY_PIN
 import com.github.ojh.overtime.util.PermissionUtil
-import com.github.ojh.overtime.util.PropertyUtil
-import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_ALARM
-import com.github.ojh.overtime.util.PropertyUtil.Companion.KEY_THEME
+import com.github.ojh.overtime.util.PropertyManager
+import com.github.ojh.overtime.util.PropertyManager.Companion.KEY_ALARM
+import com.github.ojh.overtime.util.PropertyManager.Companion.KEY_THEME
 import com.github.ojh.overtime.util.firebase.FirebaseUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class SettingPresenter<V : SettingContract.View> @Inject constructor(
         private val dataManager: DataManager,
         private val application: Application,
-        private val propertyUtil: PropertyUtil
+        private val propertyManager: PropertyManager
 
 ) : BasePresenter<V>(), SettingContract.Presenter<V> {
 
@@ -42,11 +42,24 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
         val lottieUrl = FirebaseUtil.getString("setting_url")
         getView()?.setLottieView(lottieUrl)
 
-        val isChecked = propertyUtil.getBoolean(KEY_ALARM, true)
-        getView()?.setAlarmSwitch(isChecked)
+        addDisposable(
+                propertyManager.getBoolean(KEY_ALARM, true)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.setAlarmSwitch(it)
+                        }
+        )
 
-        val theme = propertyUtil.getInt(KEY_THEME)
-        getView()?.setThemeSpinner(theme)
+
+        addDisposable(
+                propertyManager.getInt(KEY_THEME)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.setThemeSpinner(it)
+                        }
+        )
 
     }
 
@@ -58,18 +71,24 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
             AlarmUtil.cancelAlarm(application)
         }
 
-        propertyUtil.setBoolean(KEY_ALARM, isChecked)
+        propertyManager.setBoolean(KEY_ALARM, isChecked)
 
     }
 
     override fun selectTheme(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        propertyUtil.setInt(KEY_THEME, position)
+        propertyManager.setInt(KEY_THEME, position)
         getView()?.changeTheme(position)
     }
 
     override fun setPin() {
-        val enablePin = propertyUtil.getBoolean(KEY_PIN, false)
-        getView()?.showSetPinDialog(!enablePin)
+        addDisposable(
+                propertyManager.getBoolean(KEY_PIN, false)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.showSetPinDialog(!it)
+                        }
+        )
     }
 
 
@@ -83,7 +102,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            REQUEST_ENABLE_PIN -> propertyUtil.setBoolean(KEY_PIN, true)
+            REQUEST_ENABLE_PIN -> propertyManager.setBoolean(KEY_PIN, true)
         }
     }
 
@@ -106,7 +125,7 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     override fun backupData() {
         getView()?.showProgress()
 
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.backUpData()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

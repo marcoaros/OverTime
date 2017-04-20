@@ -3,12 +3,14 @@ package com.github.ojh.overtime.main
 import android.app.Activity
 import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.util.BackPressCloseHandler
-import com.github.ojh.overtime.util.PropertyUtil
+import com.github.ojh.overtime.util.PropertyManager
 import com.google.android.gms.ads.AdRequest
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainPresenter<V : MainContract.View> @Inject constructor(
-        private val propertyUtil: PropertyUtil,
+        private val propertyManager: PropertyManager,
         private val backPressCloseHandler: BackPressCloseHandler
 
 ) : BasePresenter<V>(), MainContract.Presenter<V> {
@@ -18,11 +20,18 @@ class MainPresenter<V : MainContract.View> @Inject constructor(
     }
 
     override fun getPinSettings() {
-        val enablePin = propertyUtil.getBoolean(KEY_PIN, false)
+        val enablePin = propertyManager.getBoolean(KEY_PIN, false)
 
-        if(enablePin) {
-            getView()?.showPinDialog()
-        }
+        addDisposable(
+                enablePin
+                        .observeOn (AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            if(it) {
+                                getView()?.showPinDialog()
+                            }
+                        }
+        )
     }
 
     override fun clickWriteButton() {
@@ -42,7 +51,7 @@ class MainPresenter<V : MainContract.View> @Inject constructor(
     }
 
     override fun onBackPress() {
-        if(backPressCloseHandler.isCloseable()) {
+        if (backPressCloseHandler.isCloseable()) {
             getView()?.showAdView()
         } else {
             getView()?.showToast("\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.")

@@ -16,7 +16,7 @@ class RestorePresenter<V : RestoreContract.View> @Inject constructor(
     override fun restoreData(internalFilePath: String, externalFilePath: String) {
         getView()?.showProgress()
 
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.restoreData(internalFilePath, externalFilePath)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

@@ -16,7 +16,7 @@ class CalendarPresenter<V : CalendarContract.View> @Inject constructor(
 ) : BasePresenter<V>(), CalendarContract.Presenter<V> {
 
     override fun initWrittenDates() {
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.getWrittenDates()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -27,7 +27,7 @@ class CalendarPresenter<V : CalendarContract.View> @Inject constructor(
     }
 
     override fun initEventBus() {
-        compositeDisposable.add(EventBus.asFlowable()
+        addDisposable(EventBus.asFlowable()
                 .subscribe {
                     when (it) {
                         is Events.WriteEvent, is Events.DeleteEvent, is Events.RefreshEvent -> {

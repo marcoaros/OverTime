@@ -22,7 +22,7 @@ class EditPresenter<V : EditContract.View> @Inject constructor(
     }
 
     override fun updateTimeLine() {
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.getTimeLine(timeLineId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

@@ -19,7 +19,7 @@ abstract class BaseFragment<in C: ActivityComponent> : Fragment(), BaseContract.
 
     abstract fun setComponent(activityComponent: C)
 
-    override fun showToast(message: String, duration: Int) {
+    final override fun showToast(message: String, duration: Int) {
         toast(message, duration)
     }
 }

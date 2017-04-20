@@ -37,7 +37,7 @@ class ListPresenter<V: ListContract.View> @Inject constructor(
 
         }
 
-        compositeDisposable.add(EventBus.asFlowable()
+        addDisposable(EventBus.asFlowable()
                 .subscribe {
                     when (it) {
                         is Events.WriteEvent -> subscribeAddTimeLine(it.timeLine)
@@ -54,7 +54,7 @@ class ListPresenter<V: ListContract.View> @Inject constructor(
 
 
     override fun getTimeLines() {
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.getTimeLines(FilterEqualDate(date))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

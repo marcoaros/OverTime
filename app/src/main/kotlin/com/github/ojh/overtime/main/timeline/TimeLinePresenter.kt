@@ -35,7 +35,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
 
         }
 
-        compositeDisposable.add(EventBus.asFlowable()
+        addDisposable(EventBus.asFlowable()
                 .subscribe {
                     when (it) {
                         is Events.WriteEvent -> addTimeLine(it.timeLine)
@@ -50,7 +50,7 @@ class TimeLinePresenter<V : TimeLineContract.View> @Inject constructor(
     override fun getTimeLines(filter: FilterType) {
         filterType = filter
 
-        compositeDisposable.add(
+        addDisposable(
                 dataManager.getTimeLines(filter)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

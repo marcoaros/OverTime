@@ -8,6 +8,8 @@ interface SplashContract {
         fun navigateToTimeLine()
     }
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun init(views: Array<LottieAnimationView>)
+        fun initFirebaseRemoteConfig()
+        fun initLottieView(views: Array<LottieAnimationView>)
+        fun initAlarm()
     }
 }

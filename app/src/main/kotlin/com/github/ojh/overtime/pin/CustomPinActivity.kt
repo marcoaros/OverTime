@@ -1,7 +1,7 @@
 package com.github.ojh.overtime.pin
 
 import com.github.ojh.overtime.main.MainPresenter.Companion.KEY_PIN
-import com.github.ojh.overtime.util.PropertyUtil
+import com.github.ojh.overtime.util.PropertyManager
 import com.github.ojh.overtime.util.extensions.toast
 import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity
 
@@ -9,7 +9,7 @@ import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity
 class CustomPinActivity : AppLockActivity() {
 
     override fun showForgotDialog() {
-        val propertyUtil = PropertyUtil(this)
+        val propertyUtil = PropertyManager(this)
         propertyUtil.setBoolean(KEY_PIN, false)
         toast("비밀번호 초기화")
         finish()
