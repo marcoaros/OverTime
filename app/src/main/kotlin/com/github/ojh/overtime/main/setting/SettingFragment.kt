@@ -26,9 +26,6 @@ import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class SettingFragment : BaseFragment<MainComponent>(), SettingContract.View {
 
     private val progressDialog by lazy(NONE) {

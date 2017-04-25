@@ -40,8 +40,26 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     override fun initSetting() {
         val lottieUrl = FirebaseUtil.getString("setting_url")
         getView()?.setLottieView(lottieUrl)
-        getView()?.setAlarmSwitch(propertyManager.getBoolean(KEY_ALARM, true))
-        getView()?.setThemeSpinner(propertyManager.getInt(KEY_THEME))
+
+        addDisposable(
+                propertyManager.getBoolean(KEY_ALARM, true)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.setAlarmSwitch(it)
+                        }
+        )
+
+
+        addDisposable(
+                propertyManager.getInt(KEY_THEME)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.setThemeSpinner(it)
+                        }
+        )
+
     }
 
     override fun changeAlarm(view: CompoundButton, isChecked: Boolean) {
@@ -62,7 +80,14 @@ class SettingPresenter<V : SettingContract.View> @Inject constructor(
     }
 
     override fun setPin() {
-        getView()?.showSetPinDialog(!propertyManager.getBoolean(KEY_PIN, false))
+        addDisposable(
+                propertyManager.getBoolean(KEY_PIN, false)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            getView()?.showSetPinDialog(!it)
+                        }
+        )
     }
 
 

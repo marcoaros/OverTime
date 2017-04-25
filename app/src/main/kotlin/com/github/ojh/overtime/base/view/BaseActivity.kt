@@ -17,7 +17,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val theme = PropertyManager(this).getInt(KEY_THEME)
+        val theme = PropertyManager(this).getIntSync(KEY_THEME)
         ThemeUtil.onActivityCreateSetTheme(this, theme)
         activityComponent = setComponent(OverTimeApplication.appComponent)
     }

@@ -14,6 +14,7 @@ buildscript {
         rxJavaVersion = '2.0.8'
         rxAndroidVersion = '2.0.1'
         rxRelayVersion = '2.0.0'
+        rxPreferencesVersion = '2.0.0-RC1'
         retrofitVersion = '2.2.0'
         lottieVersion = '2.0.0-beta3'
         recyclerViewAnimatorsVersion = '2.2.6'

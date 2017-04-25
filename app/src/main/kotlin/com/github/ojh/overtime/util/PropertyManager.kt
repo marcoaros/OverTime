@@ -2,6 +2,8 @@ package com.github.ojh.overtime.util
 
 import android.content.Context
 import android.preference.PreferenceManager
+import com.f2prateek.rx.preferences2.RxSharedPreferences
+import io.reactivex.Observable
 import kotlin.LazyThreadSafetyMode.NONE
 
 class PropertyManager(context: Context) {
@@ -15,6 +17,10 @@ class PropertyManager(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
 
+    private val rxPref by lazy {
+        RxSharedPreferences.create(pref)
+    }
+
     private val editor by lazy(NONE) {
         pref.edit()
     }
@@ -24,8 +30,8 @@ class PropertyManager(context: Context) {
         editor.apply()
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean {
-        return pref.getBoolean(key, defaultValue)
+    fun getBoolean(key: String, defaultValue: Boolean = false): Observable<Boolean> {
+        return rxPref.getBoolean(key, defaultValue).asObservable()
     }
 
     fun setInt(key: String, value: Int) {
@@ -33,7 +39,11 @@ class PropertyManager(context: Context) {
         editor.apply()
     }
 
-    fun getInt(key: String): Int {
-        return pref.getInt(key, 0)
+    fun getInt(key: String, defaultValue: Int = 0): Observable<Int> {
+        return rxPref.getInteger(key, defaultValue).asObservable()
+    }
+
+    fun getIntSync(key: String, defaultValue: Int = 0): Int {
+        return pref.getInt(key, defaultValue)
     }
 }

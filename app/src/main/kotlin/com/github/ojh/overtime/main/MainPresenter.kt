@@ -5,6 +5,8 @@ import com.github.ojh.overtime.base.BasePresenter
 import com.github.ojh.overtime.util.BackPressCloseHandler
 import com.github.ojh.overtime.util.PropertyManager
 import com.google.android.gms.ads.AdRequest
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainPresenter<V : MainContract.View> @Inject constructor(
@@ -18,11 +20,16 @@ class MainPresenter<V : MainContract.View> @Inject constructor(
     }
 
     override fun getPinSettings() {
-        val enablePin = propertyManager.getBoolean(KEY_PIN, false)
-
-        if (enablePin) {
-            getView()?.showPinDialog()
-        }
+        addDisposable(
+                propertyManager.getBoolean(KEY_PIN, false)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            if (it) {
+                                getView()?.showPinDialog()
+                            }
+                        }
+        )
     }
 
     override fun clickWriteButton() {

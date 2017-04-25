@@ -79,6 +79,9 @@ dependencies {
     // RxRelay
     compile "com.jakewharton.rxrelay2:rxrelay:$rootProject.rxRelayVersion"
 
+    // RxPreferences
+    compile "com.f2prateek.rx.preferences2:rx-preferences:$rootProject.rxPreferencesVersion"
+
     // Stetho
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
     compile "com.uphyca:stetho_realm:$rootProject.stethoRealmVersion"
